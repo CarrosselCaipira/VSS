@@ -63,8 +63,8 @@ class Robo {
         /***************************** SETTERS **************************/
 
         /************************ POSICAO ATUAL ROBO ********************/
-        // Define a posicao XY do robo, cuidado talvez precise usar this.
-        inline void setPosicaoRobo (const posXY posicao);
+        // Define a posicao XY do robo.
+        inline void setPosicaoAtualRobo (const posXY posicao);
 
         // Define o vetor de sentido de deslocamento do robo.
         inline void setVetorSentidoAtualRobo(const vetorSentido vetor);

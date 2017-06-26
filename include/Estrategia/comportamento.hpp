@@ -1,6 +1,12 @@
-void posiciona_centro_gol (){
-	posXY p;
-	p.x = CENTRO_X_GOL;
-	p.y = CENTRO_X_GOL;
-	this->setPosicaoObj(p);
-} 
+#ifndef COMPORTAMENTO_H
+#define COMPORTAMENTO_H
+
+#include "comportamento.hpp"
+
+class comportamento {
+ public:
+ 	static void posiciona_centro_gol(Robo& r);
+ 	
+ }; 
+
+ #endif /* COMPORTAMENTO_H */
