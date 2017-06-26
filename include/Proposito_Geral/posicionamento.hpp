@@ -11,7 +11,7 @@
 #define TAM_Y_CAMPO 130	// em cemtimetros
 
 #define TAM_X_AREA_GOL 15
-#define CENTRO_X_GOL (TAM_X_CAMPO-TAM_X_GOL)
+#define CENTRO_X_GOL_ADV (TAM_X_CAMPO-TAM_X_GOL)
 #define CENTRO_Y_GOL TAM_Y_CAMPO/2
 /* SOB ANALISE DE NECESSIDADE */
 // #define POS_X_NECESSARIA_PARA_GOLEIRO_TER_TEMPO_DEFENDER (TAM_X_GOL + TAM_ROBO/2 + 2)	// 2 cm a mais para o robo ter espaco para andar
@@ -107,4 +107,4 @@ inline  bool faixaChuteGirandoTime(const posXY posicao);
 inline  bool faixaChuteGirandoAdv(const posXY posicao);
 
 /* POSICIONAMENTO_H */
-#endif 
+#endif
