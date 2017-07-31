@@ -1,7 +1,7 @@
 #ifndef COMPORTAMENTO_H
 #define COMPORTAMENTO_H
 
-#include "comportamento.hpp"
+#include "robo.hpp"
 
 class comportamento {
  public:

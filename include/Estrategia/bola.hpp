@@ -1,3 +1,6 @@
+#ifndef BOLA_H
+#define BOLA_H
+
 #include "auxiliares.hpp"
 #include "tipoClasses.hpp"
 
@@ -25,3 +28,5 @@ class Bola{
     inline float getVelocidadePrevistoBola ();
 
 };
+
+#endif /* BOLA_H*/

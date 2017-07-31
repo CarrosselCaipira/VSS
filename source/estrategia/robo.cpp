@@ -56,13 +56,21 @@ float Robo::getAnguloObj () {
 
 /************************ POSICAO ATUAL ROBO ********************/
 void Robo::setPosicaoAtualRobo (const posXY posicao) {
-  estadoAtualRobo.posicao.x = posicao.x;
-  estadoAtualRobo.posicao.y = posicao.y;
+  estadoAtualRobo.posicao = posicao;
+}
+
+void Robo::setPosicaoAtualRobo (const float x, const float y) {
+  estadoAtualRobo.posicao.x = x;
+  estadoAtualRobo.posicao.y = y;
 }
 
 void Robo::setVetorSentidoAtualRobo(const vetorSentido vetor) {
-  estadoAtualRobo.direcao.x = vetor.x;
-  estadoAtualRobo.direcao.y = vetor.y;
+  estadoAtualRobo.direcao = vetor;
+}
+
+void Robo::setVetorSentidoAtualRobo(const float vetorX, const float vetorY) {
+  estadoAtualRobo.direcao.x = vetorX;
+  estadoAtualRobo.direcao.y = vetorY;
 }
 
 void Robo::setAnguloAtualRobo (const float angulo) {
@@ -70,15 +78,23 @@ void Robo::setAnguloAtualRobo (const float angulo) {
 }
 
 void Robo::setVelocidadeAtualRobo (const velocidadeRobo velocidade) {
-  estadoAtualRobo.velocidade.rodaEsq = velocidade.rodaEsq;
-  estadoAtualRobo.velocidade.rodaDir = velocidade.rodaDir;
+  estadoAtualRobo.velocidade = velocidade;
+}
+
+void Robo::setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir) {
+  estadoAtualRobo.velocidade.rodaEsq = velRodaEsq;
+  estadoAtualRobo.velocidade.rodaDir = velRodaDir;
 }
 /****************************************************************/
 
 /********************* POSICAO PREVISTA ROBO ********************/
 void Robo::setPosicaoPrevRobo (const posXY posicao) {
-  estadoPrevRobo.posicao.x = posicao.x;
-  estadoPrevRobo.posicao.y = posicao.y;
+  estadoPrevRobo.posicao = posicao;
+}
+
+void Robo::setPosicaoPrevRobo (const float x, const float y) {
+  estadoPrevRobo.posicao.x = x;
+  estadoPrevRobo.posicao.y = y;
 }
 
 void Robo::setVetorSentidoPrevRobo(const vetorSentido vetor) {
@@ -86,32 +102,50 @@ void Robo::setVetorSentidoPrevRobo(const vetorSentido vetor) {
   estadoPrevRobo.direcao.y = vetor.y;
 }
 
+void Robo::setVetorSentidoPrevRobo(const float x, const float y) {
+  estadoPrevRobo.direcao.x = x;
+  estadoPrevRobo.direcao.y = y;
+}
+
 void Robo::setAnguloPrevRobo (const float angulo) {
   estadoPrevRobo.angulo = angulo;
 }
 
 void Robo::setVelocidadePrevRobo (const velocidadeRobo velocidade) {
-  estadoPrevRobo.velocidade.rodaEsq = velocidade.rodaEsq;
-  estadoPrevRobo.velocidade.rodaDir = velocidade.rodaDir;
+  estadoPrevRobo.velocidade = velocidade;
+}
+
+void Robo::setVelocidadePrevRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir) {
+  estadoPrevRobo.velocidade.rodaEsq = velRodaEsq;
+  estadoPrevRobo.velocidade.rodaDir = velRodaDir;
 }
 /****************************************************************/
 
 /************************ OBJETIVO DO ROBO **********************/
 void Robo::setPosicaoObj (const posXY posicao) {
-  objRobo.posicao.x = posicao.x;
-  objRobo.posicao.y = posicao.y;
+  objRobo.posicao = posicao;
+}
+
+void Robo::setPosicaoObj (const float x, const float y) {
+  objRobo.posicao.x = x;
+  objRobo.posicao.y = y;
 }
 
 void Robo::setAnguloObj (const float angulo) {
   objRobo.angulo = angulo;
 }
 
-void Robo::setVelocidadeObj (const velocidadeRobo velocidade){
-  objRobo.velocidade.rodaEsq = velocidade.rodaEsq;
-  objRobo.velocidade.rodaDir = velocidade.rodaDir;
+void Robo::setVelocidadeObj (const velocidadeRobo vel){
+  objRobo.velocidade = vel;
+}
+
+void Robo::setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char velRodaDir) {
+  objRobo.velocidade.rodaEsq = velRodaEsq;
+  objRobo.velocidade.rodaDir = velRodaDir;
 }
 /****************************************************************/
 
+/*
 /// SOB ANALISE
 void Robo::setSituacaoAtual(const int situacao){
   situacaoAtual = (unsigned short int)situacao;
@@ -120,3 +154,4 @@ void Robo::setSituacaoAtual(const int situacao){
 void Robo::saturaPosicoes(posXY &posicao){
 
 }
+*/
