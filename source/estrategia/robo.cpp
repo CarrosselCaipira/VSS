@@ -143,6 +143,27 @@ void Robo::setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char
   objRobo.velocidade.rodaEsq = velRodaEsq;
   objRobo.velocidade.rodaDir = velRodaDir;
 }
+
+void Robo::set_roteiro(roteiros r) {
+  tipo_jogador = r;
+}
+
+void Robo::run() {
+  switch (tipo_jogador) {
+    case ATACANTE:
+      Roteiro::atacante(*this);
+      break;
+
+    case VOLANTE:
+      Roteiro::volante(*this);
+      break;
+      
+    case GOLEIRO:
+      Roteiro::goleiro(*this);
+      break;
+  }
+}
+
 /****************************************************************/
 
 /*

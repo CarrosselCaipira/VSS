@@ -1,5 +1,5 @@
 #include "roteiro.hpp"
 
-void Volante::run(){
-	/* funcao de comportamento a assumir a lugar da funcao virtual run() de Robo */
+void Roteiro::volante(Robo& r){
+	/* funcao de comportamento do volante */	
 }

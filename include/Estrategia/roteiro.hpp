@@ -3,22 +3,17 @@
 
 #include "comportamento.hpp"
 
-class Atacante : public Robo {
-	friend comportamento;
-	public:
-		void run();
+enum roteiros {
+	ATACANTE,
+	VOLANTE,
+	GOLEIRO
 };
 
-class Goleiro : public Robo{
-	friend comportamento;
+class Roteiro {
 	public:
-		void run();
-};
-
-class Volante : public Robo{
-	friend comportamento;
-	public:
-		void run();
+		static void atacante(Robo& r);	
+		static void volante(Robo& r);	
+		static void goleiro(Robo& r);	
 };
 
 #endif /* ROTEIRO_H */

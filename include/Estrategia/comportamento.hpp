@@ -3,9 +3,9 @@
 
 #include "robo.hpp"
 
-class comportamento {
+class Comportamento {
  public:
- 	static void posiciona_centro_gol(Robo& r);
+ 	static void posiciona_centro_golXY(Robo& r);
  	
  }; 
 

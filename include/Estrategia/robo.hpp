@@ -2,16 +2,17 @@
 #define ROBO_H
 
 #include "tipoEstruturas.hpp"
-#include "roteiros.hpp"
-
-// #include <bitset>
+#include "roteiro.hpp"
 
 class Robo {
     estadoRobo estadoAtualRobo; // Todas as informacoes atuais sobre o robo.
     estadoRobo estadoPrevRobo; // Todas as informacoes sobre as posicoes futuras do robo.
     estadoRobo objRobo; // Informações sobre o objetivo do robo.
-    std::bitset<>
-    bool chuteGirando = false;
+
+    roteiros tipo_jogador;
+
+    friend comportamento;
+    friend roteiro;
 
     public:
 
@@ -106,7 +107,11 @@ class Robo {
         /****************************************************************/
 
         /*********************** FUNCAO ROTEIRO *************************/
-        virtual void run();
+        /* Define o identificador de roteiro do robo */
+        inline void set_roteiro(roteiros r);
+
+        /* Corre o roteiro determinado por tipo_jogador */
+        void run();
 
         /* 
         // analise de necessidade
