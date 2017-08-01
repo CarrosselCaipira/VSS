@@ -1,0 +1,2 @@
+# adicionando o usuario ao grupo que permite o acesso a porta serial sem necessidade de senha
+sudo usermod -a $USER -G dialout,lock,uucp 
