@@ -8,8 +8,8 @@ class Robo {
     estadoRobo estadoAtualRobo; // Todas as informacoes atuais sobre o robo.
     estadoRobo estadoPrevRobo; // Todas as informacoes sobre as posicoes futuras do robo.
     estadoRobo objRobo; // Informações sobre o objetivo do robo.
-
-    roteiros tipo_jogador;
+    
+    roteiros tipo_jogador; // identificao de qual roteiro esta sendo seguido pelo robo no momento.
 
     friend comportamento;
     friend roteiro;

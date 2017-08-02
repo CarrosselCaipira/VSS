@@ -19,10 +19,14 @@
 #include <termios.h> // Definicoes de controle de terminal POSIX
 
 
+/* No momento faremos apenas o envio de dados. Mas futuramente tambem implementaremos o recebimento. */
 class Radio {
 	/* referencia para o vector que contem os robos */
 	const std::vector<Robo>& vector_robos;
+	/* estrutura de configuracao da porta serial */
 	struct termios dispositivo_tty;
+	/* descritor da porta serial a ser lida */
+	int USB;
 	/* caminho para a porta a ser aberta para comunicao serial */
 	const char* caminho_dispositivo = "/dev/ttyUSB0";
 
@@ -35,6 +39,11 @@ class Radio {
 		 * @brief      Fecha a porta serial e termina a comunicao.
 		 */
 		~Radio();
+
+		/**
+		 * @brief      Faz o envio dos valores de velocidade de estadoAtualRobo de cada robo em campo
+		 */
+		void enviaDados();
 	
 };
 
