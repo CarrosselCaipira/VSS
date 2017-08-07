@@ -1,9 +1,8 @@
 #include "radio.hpp"
 
 /* o trecho: vector_robos(v) serve para acoplar o vector com os robos a classe de transmissao */
-Radio::Radio(const std::vector<Robo>& v) : vector_robos(v) {
+Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 	
-	vector_robos = v;
 	/* abrindo a porta serial para leitura e escrita */
 	USB = open(caminho_dispositivo, O_RDWR| O_NOCTTY | O_NDELAY);
 	
@@ -13,7 +12,7 @@ Radio::Radio(const std::vector<Robo>& v) : vector_robos(v) {
 	/* Tratamento de Erros */
 	/* Testado se foi possivel abrir a porta serial */
 	if ( USB < 0 ) 
-		std::cout << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror (errno) << endl;
+		std::cout << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror (errno) << std::endl;
 
 	/* Testando se a porta serial aberta esta apontando para um dispositivo TTY (nosso radio eh TTY) */
 	if (isatty (USB) < 0)
@@ -43,7 +42,7 @@ Radio::Radio(const std::vector<Robo>& v) : vector_robos(v) {
 	 * TCSANOW = aplica instantaneamente as configuracoes.
 	 */
 	if ( tcsetattr(USB, TCSANOW, &dispositivo_tty ) < 0)
-	   std::cout << "Error " << errno << " @Radio->tcsetattr" << std::strerror(errno) << std::endl;
+	   std::cout << "Error " << errno << " @Radio->tcsetattr " << std::strerror(errno) << std::endl;
 }
 
 Radio::~Radio() {
@@ -65,7 +64,8 @@ void Radio::enviaDados() {
 	unsigned char dados[2 * vector_robos.size() + 2];
 
 	/* envia 0x80 como primeiro sinal (sera interpretado pelos robos) */
-	write(USB, (unsigned char)0x80, 1);
+	unsigned char caractere_inicial = 0x80;
+	write(USB, &caractere_inicial, 1);
 
 	/* preenchendo o vetor de dados das rodas com os valores de velocidade dos robos */
 	for(int i = 0; i < vector_robos.size(); i++) {
@@ -77,6 +77,6 @@ void Radio::enviaDados() {
 	dados[2 * vector_robos.size() + 1] = '0';
 
 	/* faz o envio das velocidades de cada roda para a porta serial */
-	if(write(USB, b, 8) < 0)
-		std::cout << "Error " << errno << " @enviaDados->write" << std::strerror(errno) << std::endl;
+	if(write(USB, dados, 8) < 0)
+		std::cout << "Error " << errno << " @enviaDados->write " << std::strerror(errno) << std::endl;
 }

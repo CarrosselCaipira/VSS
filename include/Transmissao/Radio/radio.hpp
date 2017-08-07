@@ -17,6 +17,9 @@
 #include <fcntl.h> // Para o uso das constantes utilizadas em 'open(...)' ex.: O_RDWR, O_RDONLY, etc. Para mais informacoes, va para Docs/tcntl.pdf
 #include <cerrno> // Para o uso da rotina de indicacao de erro strerror() e da constante errno
 #include <termios.h> // Definicoes de controle de terminal POSIX
+#include <vector>
+#include <iostream>
+#include "robo.hpp"
 
 
 /** @class Radio radio.h "radio.hpp"
@@ -29,7 +32,7 @@
  *  @todo Futuramente tambem implementaremos o recebimento.
  */
 class Radio {
-	const std::vector<Robo>& vector_robos; /**< referencia para o vector que contem os robos  */
+	std::vector<Robo>& vector_robos; /**< referencia para o vector que contem os robos  */
 	struct termios dispositivo_tty; /**< estrutura de configuracao da porta serial */
 	int USB; /**< descritor da porta serial a ser lida */
 	const char* caminho_dispositivo = "/dev/ttyUSB0"; /**< caminho para a porta a ser aberta para comunicao serial */

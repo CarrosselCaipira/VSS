@@ -14,7 +14,7 @@ struct posXY {
  * @brief      Vetor de movimentacao, com relacao as componentes do vetor
  */
 struct vetorSentido {
-	float x, y
+	float x, y;
 };
 
 /**

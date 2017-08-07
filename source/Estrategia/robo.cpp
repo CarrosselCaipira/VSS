@@ -1,5 +1,16 @@
 #include "robo.hpp"
 
+/*************************** CONSTRUTOR *************************/
+Robo::Robo() {
+  /* zerando todas as componentes do robo */
+  std::memset(&estadoAtualRobo, 0, sizeof(estadoRobo));
+  std::memset(&estadoPrevRobo, 0, sizeof(estadoRobo));
+  std::memset(&objRobo, 0, sizeof(estadoRobo));
+  /* o roteiro do robo eh inicializado como INDEFINIDO */
+  tipo_jogador = INDEFINIDO;
+}
+/****************************************************************/
+
 /***************************** GETTERS **************************/
 
 /************************ POSICAO ATUAL ROBO ********************/
@@ -163,16 +174,3 @@ void Robo::run() {
       break;
   }
 }
-
-/****************************************************************/
-
-/*
-/// SOB ANALISE
-void Robo::setSituacaoAtual(const int situacao){
-  situacaoAtual = (unsigned short int)situacao;
-}
-
-void Robo::saturaPosicoes(posXY &posicao){
-
-}
-*/
