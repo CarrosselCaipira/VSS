@@ -3,6 +3,7 @@
 
 #include "tipoEstruturas.hpp"
 #include "roteiro.hpp"
+#include <cstring>
 
 class Robo {
     estadoRobo estadoAtualRobo; // Todas as informacoes atuais sobre o robo.
@@ -15,109 +16,107 @@ class Robo {
     friend roteiro;
 
     public:
+        /*************************** CONSTRUTOR *************************/
+        // inicializa todas as componentes do robo com zero e define o roteiro atual do robo como "INDEFINIDO".
+        Robo();
+        /****************************************************************/
 
         /***************************** GETTERS **************************/
 
         /************************ POSICAO ATUAL ROBO ********************/
         // Retorna as coordenadas do robo.
-        inline posXY getPosicaoAtualRobo ();
+        posXY getPosicaoAtualRobo ();
 
         // Retorna as componentes de movimentacao do robo.
-        inline vetorSentido getVetorSentidoAtualRobo ();
+        vetorSentido getVetorSentidoAtualRobo ();
 
         // Retorna o angulo do robo.
-        inline float getAnguloAtualRobo ();
+        float getAnguloAtualRobo ();
 
         // Retorna a velocidade do robo.
-        inline velocidadeRobo getVelocidadeAtualRobo ();
+        velocidadeRobo getVelocidadeAtualRobo ();
         /****************************************************************/
 
         /********************* POSICAO PREVISTA ROBO ********************/
         // Retorna as coordenadas previstas do robo.
-        inline posXY getPosicaoPrevRobo ();
+        posXY getPosicaoPrevRobo ();
 
         // Retorna as componentes de movimentacao previstas do robo.
-        inline vetorSentido getVetorSentidoPrevRobo ();
+        vetorSentido getVetorSentidoPrevRobo ();
 
         // Retorna o angulo previsto do robo.
-        inline float getAnguloPrevRobo ();
+        float getAnguloPrevRobo ();
 
         // Retorna a velocidade prevista do robo.
-        inline velocidadeRobo getVelocidadePrevRobo ();
+        velocidadeRobo getVelocidadePrevRobo ();
         /****************************************************************/
 
         /************************ OBJETIVO DO ROBO **********************/
         // Retorna a velocidade esperada quando chegar no objetivo.
-        inline velocidadeRobo getVelocidadeAtualObj ();
+        velocidadeRobo getVelocidadeAtualObj ();
 
         // Retorna a posicao do objetivo do  robo.
-        inline posXY getPosicaoObj ();
+        posXY getPosicaoObj ();
 
         // Retorna o angulo esperado do robo quando chegar no objetivo.
-        inline float getAnguloObj ();
+        float getAnguloObj ();
         /****************************************************************/
 
         /***************************** SETTERS **************************/
 
         /************************ POSICAO ATUAL ROBO ********************/
         // Define a posicao XY do robo.
-        inline void setPosicaoAtualRobo (const posXY posicao);
-        inline void setPosicaoAtualRobo (const float x, const float y);
+        void setPosicaoAtualRobo (const posXY posicao);
+        void setPosicaoAtualRobo (const float x, const float y);
 
         // Define o vetor de sentido de deslocamento do robo.
-        inline void setVetorSentidoAtualRobo(const vetorSentido vetor);
-        inline void setVetorSentidoAtualRobo(const float vetorX, const float vetorY);
+        void setVetorSentidoAtualRobo(const vetorSentido vetor);
+        void setVetorSentidoAtualRobo(const float vetorX, const float vetorY);
 
         // Define o angulo atual do robo.
-        inline void setAnguloAtualRobo (const float angulo);
+        void setAnguloAtualRobo (const float angulo);
 
         // Define a velocidade de cada roda do robo.
-        inline void setVelocidadeAtualRobo (const velocidadeRobo velocidade);
-        inline void setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir);
+        void setVelocidadeAtualRobo (const velocidadeRobo velocidade);
+        void setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir);
         /****************************************************************/
 
         /********************* POSICAO PREVISTA ROBO ********************/
         // Define as coordenadas previstas do robo.
-        inline void setPosicaoPrevRobo (const posXY posicao);
-        inline void setPosicaoPrevRobo (const float x, const float y);
+        void setPosicaoPrevRobo (const posXY posicao);
+        void setPosicaoPrevRobo (const float x, const float y);
 
         // Define as componentes de movimentacao previstas do robo.
-        inline void setVetorSentidoPrevRobo (const vetorSentido vetor);
-        inline void setVetorSentidoPrevRobo(const float x, const float y);
+        void setVetorSentidoPrevRobo (const vetorSentido vetor);
+        void setVetorSentidoPrevRobo(const float x, const float y);
 
         // Define o angulo previsto do robo.
-        inline void setAnguloPrevRobo (const float angulo);
+        void setAnguloPrevRobo (const float angulo);
 
         // Define a velocidade prevista do robo.
-        inline void setVelocidadePrevRobo (const velocidadeRobo velocidade);
-        inline void setVelocidadePrevRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir);
+        void setVelocidadePrevRobo (const velocidadeRobo velocidade);
+        void setVelocidadePrevRobo (const unsigned char velRodaEsq, const unsigned char velRodaDir);
         /****************************************************************/
 
         /************************ OBJETIVO DO ROBO **********************/
         // Define a posicao objetivo do robo.
-        inline void setPosicaoObj (const posXY posicao);
-        inline void setPosicaoObj (const float x, const float y);
+        void setPosicaoObj (const posXY posicao);
+        void setPosicaoObj (const float x, const float y);
 
         // Define o angulo de chegada do robo no objetivo.
-        inline void setAnguloObj (const float angulo);
+        void setAnguloObj (const float angulo);
 
         // Define a velocidade de chegada do robo no objetivo.
-        inline void setVelocidadeObj(const velocidadeRobo velocidade);
-        inline void setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char velRodaDir);
+        void setVelocidadeObj(const velocidadeRobo velocidade);
+        void setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char velRodaDir);
         /****************************************************************/
 
         /*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */
-        inline void set_roteiro(roteiros r);
+        void set_roteiro(roteiros r);
 
         /* Corre o roteiro determinado por tipo_jogador */
         void run();
-
-        /* 
-        // analise de necessidade
-        // Define a situacao atual de jogo (ex.: em penalidade, em disputa).
-        inline void setSituacaoAtual(const int situacao);
-        */
 };
 
 #endif /* ROBO_H */

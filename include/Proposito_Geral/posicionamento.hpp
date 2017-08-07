@@ -32,80 +32,80 @@
 #define ESPACO_CHUTE_GIRANDO 6
 
 // Nossa metade do campo.
-inline bool campoTime(const posXY posicao);
+bool campoTime(const posXY posicao);
 
 // faixa superior do campo.
-inline bool faixaSuperior(const posXY posicao);
+bool faixaSuperior(const posXY posicao);
 
 // faixa inferior do campo.
-inline bool faixaInferior(const posXY posicao);
+bool faixaInferior(const posXY posicao);
 
 // Faixa Central do Campo como um todo
-inline bool faixaCentral(const posXY posicao);
+bool faixaCentral(const posXY posicao);
 
 // faixa da linha da area do gol do nosso time para tras (ate a parede do campo).
-inline bool faixaXDaAreaGolTime(const posXY posicao);
+bool faixaXDaAreaGolTime(const posXY posicao);
 
 // faixa da linha da area do gol adversario time para tras (ate a parede do campo).
-inline bool faixaXDaAreaGolAdv(const posXY posicao);
+bool faixaXDaAreaGolAdv(const posXY posicao);
 
 // Do final da area do goleiro ate o meio de Campo.
-inline bool campoSemAreaGolTime(const posXY posicao);
+bool campoSemAreaGolTime(const posXY posicao);
 
 // Do final da area do goleiro adversario ate o meio de Campo.
-inline bool campoSemAreaGolAdv(const posXY posicao);
+bool campoSemAreaGolAdv(const posXY posicao);
 
 // Interseccao de faixaXDaAreaGolTime() com faixaSuperior()
-inline bool areaEscanteioSuperiorTime(const posXY posicao);
+bool areaEscanteioSuperiorTime(const posXY posicao);
 
 // Interseccao de faixaXDaAreaGolTime() com faixaInferior()
-inline bool areaEscanteioInferiorTime(const posXY posicao);
+bool areaEscanteioInferiorTime(const posXY posicao);
 
 // Interseccao de faixaXDaAreaGolAdv() com faixaSuperior()
-inline bool areaEscanteioSuperiorAdv(const posXY posicao);
+bool areaEscanteioSuperiorAdv(const posXY posicao);
 
 // Interseccao de faixaXDaAreaGolAdv() com faixaInferior()
-inline bool areaEscanteioInferiorAdv(const posXY posicao);
+bool areaEscanteioInferiorAdv(const posXY posicao);
 
 // "Miolo" central do nosso campo.
-inline bool areaAntesMetadeCampoTime(const posXY posicao);
+bool areaAntesMetadeCampoTime(const posXY posicao);
 
 // "Miolo" central do campo adversario.
-inline bool areaAntesMetadeCampoAdv(const posXY posicao);
+bool areaAntesMetadeCampoAdv(const posXY posicao);
 
 // Tamanho adicional que completa a area superior do nosso gol.
-inline bool quinaSuperiorAreaGolTime(const posXY posicao);
+bool quinaSuperiorAreaGolTime(const posXY posicao);
 
 // Tamanho adicional que completa a area inferior do nosso gol.
-inline bool quinaInferiorAreaGolTime(const posXY posicao);
+bool quinaInferiorAreaGolTime(const posXY posicao);
 
 // Tamanho adicional que completa a area superior do gol adversario.
-inline bool quinaSuperiorAreaGolAdv(const posXY posicao);
+bool quinaSuperiorAreaGolAdv(const posXY posicao);
 
 // Tamanho adicional que completa a area inferior do gol adversario.
-inline bool quinaInferiorAreaGolAdv(const posXY posicao);
+bool quinaInferiorAreaGolAdv(const posXY posicao);
 
 // Area do gol do nosso time. (linhas do desenho do campo)
-inline bool areaGolTime(const posXY posicao);
+bool areaGolTime(const posXY posicao);
 
 // Area do gol do time adversario. (linhas do desenho do campo)
-inline bool areaGolAdv(const posXY posicao);
+bool areaGolAdv(const posXY posicao);
 
 // Area definida para fazer o chute girando.
 // Faixa pertencente a faixaSuperior() mas menor, onde o robo fara o chute girando.
-inline bool faixaSuperiorChuteGirando(const posXY posicao);
+bool faixaSuperiorChuteGirando(const posXY posicao);
 
 // Area definida para fazer o chute girando.
 // Faixa pertencente a faixaInferior() mas menor, onde o robo fara o chute girando.
-inline bool faixaInferiorChuteGirando(const posXY posicao);
+bool faixaInferiorChuteGirando(const posXY posicao);
 
 // Area definida para fazer o chute girando.
 // Faixa pertencente a faixaXDaAreaGolTime() mas menor, onde o robo fara o chute girando.
-inline  bool faixaChuteGirandoTime(const posXY posicao);
+bool faixaChuteGirandoTime(const posXY posicao);
 
 // Area definida para fazer o chute girando.
 // Faixa pertencente a faixaXDaAreaGolAdv() mas menor, onde o robo fara o chute girando.
-inline  bool faixaChuteGirandoAdv(const posXY posicao);
+bool faixaChuteGirandoAdv(const posXY posicao);
 
 /* POSICIONAMENTO_H */
 #endif
