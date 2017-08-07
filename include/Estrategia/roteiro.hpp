@@ -4,6 +4,7 @@
 #include "comportamento.hpp"
 
 enum roteiros {
+	INDEFINIDO,
 	ATACANTE,
 	VOLANTE,
 	GOLEIRO
