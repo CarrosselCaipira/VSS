@@ -2,16 +2,16 @@
 
 /* o trecho: vector_robos(v) serve para acoplar o vector com os robos a classe de transmissao */
 Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
-	
+
 	/* abrindo a porta serial para leitura e escrita */
 	USB = open(caminho_dispositivo, O_RDWR| O_NOCTTY | O_NDELAY);
-	
+
 	/* setando todos os campos de dispositivo_tty com 0 (vamos evitar surpresas...) */
 	memset(&dispositivo_tty, 0, sizeof dispositivo_tty);
 
 	/* Tratamento de Erros */
 	/* Testado se foi possivel abrir a porta serial */
-	if ( USB < 0 ) 
+	if (USB < 0)
 		std::cout << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror (errno) << std::endl;
 
 	/* Testando se a porta serial aberta esta apontando para um dispositivo TTY (nosso radio eh TTY) */
@@ -19,7 +19,7 @@ Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 		std::cout << "Erro " << errno << " @Radio->isatty: " << std::strerror(errno) << std::endl;
 
 	/* Testando se a atual configuracao da porta serial pode ser lida */
-	if ( tcgetattr( USB, &dispositivo_tty ) != 0 )
+	if (tcgetattr(USB, &dispositivo_tty) != 0 )
 	   std::cout << "Erro " << errno << " @Radio->tcgetattr: " << std::strerror(errno) << std::endl;
 
 	/* Setando a frequencia de input e output do radio em 115200 */
