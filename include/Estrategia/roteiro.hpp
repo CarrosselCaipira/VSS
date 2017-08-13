@@ -3,7 +3,7 @@
 
 #include "comportamento.hpp"
 
-enum roteiros {
+enum ROTEIROS {
 	INDEFINIDO,
 	ATACANTE,
 	VOLANTE,
@@ -12,9 +12,9 @@ enum roteiros {
 
 class Roteiro {
 	public:
-		static void atacante(Robo& r);	
-		static void volante(Robo& r);	
-		static void goleiro(Robo& r);	
+		static void atacante(Robo& r);
+		static void volante(Robo& r);
+		static void goleiro(Robo& r);
 };
 
 #endif /* ROTEIRO_H */

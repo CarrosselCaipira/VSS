@@ -5,9 +5,13 @@ Robo::Robo() {
   /* zerando todas as componentes do robo */
   std::memset(&estadoAtualRobo, 0, sizeof(estadoRobo));
   std::memset(&estadoPrevRobo, 0, sizeof(estadoRobo));
-  std::memset(&objRobo, 0, sizeof(estadoRobo));
+  std::memset(&estadoObjRobo, 0, sizeof(estadoRobo));
+
   /* o roteiro do robo eh inicializado como INDEFINIDO */
-  tipo_jogador = INDEFINIDO;
+  tipoJogador = INDEFINIDO;
+
+	/* definindo todos os atributos inicialmente como zero */
+	atributos.reset();
 }
 /****************************************************************/
 
@@ -51,26 +55,37 @@ velocidadeRobo Robo::getVelocidadePrevRobo () {
 
 /************************ OBJETIVO DO ROBO **********************/
 velocidadeRobo Robo::getVelocidadeObj () {
-  return objRobo.velocidade;
+  return estadoObjRobo.velocidade;
 }
 
 posXY Robo::getPosicaoObj () {
-  return objRobo.posicao;
+  return estadoObjRobo.posicao;
 }
 
 float Robo::getAnguloObj () {
-  return objRobo.angulo;
+  return estadoObjRobo.angulo;
 }
+/****************************************************************/
+
+/*********************** FUNCAO ROTEIRO *************************/
+/* Define o identificador de roteiro do robo */
+ROTEIROS getRoteiro() {
+
+};
 /****************************************************************/
 
 /***************************** SETTERS **************************/
 
 /************************ POSICAO ATUAL ROBO ********************/
 void Robo::setPosicaoAtualRobo (const posXY posicao) {
+	if(posicao.x <= 0 || posicao.y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoAtualRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoAtualRobo (const float x, const float y) {
+	if(x <= 0 || y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoAtualRobo.posicao.x = x;
   estadoAtualRobo.posicao.y = y;
 }
@@ -100,10 +115,14 @@ void Robo::setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigne
 
 /********************* POSICAO PREVISTA ROBO ********************/
 void Robo::setPosicaoPrevRobo (const posXY posicao) {
+	if(posicao.x <= 0 || posicao.y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoPrevRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoPrevRobo (const float x, const float y) {
+	if(x <= 0 || y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoPrevRobo.posicao.x = x;
   estadoPrevRobo.posicao.y = y;
 }
@@ -134,33 +153,58 @@ void Robo::setVelocidadePrevRobo (const unsigned char velRodaEsq, const unsigned
 
 /************************ OBJETIVO DO ROBO **********************/
 void Robo::setPosicaoObj (const posXY posicao) {
-  objRobo.posicao = posicao;
+	if(posicao.x <= 0 || posicao.y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+  estadoObjRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoObj (const float x, const float y) {
-  objRobo.posicao.x = x;
-  objRobo.posicao.y = y;
+	if(x <= 0 || y <= 0 )
+		std::cout << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+  estadoObjRobo.posicao.x = x;
+  estadoObjRobo.posicao.y = y;
 }
 
 void Robo::setAnguloObj (const float angulo) {
-  objRobo.angulo = angulo;
+  estadoObjRobo.angulo = angulo;
 }
 
 void Robo::setVelocidadeObj (const velocidadeRobo vel){
-  objRobo.velocidade = vel;
+  estadoObjRobo.velocidade = vel;
 }
 
 void Robo::setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char velRodaDir) {
-  objRobo.velocidade.rodaEsq = velRodaEsq;
-  objRobo.velocidade.rodaDir = velRodaDir;
+  estadoObjRobo.velocidade.rodaEsq = velRodaEsq;
+  estadoObjRobo.velocidade.rodaDir = velRodaDir;
+}
+/****************************************************************/
+
+/*********************** FUNCAO ROTEIRO *************************/
+void Robo::set_roteiro(ROTEIROS r) {
+  tipoJogador = r;
+}
+/****************************************************************/
+
+/*********************** ESTADOS DO ROBO *************************/
+void Robo::setEstadoAtualComoEstadoPrev(){
+	std::memcpy(this->estadoAtualRobo, this->estadoPrevRobo, sizeof(estadoRobo));
 }
 
-void Robo::set_roteiro(roteiros r) {
-  tipo_jogador = r;
+void Robo::setEstadoAtualComoEstadoObj(){
+	std::memcpy(this->estadoAtualRobo, this->estadoObjRobo, sizeof(estadoRobo));
 }
+
+void Robo::setEstadoPrevComoEstadoAtual(){
+	std::memcpy(this->estadoPrevRobo, this->estadoAtualRobo, sizeof(estadoRobo));
+}
+
+void Robo::setEstadoPrevComoEstadoObj(){
+	std::memcpy(this->estadPrevRobo, this->estadoObjRobo, sizeof(estadoRobo));
+}
+/****************************************************************/
 
 void Robo::run() {
-  switch (tipo_jogador) {
+  switch (tipoJogador) {
     case ATACANTE:
       Roteiro::atacante(*this);
       break;
@@ -168,7 +212,7 @@ void Robo::run() {
     case VOLANTE:
       Roteiro::volante(*this);
       break;
-      
+
     case GOLEIRO:
       Roteiro::goleiro(*this);
       break;

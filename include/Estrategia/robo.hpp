@@ -4,16 +4,26 @@
 #include "tipoEstruturas.hpp"
 #include "roteiro.hpp"
 #include <cstring>
+#include <bitset>
+
+enum INDEX_ATRIBUTOS {
+	CHUTE_GIRANDO,
+	CHUTANDO,
+
+	/* Adicionar os novos atributos antes de BITSET_SIZE */
+	BITSET_SIZE
+};
 
 class Robo {
-    estadoRobo estadoAtualRobo; // Todas as informacoes atuais sobre o robo.
-    estadoRobo estadoPrevRobo; // Todas as informacoes sobre as posicoes futuras do robo.
-    estadoRobo objRobo; // Informações sobre o objetivo do robo.
-    
-    roteiros tipo_jogador; // identificao de qual roteiro esta sendo seguido pelo robo no momento.
+    estadoRobo estadoAtualRobo; /**< Todas as informacoes atuais sobre o robo. */
+    estadoRobo estadoPrevRobo; /**< Todas as informacoes sobre as posicoes futuras do robo. */
+    estadoRobo estadoObjRobo; /**< Informações sobre o objetivo do robo. */
 
-    friend comportamento;
-    friend roteiro;
+		std::bitset<BITSET_SIZE> atributos;
+    ROTEIROS tipoJogador; // identificao de qual roteiro esta sendo seguido pelo robo no momento.
+
+    friend class Comportamento;
+    friend class Roteiro;
 
     public:
         /*************************** CONSTRUTOR *************************/
@@ -61,6 +71,11 @@ class Robo {
         // Retorna o angulo esperado do robo quando chegar no objetivo.
         float getAnguloObj ();
         /****************************************************************/
+
+				/*********************** FUNCAO ROTEIRO *************************/
+        /* Define o identificador de roteiro do robo */
+        void getRoteiro();
+				/****************************************************************/
 
         /***************************** SETTERS **************************/
 
@@ -113,7 +128,22 @@ class Robo {
 
         /*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */
-        void set_roteiro(roteiros r);
+        void setRoteiro(ROTEIROS r);
+				/****************************************************************/
+
+				/*********************** ESTADOS DO ROBO *************************/
+				/* define o estado atual como sendo o estado previsto (faz a copia das variaveis de estadoPrevRobo para estadoAtualRobo) */
+				void setEstadoAtualComoEstadoPrev();
+
+				/* define o estado atual como sendo o estado no objetivo (faz a copia das variaveis de estadoObjRobo para estadoAtualRobo) */
+				void setEstadoAtualComoEstadoObj();
+
+				/* definie o estado previsto como sendo o estado atual (faz a copia das variaveis de estadoAtualRobo para estadoPrevRobo) */
+				void setEstadoPrevComoEstadoAtual();
+
+				/* define o estado previsto como sendo o estado no objetivo (faz a copia das variaveis de estadoAtualRobo para estadoPrevRobo) */
+				void setEstadoPrevComoEstadoObj();
+				/****************************************************************/
 
         /* Corre o roteiro determinado por tipo_jogador */
         void run();
