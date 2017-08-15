@@ -12,19 +12,19 @@ Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 	/* Tratamento de Erros */
 	/* Testado se foi possivel abrir a porta serial */
 	if (USB < 0)
-		std::cout << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror (errno) << std::endl;
+		std::cerr << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror (errno) << std::endl;
 
 	/* Testando se a porta serial aberta esta apontando para um dispositivo TTY (nosso radio eh TTY) */
 	if (isatty (USB) < 0)
-		std::cout << "Erro " << errno << " @Radio->isatty: " << std::strerror(errno) << std::endl;
+		std::cerr << "Erro " << errno << " @Radio->isatty: " << std::strerror(errno) << std::endl;
 
 	/* Testando se a atual configuracao da porta serial pode ser lida */
 	if (tcgetattr(USB, &dispositivo_tty) != 0 )
-	   std::cout << "Erro " << errno << " @Radio->tcgetattr: " << std::strerror(errno) << std::endl;
+	   std::cerr << "Erro " << errno << " @Radio->tcgetattr: " << std::strerror(errno) << std::endl;
 
 	/* Setando a frequencia de input e output do radio em 115200 */
 	if (cfsetspeed(&dispositivo_tty, (speed_t)B115200) < 0)
-		std::cout << "Erro " << errno << " @Radio->cfsetospeed: " << std::strerror(errno) << std::endl;
+		std::cerr << "Erro " << errno << " @Radio->cfsetospeed: " << std::strerror(errno) << std::endl;
 
 	/* Setando outras configuracoes da porta (no momento: aceite que funciona)*/
 	dispositivo_tty.c_iflag = IGNBRK | IGNPAR;
@@ -42,7 +42,7 @@ Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 	 * TCSANOW = aplica instantaneamente as configuracoes.
 	 */
 	if ( tcsetattr(USB, TCSANOW, &dispositivo_tty ) < 0)
-	   std::cout << "Error " << errno << " @Radio->tcsetattr " << std::strerror(errno) << std::endl;
+	   std::cerr << "Error " << errno << " @Radio->tcsetattr " << std::strerror(errno) << std::endl;
 }
 
 Radio::~Radio() {
@@ -78,5 +78,5 @@ void Radio::enviaDados() {
 
 	/* faz o envio das velocidades de cada roda para a porta serial */
 	if(write(USB, dados, 8) < 0)
-		std::cout << "Error " << errno << " @enviaDados->write " << std::strerror(errno) << std::endl;
+		std::cerr << "Error " << errno << " @enviaDados->write " << std::strerror(errno) << std::endl;
 }

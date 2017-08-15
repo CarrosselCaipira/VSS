@@ -119,29 +119,35 @@ void CPH::calculaVelRodas() {
 	double directionAngle, K_ro, K_alfa, lim = 180 / 8;
 	static int count = 0;
 
+	posXY distObjRobo;
+	int flagDirection;
+	float ang, directionAngle, distEuclidianaObjRobo, vObj, wObj, K_ro, vRodaEsq, vRodaDir;
+	float forcaCelulaCampoPot; /**< Força aplicada na célula do campo potencial */
+
 	/* Controle dos Robôs Atacante e Defensor */
 	/* NA CBR2016 ESTA CONDICAO ESTAVA DEFINIDA PARA SEMPRE VERDADEIRA ("if(true)") >> NECESSARIA ANALISE */
 	if (robo.getRoteiro() == ATACANTE || robo.getRoteiro() == VOLANTE) {
-		if(atributos.test(CHUTANDO) == false){
+		if(robo.atributos.test(CHUTANDO) == false){
 
 			inicializa_obst_meta();
 			calcula_campo_SOR();
 
 			robo.setEstadoAtualComoEstadoPrev();
-			dx = robo.getPosicaoObj().x - xRobo;
-			dy = robo.getPosicaoObj().x - yRobo;
-			d = sqrt(dx * dx + dy * dy);
-			i = xRobo / DIV_CAMPO;
-			j = yRobo / DIV_CAMPO;
+			/* analizar utilidade de salvarmos estado anterior, atualmente removida */
+			robo.getDistObjRobo(distObjRobo);
+			distEuclidianaObjRobo = robo.getDistEuclianaObjRobo();
+			i = robo.getPosicaoAtualRobo().x / DIV_CAMPO;
+			j = robo.getPosicaoAtualRobo().y / DIV_CAMPO;
 
-			directionAngle = atan2((double) (campoPotencial[indJogador].matPot[i][j - 1] - campoPotencial[indJogador].matPot[i][j + 1]),
-								   (double) (campoPotencial[indJogador].matPot[i - 1][j] - campoPotencial[indJogador].matPot[i + 1][j]))* 180/M_PI;
+			directionAngle = atan2((double) (campoPotencial.matPot[i][j - 1] - campoPotencial.matPot[i][j + 1]),
+								   (double) (campoPotencial.matPot[i - 1][j] - campoPotencial.matPot[i + 1][j])) * 180 / M_PI;
 			ang = (float) directionAngle;
 
 			if (ang < 0) {
 				ang += 360;
 			}
 
+			/* EH INTERESSANTE SUBSTITUIRMOS ESSAS DIRETIAS DE PRE-COMPILACAO POR ALGUMA FORMA MAIS DINAMICA PARA MOSTRAR DADOS PARA DEBUG - UMA CLASSE QUE CONTENHA ESSA INFORMACAO (EM DEBUG OU NAO) TALVEZ? */
 			#ifdef DEBUG
 				printf("[%d](%f)\n", indJogador, (float)directionAngle);
 				printf("[%d](%f)\n[        ][%f][        ]\n[%f][        ][%f]\n[        ][%f][        ]\n",
@@ -160,13 +166,15 @@ void CPH::calculaVelRodas() {
 			/**
 			 * Início do Novo Controle de Velocidade
 			 */
-			if (robo.getAnguloAtualRobo() > 180) {
-				robo.getAnguloAtualRobo() -= 360;
+			if (float anguloAtual = robo.getAnguloAtualRobo() > 180) {
+				robo.setAnguloAtualRobo(anguloAtual - 360);
 			}
+
 			double dAng = ang - robo.getAnguloAtualRobo();
 			if (dAng > 180) {
 				dAng -= 360;
 			}
+
 			auxAng = dAng;
 			if ((dAng <= 90 && dAng > 0) || (dAng <= 0 && dAng >= -90)) {
 				flagDirection = 1;
@@ -183,53 +191,63 @@ void CPH::calculaVelRodas() {
 			 * Alterar cálculo das velocidades angular e linear a seguir
 			 */
 
-			//Força aplicada na célula  do campo potencial
-			F = KF * campoPotencial[indJogador].matPot[i][j];
+			//Força aplicada na célula do campo potencial
+			forcaCelulaCampoPot = KF * campoPotencial.matPot[i][j];
+
+			#ifdef DEBUG
 			 printf("dAng = %f - %f = %f  \n", ang, robo.getAnguloAtualRobo(), dAng);
+			#endif
 
 			//Velocidade do robô calculada em função da força vinda do campo potencial
-			vObj = (2/MASSA_ROBO)*(F*sin(directionAngle * (M_PI/180))*(dy) + F*cos(directionAngle * (M_PI/180))*(dx)) + pow(vAnt, 2);
-			K_ro = vObj/(d*cos(dAng * (M_PI/180)));
+			vObj = (2 / MASSA_ROBO) * (forcaCelulaCampoPot * sin(directionAngle * (M_PI / 180)) * (distObjRobo.y) + forcaCelulaCampoPot * cos(directionAngle * (M_PI / 180)) * (distObjRobo.x)) + pow(vAnt, 2);
+			K_ro = vObj/(distEuclidianaObjRobo * cos(dAng * (M_PI / 180)));
+
 			if (vObj < 127 && vObj >= 0){
 				vObj = 127 - vObj;
-			} else {
+			}
+			else {
 				if (vObj > -127 && vObj < 0)
 					vObj = 127 + vObj;
 			}
-			vObj = vObj*cos(dAng * (M_PI/180));
+
+			vObj = vObj * cos(dAng * (M_PI / 180));
 
 			vAnt = vObj;
 			// double errorAng = atan2(sin(dAng * (M_PI/180)), cos(dAng * (M_PI/180)));
 			// wObj = K_ro*sin(dAng)*cos(dAng) + PID(errorAng, angRoboAnt, angRobo);
-			wObj = K_ro*sin(dAng * (M_PI/180))*cos(dAng * (M_PI/180)) + K_ALFA*dAng;
+			wObj = K_ro * sin(dAng * (M_PI/180)) * cos(dAng * (M_PI / 180)) + K_ALFA * dAng;
+
 			if (wObj < 0){
 				wSignal = -1;
-			} else {
+			}
+			else {
 				wSignal = 1;
 			}
+
 			if (vObj < 0){
 				vSignal = -1;
-			} else {
+			}
+			else {
 				vSignal = 1;
 			}
 
 			if (abs(vObj) > 127)
-				vObj = 127*vSignal;
+				vObj = 127 * vSignal;
 			if (indJogador != indAtacante){ // Robo defensor
-				if (d < RAIO_DISTANCIA){ // Se a distancia for menor que o raio de distancia aceitavel chegou no objetivo
+				if (distEuclidianaObjRobo < RAIO_DISTANCIA){ // Se a distancia for menor que o raio de distancia aceitavel chegou no objetivo
 					if (abs(vObj) > 0)
 						vObj = 0;
 				}
 			}
-			if (d > RAIO_DISTANCIA){ // Se a distancia for maior que o raio de distancia aceitavel esta errado
+			if (distEuclidianaObjRobo > RAIO_DISTANCIA){ // Se a distancia for maior que o raio de distancia aceitavel esta errado
 				if (abs(vObj) < 42)
-					vObj = 42*vSignal;
+					vObj = 42 * vSignal;
 			} else {
 				if (abs(dAng) >= 80 || velObjetivo == 0)
 					if (vObj > 0)
 						vObj = 0;
 			}
-			switch((int) abs(vObj/21)){
+			switch((int) abs(vObj / 21)){
 				case 1:
 					if (abs(wObj) > 6)
 						wObj = 6 * wSignal;
@@ -265,25 +283,37 @@ void CPH::calculaVelRodas() {
 			 * Fim do trecho do código que deve ser alterado para o cálculo de
 			 * velocidade considerando a função candidata de Lyapunov
 			 */
+			/* RODA ESQUERDA */
+			vRodaEsq = (int) ((2 * vObj - wObj * DIST_ENTRE_RODAS) / (2 * RAIO_DA_RODA)) / 21;
+			vRodaEsq *= flagDirection;
+			if (vRodaEsq > 7) {
+				vRodaEsq = 7;
+			}
+			else {
+				if (vRodaEsq < -7)
+					vRodaEsq = -7;
+			}
+			if (vRodaEsq < 0)
+				vRodaEsq = -vRodaEsq + 8;
+
+			/* RODA DIREITA */
+			vRodaDir = (int) ((2 * vObj + wObj * DIST_ENTRE_RODAS) / (2 * RAIO_DA_RODA)) / 21;
+			vRodaDir *= flagDirection;
+			if (vRodaDir > 7) {
+				vRodaDir = 7;
+			}
+			else {
+				if (vRodaDir < -7)
+					vRodaDir = -7;
+			}
+			if (vRodaDir < 0)
+				vRodaDir = -vRodaDir + 8;
+
+			#ifdef DEBUG
 			 printf("vObj = %f| wObj = %f |", vObj, wObj);
-			pe = (int) ((2 * vObj - wObj * DIST_ENTRE_RODAS) / (2 * RAIO_DA_RODA)) / 21;
-			 printf("pe = %d |", pe);
-			pe *= flagDirection;
-			if (pe > 7) {
-				pe = 7;
-			} else if (pe < -7)
-				pe = -7;
-			if (pe < 0)
-				pe = -pe + 8;
-			pd = (int) ((2 * vObj + wObj * DIST_ENTRE_RODAS) / (2 * RAIO_DA_RODA)) / 21;
-			 printf("pd = %d |\n", pd);
-			pd *= flagDirection;
-			if (pd > 7) {
-				pd = 7;
-			} else if (pd < -7)
-				pd = -7;
-			if (pd < 0)
-				pd = -pd + 8;
+			 printf("vRodaEsq = %d |", vRodaEsq);
+ 			 printf("vRodaDir = %d |\n", vRodaDir);
+			#endif
 			/**
 			 * Fim do novo controle de velocidade
 			 */
@@ -294,50 +324,43 @@ void CPH::calculaVelRodas() {
 			 * velocidade
 			 */
 
-			cmdEnviado[0][indJogador].esq = pe * 1;
-			cmdEnviado[0][indJogador].dir = pd * 1;
+			robo.setVelocidadeAtualRobo(vRodaEsq, vRodaDir);
 		/**
-		 * Chute rodando no pr´oprio eixo
+		 * CHUTE_GIRANDO
 		 */
-		} else {
-			xRobo = estadoPrev[indJogador].x;
-			yRobo = estadoPrev[indJogador].y;
-			if (yRobo <= 65){ //Canto inferior
-				cmdEnviado[0][indJogador].esq = -5 * 1;
-				cmdEnviado[0][indJogador].dir = 5 * 1;
-			} else { // Canto superior
-				cmdEnviado[0][indJogador].esq = 5 * 1;
-				cmdEnviado[0][indJogador].dir = -5 * 1;
-				printf("chute esquerda\n");
-			}
 		}
-
+		else {
+			robo.setEstadoAtualComoEstadoPrev();
+			/* SUBSTITUIR POR FUNCOES DE POSICIONAMENTO */
+			if (yRobo <= 65) //Canto inferior
+				robo.setVelocidadeAtualRobo(-5, 5);
+			else // Canto superior
+				robo.setVelocidadeAtualRobo(5, -5);
+		}
+	}
 	/**
-	 * Controle do Robô Goleiro
-	 */
-	} else {
+	* Controle do Robô Goleiro
+	*/
+	else {
 		double lim = 180 / 8;
+		robo.setEstadoAtualComoEstadoPrev();
+		robo.getDistObjRobo(distObjRobo);
+		distEuclidianaObjRobo = robo.getDistEuclianaObjRobo();
 
-		angRobo = estadoPrev[indJogador].angulo;
-		xRobo = estadoPrev[indJogador].x;
-		yRobo = estadoPrev[indJogador].y;
-		dx = robo.getPosicaoObj().x - xRobo;
-		dy = robo.getPosicaoObj().x - yRobo;
-		d = sqrt(dx * dx + dy * dy);
-
-		ang = atan2(dy, dx) * 180 / M_PI;
+		ang = atan2(distObjRobo.y, distObjRobo.x) * 180 / M_PI;
 		if (ang < 0) {
 			ang += 2 * 180;
 		}
+
 		double dAng = ang - robo.getAnguloAtualRobo();
 		if (dAng < 0) {
 			dAng += 2 * 180;
 		}
 
-		if (d < 10) {
+		if (distEuclidianaObjRobo < 10) {
 			vObj = 2;
 			wObj = 1;
-		} else if (d < 6) {
+		} else if (distEuclidianaObjRobo < 6) {
 			vObj = 0;
 			wObj = 0;
 		} else {
@@ -346,41 +369,40 @@ void CPH::calculaVelRodas() {
 		}
 
 		if (dAng < lim) {
-			ve = vObj;
-			vd = vObj;
+			vRodaEsq = vObj;
+			vRodaDir = vObj;
 		} else if (dAng < 180 / 2 - lim) {
-			ve = 0;
-			vd = wObj;
+			vRodaEsq = 0;
+			vRodaDir = wObj;
 		} else if (dAng < 180 / 2) {
-			ve = -wObj;
-			vd = wObj;
+			vRodaEsq = -wObj;
+			vRodaDir = wObj;
 		} else if (dAng < 180 / 2 + lim) {
-			ve = wObj;
-			vd = -wObj;
+			vRodaEsq = wObj;
+			vRodaDir = -wObj;
 		} else if (dAng < 180 - lim) {
-			ve = 0;
-			vd = -wObj;
+			vRodaEsq = 0;
+			vRodaDir = -wObj;
 		} else if (dAng < 180 + lim) {
-			ve = -vObj;
-			vd = -vObj;
+			vRodaEsq = -vObj;
+			vRodaDir = -vObj;
 		} else if (dAng < 3 * 180 / 2 - lim) {
-			ve = -wObj;
-			vd = 0;
+			vRodaEsq = -wObj;
+			vRodaDir = 0;
 		} else if (dAng < 3 * 180 / 2) {
-			ve = -wObj;
-			vd = wObj;
+			vRodaEsq = -wObj;
+			vRodaDir = wObj;
 		} else if (dAng < 3 * 180 / 2 + lim) {
-			ve = wObj;
-			vd = -wObj;
+			vRodaEsq = wObj;
+			vRodaDir = -wObj;
 		} else if (dAng < 2 * 180 - lim) {
-			ve = wObj;
-			vd = 0;
+			vRodaEsq = wObj;
+			vRodaDir = 0;
 		} else {
-			ve = vObj;
-			vd = vObj;
+			vRodaEsq = vObj;
+			vRodaDir = vObj;
 		}
-
-		cmdEnviado[0][indJogador].esq = ve * 1;
-		cmdEnviado[0][indJogador].dir = vd * 1;
+		
+		robo.setVelocidadeAtualRobo(vRodaEsq, vRodaDir);
 	}
 }

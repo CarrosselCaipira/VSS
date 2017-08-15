@@ -68,10 +68,35 @@ float Robo::getAnguloObj () {
 /****************************************************************/
 
 /*********************** FUNCAO ROTEIRO *************************/
-/* Define o identificador de roteiro do robo */
-ROTEIROS getRoteiro() {
+ROTEIROS Robo::getRoteiro() {
+	return tipoJogador;
+}
+/****************************************************************/
 
-};
+/*********************** CALCULO DISTANCIAS *************************/
+posXY Robo::getDistObjRobo() {
+	posXY dist;
+
+	dist.x = estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x;
+	dist.y = estadoObjRobo.posicao.y - estadoAtualRobo.posicao.y;
+
+	return dist;
+}
+
+void Robo::getDistObjRobo(posXY& dist) {
+	dist.x = estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x;
+	dist.y = estadoObjRobo.posicao.y - estadoAtualRobo.posicao.y;
+}
+
+double Robo::getDistEuclianaObjRobo() {
+    double sum = 0.0;
+    int i;
+
+		estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x;
+    sum+=pow(estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x, 2);
+
+    return sqrt(sum);
+}
 /****************************************************************/
 
 /***************************** SETTERS **************************/
@@ -79,13 +104,13 @@ ROTEIROS getRoteiro() {
 /************************ POSICAO ATUAL ROBO ********************/
 void Robo::setPosicaoAtualRobo (const posXY posicao) {
 	if(posicao.x <= 0 || posicao.y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoAtualRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoAtualRobo (const float x, const float y) {
 	if(x <= 0 || y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoAtualRobo.posicao.x = x;
   estadoAtualRobo.posicao.y = y;
 }
@@ -116,13 +141,13 @@ void Robo::setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigne
 /********************* POSICAO PREVISTA ROBO ********************/
 void Robo::setPosicaoPrevRobo (const posXY posicao) {
 	if(posicao.x <= 0 || posicao.y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoPrevRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoPrevRobo (const float x, const float y) {
 	if(x <= 0 || y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoPrevRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoPrevRobo.posicao.x = x;
   estadoPrevRobo.posicao.y = y;
 }
@@ -154,13 +179,13 @@ void Robo::setVelocidadePrevRobo (const unsigned char velRodaEsq, const unsigned
 /************************ OBJETIVO DO ROBO **********************/
 void Robo::setPosicaoObj (const posXY posicao) {
 	if(posicao.x <= 0 || posicao.y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoObjRobo.posicao = posicao;
 }
 
 void Robo::setPosicaoObj (const float x, const float y) {
 	if(x <= 0 || y <= 0 )
-		std::cout << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+		std::cerr << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
   estadoObjRobo.posicao.x = x;
   estadoObjRobo.posicao.y = y;
 }

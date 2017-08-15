@@ -5,6 +5,12 @@
 #include "roteiro.hpp"
 #include <cstring>
 #include <bitset>
+#include <cmath>
+
+#define MASSA_ROBO 0.89
+#define RAIO_DA_RODA 1.6
+#define RAIO_DISTANCIA 5
+#define DIST_ENTRE_RODAS 7
 
 enum INDEX_ATRIBUTOS {
 	CHUTE_GIRANDO,
@@ -19,13 +25,14 @@ class Robo {
     estadoRobo estadoPrevRobo; /**< Todas as informacoes sobre as posicoes futuras do robo. */
     estadoRobo estadoObjRobo; /**< Informações sobre o objetivo do robo. */
 
-		std::bitset<BITSET_SIZE> atributos;
     ROTEIROS tipoJogador; // identificao de qual roteiro esta sendo seguido pelo robo no momento.
 
     friend class Comportamento;
     friend class Roteiro;
 
     public:
+				std::bitset<BITSET_SIZE> atributos; /**< bitset sinalizando se os atributos do robo */
+
         /*************************** CONSTRUTOR *************************/
         // inicializa todas as componentes do robo com zero e define o roteiro atual do robo como "INDEFINIDO".
         Robo();
@@ -74,7 +81,13 @@ class Robo {
 
 				/*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */
-        void getRoteiro();
+        ROTEIROS getRoteiro();
+				/****************************************************************/
+
+				/*********************** CALCULO DISTANCIAS *************************/
+				/* retorna a distancia entre o Objetivo e o Robo (posObj - posRobo)*/
+				posXY getDistObjRobo();
+				void getDistObjRobo(posXY& dist);
 				/****************************************************************/
 
         /***************************** SETTERS **************************/
