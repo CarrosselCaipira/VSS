@@ -11,6 +11,7 @@
 #define RAIO_DA_RODA 1.6
 #define RAIO_DISTANCIA 5
 #define DIST_ENTRE_RODAS 7
+#define TAM_ROBO 8 //tamanho do lado do robo em cm
 
 enum INDEX_ATRIBUTOS {
 	CHUTE_GIRANDO,
@@ -88,6 +89,9 @@ class Robo {
 				/* retorna a distancia entre o Objetivo e o Robo (posObj - posRobo)*/
 				posXY getDistObjRobo();
 				void getDistObjRobo(posXY& dist);
+
+				/* retorna a distancia euclidiana entre o Objetivo e o Robo */
+				double getDistEuclianaObjRobo();
 				/****************************************************************/
 
         /***************************** SETTERS **************************/

@@ -89,13 +89,13 @@ void Robo::getDistObjRobo(posXY& dist) {
 }
 
 double Robo::getDistEuclianaObjRobo() {
-    double sum = 0.0;
+    double soma;
     int i;
 
-		estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x;
-    sum+=pow(estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x, 2);
+		soma = pow(estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x, 2);
+    soma += pow(estadoObjRobo.posicao.y - estadoAtualRobo.posicao.y, 2);
 
-    return sqrt(sum);
+    return sqrt(soma);
 }
 /****************************************************************/
 
