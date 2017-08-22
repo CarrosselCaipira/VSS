@@ -58,7 +58,7 @@ void CPH::inicializaObstMeta() {
 
 	/* ANALIZAR A NECESSIDADE DESTE TRECHO. REMOVIDO NA CBR2016 */
 	/* posiciona os robos do time no campo potencial */
-	/*for (i = 0; i <= 2; i++) {
+	/*for (i = 0; i < 3; i++) {
 		if (i != indJogador) {
 
 			// IMPORTANTE: ENTENDER CONDICAO E SUBSTITUIR POR FUNCAO BOOLEANA
@@ -114,13 +114,8 @@ bool CPH::calculaCampoSOR() {
 }
 
 void CPH::calculaVelRodas() {
-	float wObj, vObj, vAnt = 0, F, dx, dy, v_CPO[2], d, angRobo, angRoboAnt, xRobo, yRobo, ang, auxAng;
-	int ve, vd, pe, pd, i, j, wSignal, vSignal, flagDirection;
-	double directionAngle, K_ro, K_alfa, lim = 180 / 8;
-	static int count = 0;
-
 	posXY distObjRobo;
-	int flagDirection;
+	int flagDirection, i, j, wSignal, vSignal;
 	float ang, directionAngle, distEuclidianaObjRobo, vObj, wObj, K_ro, vRodaEsq, vRodaDir;
 	float forcaCelulaCampoPot; /**< Força aplicada na célula do campo potencial */
 
@@ -147,7 +142,7 @@ void CPH::calculaVelRodas() {
 				ang += 360;
 			}
 
-			/* EH INTERESSANTE SUBSTITUIRMOS ESSAS DIRETIAS DE PRE-COMPILACAO POR ALGUMA FORMA MAIS DINAMICA PARA MOSTRAR DADOS PARA DEBUG - UMA CLASSE QUE CONTENHA ESSA INFORMACAO (EM DEBUG OU NAO) TALVEZ? */
+			/* EH INTERESSANTE SUBSTITUIRMOS ESSAS DIRETIVAS DE PRE-COMPILACAO POR ALGUMA FORMA MAIS DINAMICA PARA MOSTRAR DADOS PARA DEBUG - UMA CLASSE QUE CONTENHA ESSA INFORMACAO (EM DEBUG OU NAO) TALVEZ? */
 			#ifdef DEBUG
 				printf("[%d](%f)\n", indJogador, (float)directionAngle);
 				printf("[%d](%f)\n[        ][%f][        ]\n[%f][        ][%f]\n[        ][%f][        ]\n",
@@ -175,7 +170,6 @@ void CPH::calculaVelRodas() {
 				dAng -= 360;
 			}
 
-			auxAng = dAng;
 			if ((dAng <= 90 && dAng > 0) || (dAng <= 0 && dAng >= -90)) {
 				flagDirection = 1;
 			} else if ((dAng <= 180 && dAng > 90) || (dAng < -90 && dAng >= -180)) {
@@ -199,7 +193,8 @@ void CPH::calculaVelRodas() {
 			#endif
 
 			//Velocidade do robô calculada em função da força vinda do campo potencial
-			vObj = (2 / MASSA_ROBO) * (forcaCelulaCampoPot * sin(directionAngle * (M_PI / 180)) * (distObjRobo.y) + forcaCelulaCampoPot * cos(directionAngle * (M_PI / 180)) * (distObjRobo.x)) + pow(vAnt, 2);
+			vObj = (2 / MASSA_ROBO) * (forcaCelulaCampoPot * sin(directionAngle * (M_PI / 180)) * (distObjRobo.y) + forcaCelulaCampoPot * cos(directionAngle * (M_PI / 180)) * (distObjRobo.x));
+			
 			K_ro = vObj/(distEuclidianaObjRobo * cos(dAng * (M_PI / 180)));
 
 			if (vObj < 127 && vObj >= 0){
@@ -212,9 +207,6 @@ void CPH::calculaVelRodas() {
 
 			vObj = vObj * cos(dAng * (M_PI / 180));
 
-			vAnt = vObj;
-			// double errorAng = atan2(sin(dAng * (M_PI/180)), cos(dAng * (M_PI/180)));
-			// wObj = K_ro*sin(dAng)*cos(dAng) + PID(errorAng, angRoboAnt, angRobo);
 			wObj = K_ro * sin(dAng * (M_PI/180)) * cos(dAng * (M_PI / 180)) + K_ALFA * dAng;
 
 			if (wObj < 0){
@@ -402,7 +394,7 @@ void CPH::calculaVelRodas() {
 			vRodaEsq = vObj;
 			vRodaDir = vObj;
 		}
-		
+
 		robo.setVelocidadeAtualRobo(vRodaEsq, vRodaDir);
 	}
 }
