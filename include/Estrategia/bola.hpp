@@ -27,6 +27,10 @@ class Bola{
     // Retorna a velocidade prevista da bola
     inline float getVelocidadePrevistoBola ();
 
+		// TO-DO -> criar funcao para determinar a posicao XY da bola quando ela atingir o gol
+		// criar funcao para checar se a bola esta indo na diracao do nosso gol, se esta parada ou se esta indo na direcao do time adversario
+		// criar funcao para determinar o vetor sentido (utilizando a posicao anterior e atual) 
+
 };
 
 #endif /* BOLA_H*/
