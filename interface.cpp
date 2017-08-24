@@ -1,35 +1,54 @@
 #include <gtk/gtk.h>
 #include <vector>
 #include <string>
+#include <cmath>
+#include <sstream>
 
 #define NUM_MAX_ROBOS 9
 
+/*Conserta a rotina to_string*/
+namespace patch{
+
+    template < typename T > std::string to_string( const T& n ){
+
+        std::ostringstream stm ;
+        stm << n ;
+        return stm.str() ;
+    }
+}
+
 using namespace std;
 
-/*Vetor que Guarda as Variáveis que Identificam os Combo Box para Roteiros Individuais*/
-int identRoteiro[NUM_MAX_ROBOS];
-int comboBoxAtual=0;
-
-/*Variáveis que Explicitam as Funções dos Robôs Baseando-se no Número de Robôs*/
+/*Variáve que Controla os Labels de Identificação de Rôbos Dependendo do Número de Rôbos*/
 vector<vector<string> > posicoesRobos;
 
-vector<string> umRobo;
-vector<string> doisRobos;
-vector<string> tresRobos;
-vector<string> quatroRobos;
+/*Variáveis de Controle dos Elementos de Principal*/
+int tamString = 8;
+int tamValor = 1;
+bool gravando = false;
+
+/*Variáveis de Controle dos Elementos de Configuração*/
+int identRoteiro[NUM_MAX_ROBOS];
+int comboBoxAtual=0;
 
 /*Variáveis de Acesso aos Elementos de Principal*/
 GtkWidget *layoutTabela;
 GtkWidget *treeViewTabela;
 GtkListStore *listStoreTabela;
-bool gravando = false;
 
-/*Variáveis de Acesso aos Elementos de Outros*/
+/*Variáveis de Acesso aos Elementos de Ajuda*/
+GtkWidget *layoutAjuda;
+
 
 /**
  * @brief      Função que Prepara Variáveis Globais Necessárias em Certas Partes do Programa
  */
 void preparaGlobais () {
+
+	vector<string> umRobo;
+	vector<string> doisRobos;
+	vector<string> tresRobos;
+	vector<string> quatroRobos;
 
 	umRobo.push_back("Jogador");
 
@@ -73,12 +92,26 @@ enum {
  */
 void tabelaDebug(string descricao="", double valor=0) {
 
-	GtkTreeIter treeIterTabela;
+    GtkTreeIter treeIterTabela;
 
-	gtk_list_store_append(listStoreTabela,&treeIterTabela);
-	gtk_list_store_set(listStoreTabela,&treeIterTabela,COLUNA_STRING,descricao.c_str(),COLUNA_DOUBLE,valor,-1);
+    gtk_list_store_append(listStoreTabela,&treeIterTabela);
+    gtk_list_store_set(listStoreTabela,&treeIterTabela,COLUNA_STRING,descricao.c_str(),COLUNA_DOUBLE,valor,-1);
 
-	gtk_widget_show_all(layoutTabela);
+    if (descricao.size() > tamString) {
+
+        tamString = descricao.size();
+    }
+
+    if (valor > pow(10,tamValor)) {
+
+        do {
+
+            tamValor++;
+        } while (valor > pow(10,tamValor));
+    }
+
+    gtk_widget_set_size_request(layoutTabela,160 + (tamString-8)*12 + (tamValor-1)*8,100);
+    gtk_widget_show_all(layoutTabela);
 }
 
 /**
@@ -259,17 +292,59 @@ void setNumRobos (GtkWidget *spinner) {
 /**
  * @brief      Função Chamada Quando o Botão Redefinir Limites é Apertado em Configurações.  
  */
-void definirLimites () {
+void definirLimites (GtkWidget *botao, gpointer janela) {
 
-		g_print("oi 2");
+	GtkWidget *janelaLimites = (GtkWidget*) janela;
+
+	gtk_widget_show(janelaLimites);
+}
+
+/**
+ * @brief      Função Chamada Quando o Botão Ok é Apertado na Janela de Configuração de Limites.
+ *
+ * @param      botao  - Instância do Botão Apertado.
+ * @param[in]  janela - Instância da Janela Deste Botão.
+ */
+void fecharJanelaLimites (GtkWidget *botao, gpointer janela) {
+
+	GtkWidget *janelaLimites = (GtkWidget*) janela;
+
+	gtk_widget_hide(janelaLimites);
 }
 
 /**
  * @brief        Função Chamada Quando o Botão Redefinir Cores é Apertado em Configurações.
  */
-void definirCores () {
+void definirCores (GtkWidget *botao, gpointer janela) {
 
-		g_print("oi 3");
+	GtkWidget *janelaCores = (GtkWidget*) janela;
+
+	gtk_widget_show(janelaCores);
+}
+
+/**
+ * @brief      Função Chamada Quando o Combo Box da Janela de Cores é Modificado.
+ *
+ * @param      ativo - Instância que Permite Descobrir o Item Ativo.
+ */
+void setaCorCalibrada (GtkWidget *ativo) {
+
+	string base = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(ativo));
+
+	g_print("%s ",base.c_str());
+}
+
+/**
+ * @brief      Função Chamada Quando o Botão Ok é Apertado na Janela de Configuração de Cores.
+ *
+ * @param      botao  - Instância do Botão Apertado.
+ * @param[in]  janela - Instância da Janela Deste Botão.
+ */
+void fecharJanelaCores (GtkWidget *botao, gpointer janela) {
+
+	GtkWidget *janelaCores = (GtkWidget*) janela;
+
+	gtk_widget_hide(janelaCores);
 }
 
 /**
@@ -352,12 +427,16 @@ GtkWidget* comboBoxPreenchido() {
 
 	for (int i=0;i<5;i++) {
 
-		string temp = "teste";
+		string temp = "teste " + patch::to_string(i);
 
 		gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(comboBox),temp.c_str());
 	}
 
 	gtk_combo_box_set_active(GTK_COMBO_BOX(comboBox),0);
+
+	string temp = "Combo Box de Roteiro do Robo " + patch::to_string(comboBoxAtual);
+
+	gtk_widget_set_tooltip_text(comboBox,temp.c_str());
 
 	g_signal_connect(comboBox, "changed", G_CALLBACK(setaRoteiroIndividual),&identRoteiro[comboBoxAtual]);
 	comboBoxAtual++;
@@ -467,7 +546,12 @@ void preparaConfiguracao (GtkBuilder *builder) {
 
 	GtkWidget *spinNumRobos;
 	GtkWidget *botaoDefinirLimites;
+	GtkWidget *janelaLimites;
+	GtkWidget *botaoFecharLimites;
 	GtkWidget *botaoDefinirCores;
+	GtkWidget *janelaCores;
+	GtkWidget *comboCores;
+	GtkWidget *botaoFecharCores;
 	GtkWidget *checkGrafico;
 	GtkWidget *botaoRadioEsq;
 	GtkWidget *comboRoteiroConjunto;
@@ -480,12 +564,22 @@ void preparaConfiguracao (GtkBuilder *builder) {
 
 	/*Configurações do Botão de Redefinir Limites*/
 		botaoDefinirLimites = GTK_WIDGET(gtk_builder_get_object(builder, "botaoDefinirLimites"));
-		g_signal_connect(botaoDefinirLimites, "clicked", G_CALLBACK(definirLimites), NULL);
+		janelaLimites = GTK_WIDGET(gtk_builder_get_object(builder, "janelaLimites"));
+		botaoFecharLimites = GTK_WIDGET(gtk_builder_get_object(builder, "botaoFecharLimites"));
+
+		g_signal_connect(botaoDefinirLimites, "clicked", G_CALLBACK(definirLimites), janelaLimites);
+		g_signal_connect(botaoFecharLimites, "clicked", G_CALLBACK(fecharJanelaLimites), janelaLimites);
 	/*---------------------------------------------------------------------------------------*/
 
 	/*Configurações do Botão de Redefinir Cores*/
 		botaoDefinirCores = GTK_WIDGET(gtk_builder_get_object(builder, "botaoDefinirCores"));
-		g_signal_connect(botaoDefinirCores, "clicked", G_CALLBACK(definirCores), NULL);
+		janelaCores = GTK_WIDGET(gtk_builder_get_object(builder, "janelaCores"));
+		comboCores = GTK_WIDGET(gtk_builder_get_object(builder, "comboCores"));
+		botaoFecharCores = GTK_WIDGET(gtk_builder_get_object(builder, "botaoFecharCores"));
+
+		g_signal_connect(botaoDefinirCores, "clicked", G_CALLBACK(definirCores), janelaCores);
+		g_signal_connect(comboCores, "changed", G_CALLBACK(setaCorCalibrada), NULL);
+		g_signal_connect(botaoFecharCores, "clicked", G_CALLBACK(fecharJanelaCores), janelaCores);
 	/*---------------------------------------------------------------------------------------*/
 
 	/*Configurações do Check Button que Liga e Desliga o Gráfico*/
@@ -586,6 +680,92 @@ void preparaOutros (GtkBuilder *builder) {
 	/*---------------------------------------------------------------------------------------*/
 }
 
+/**
+ * @brief      Função Para Criar Novos Títulos na Seção de Ajuda.
+ *
+ * @param[in]  conteudo - String do Título.
+ */
+void labelTitulo (string conteudo) {
+
+	GtkWidget *label = gtk_label_new("");
+
+	string temp = "<big><b>"+conteudo+"</b></big>";
+
+	gtk_label_set_line_wrap(GTK_LABEL(label),true);
+	gtk_label_set_markup(GTK_LABEL(label), temp.c_str());
+	gtk_widget_set_margin_start(label, 5);
+	gtk_widget_set_margin_end(label, 5);
+	gtk_widget_set_margin_top(label, 5);
+	gtk_widget_set_margin_bottom(label, 5);
+	gtk_box_pack_start(GTK_BOX(layoutAjuda),label,true,true,0);
+	gtk_widget_set_halign(label,GTK_ALIGN_START);
+
+	gtk_widget_show_all(layoutAjuda);
+}
+
+/**
+ * @brief      Função Para Criar Novos Parágrafos na Seção de Ajuda.
+ *
+ * @param[in]  conteudo - String do Parágrafo.
+ */
+void labelParagrafo (string conteudo) {
+
+	string temp = "	"+conteudo;
+
+	GtkWidget *label = gtk_label_new(temp.c_str());
+
+	gtk_label_set_line_wrap(GTK_LABEL(label),true);
+	gtk_widget_set_margin_start(label, 5);
+	gtk_widget_set_margin_end(label, 5);
+	gtk_box_pack_start(GTK_BOX(layoutAjuda),label,true,true,0);
+	gtk_widget_set_halign(label,GTK_ALIGN_START);
+
+	gtk_widget_show_all(layoutAjuda);
+}
+
+/**
+ * @brief      Função Para Inserir Novas Imagens na Seção de Ajuda.
+ *
+ * @param[in]  nomeArquivo - Nome do Arquivo de Imagem.
+ * @param[in]  width       - Largura que a Imagem Será Mostrada.
+ * @param[in]  height      - Altura da Imagem Mostrada.
+ */
+void imagemAjuda (string nomeArquivo,int width, int height) {
+
+	GdkPixbuf *pixbuf = gdk_pixbuf_new_from_file(nomeArquivo.c_str(),NULL);
+	pixbuf = gdk_pixbuf_scale_simple(pixbuf,width,height,GDK_INTERP_BILINEAR);
+
+	GtkWidget *imagem = gtk_image_new_from_pixbuf(pixbuf);
+
+	gtk_widget_set_margin_start(imagem, 10);
+	gtk_widget_set_margin_end(imagem, 10);
+	gtk_widget_set_margin_top(imagem, 10);
+	gtk_widget_set_margin_bottom(imagem, 10);
+	gtk_box_pack_start(GTK_BOX(layoutAjuda),imagem,true,true,0);
+	gtk_widget_set_halign(imagem,GTK_ALIGN_CENTER);
+
+	gtk_widget_show_all(layoutAjuda);
+}
+
+/**
+ * @brief      Função que Contém as Instruções Mostradas na Seção de Ajuda.
+ *
+ * @param      builder - O Construtor que Permite Acessar Objetos Criados no Glade.
+ */
+void preparaAjuda (GtkBuilder *builder) {
+
+	/*Aquisição da Instância do Layout de Ajuda*/
+		layoutAjuda = GTK_WIDGET(gtk_builder_get_object(builder, "layoutAjudaLabels"));
+	/*---------------------------------------------------------------------------------------*/
+
+	labelTitulo("Titulo:");
+	imagemAjuda("icone.png",120,120);
+	labelParagrafo(
+	"Teste"
+	" Teste 2");
+	labelParagrafo("Coisas e talz.");
+}
+
 int main(int argc, char *argv[]) {
 
 	gtk_init(&argc, &argv);
@@ -600,6 +780,7 @@ int main(int argc, char *argv[]) {
 	preparaPrincipal(builder);
 	preparaConfiguracao(builder);
 	preparaOutros(builder);
+	preparaAjuda(builder);
 
 	g_object_unref(builder);
 

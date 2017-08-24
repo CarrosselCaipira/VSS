@@ -46,8 +46,8 @@
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                     <property name="shadow_type">in</property>
-                    <property name="min_content_width">175</property>
-                    <property name="min_content_height">100</property>
+                    <property name="min_content_width">0</property>
+                    <property name="min_content_height">0</property>
                     <child>
                       <object class="GtkViewport" id="viewportTabela">
                         <property name="visible">True</property>
@@ -56,8 +56,8 @@
                           <object class="GtkTreeView" id="treeviewTabela">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
-                            <property name="halign">start</property>
-                            <property name="valign">start</property>
+                            <property name="halign">center</property>
+                            <property name="valign">center</property>
                             <property name="search_column">0</property>
                             <property name="enable_grid_lines">both</property>
                             <property name="tooltip_column">0</property>
@@ -80,6 +80,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">False</property>
+                    <property name="tooltip_text" translatable="yes">CheckBox que Liga e Desliga o Salvamento da Informações de Debug em um Arquivo Externo.</property>
                     <property name="halign">center</property>
                     <property name="margin_left">5</property>
                     <property name="margin_right">5</property>
@@ -125,6 +126,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Botão que Volta para um Frame Anterior.</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_bottom">10</property>
@@ -141,6 +143,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Botão que Inicia e Finaliza a Gravação.</property>
                     <property name="margin_right">10</property>
                     <property name="margin_bottom">10</property>
                   </object>
@@ -182,6 +185,7 @@
                   <object class="GtkComboBoxText" id="comboSituacao">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Combo Box Com as Situações Disponíveis para Iniciar o Jogo.</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
@@ -208,6 +212,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Botão que Inicia o Programa na Situação Desejada.</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                   </object>
@@ -223,6 +228,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Botão que Pausa o Programa no Momento Desejado.</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                   </object>
@@ -238,6 +244,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Botão que Para o Programa no Momento Desejado.</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                   </object>
@@ -260,6 +267,7 @@
           <object class="GtkLabel" id="abaPrincipal">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Aba com Informações ao Vivo do Programa.</property>
             <property name="label" translatable="yes">Principal</property>
           </object>
           <packing>
@@ -299,6 +307,7 @@
                               <object class="GtkSpinButton" id="botaoSpinNumRobos">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="tooltip_text" translatable="yes">Spin Button que Determina o Número de Robôs com o qual o Programa Está Trabalhando.</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -348,6 +357,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_text" translatable="yes">Botão que Abre uma Janela Auxiliar Para Configurar a Área Efetiva Captada Pela Câmera.</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -389,6 +399,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_text" translatable="yes">Botão que Abre uma Janela Auxiliar Para Calibrar as Cores Procuradas Pela Visão.</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -431,6 +442,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Check Button que Liga e Desliga o Gráfico na Tela Preta em Principal.</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -481,6 +493,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Botão de Rádio que Escolhe Sentido Esquerda-Direita de Orientação.</property>
                                     <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                   </object>
@@ -496,6 +509,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">False</property>
                                     <property name="receives_default">False</property>
+                                    <property name="tooltip_text" translatable="yes">Botão de Rádio que Escolhe Sentido Direita-Esquerda de Orientação.</property>
                                     <property name="xalign">0</property>
                                     <property name="draw_indicator">True</property>
                                     <property name="group">botaoRadioEsq</property>
@@ -570,6 +584,7 @@
                                       <object class="GtkComboBoxText" id="comboRoteiroConjunto">
                                         <property name="visible">True</property>
                                         <property name="can_focus">False</property>
+                                        <property name="tooltip_text" translatable="yes">Combo Box que Define o Roteiro Base dos Roteiros Abaixo.</property>
                                         <property name="active">0</property>
                                         <items>
                                           <item id="0" translatable="yes">Defensivo</item>
@@ -652,6 +667,7 @@
           <object class="GtkLabel" id="abaConfiguracao">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Aba com Parâmetros para Configurar o Programa.</property>
             <property name="label" translatable="yes">Configurações</property>
           </object>
           <packing>
@@ -694,6 +710,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">False</property>
+                                <property name="tooltip_text" translatable="yes">Check Button que Liga e Desliga o Painel de Gravação na Aba Principal. </property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -738,6 +755,7 @@
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <property name="tooltip_text" translatable="yes">Botão para Capturar o Campor Vazio.</property>
                                 <property name="halign">center</property>
                                 <property name="margin_top">10</property>
                                 <property name="margin_bottom">10</property>
@@ -777,6 +795,7 @@
                               <object class="GtkScale" id="escalaTaxaCampoVazio">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
+                                <property name="tooltip_text" translatable="yes">Escala para Determinar a Porcentagem de Uso do Campo Vazio.</property>
                                 <property name="margin_left">10</property>
                                 <property name="margin_right">10</property>
                                 <property name="margin_top">10</property>
@@ -814,6 +833,7 @@
           <object class="GtkLabel" id="abaOutros">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Aba com Outras Configurações Menos Utilizadas, Porém Úteis em Emergências.</property>
             <property name="label" translatable="yes">Outros</property>
           </object>
           <packing>
@@ -831,7 +851,20 @@
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkBox" id="layoutAjudaLabels">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
                 </child>
               </object>
             </child>
@@ -844,6 +877,7 @@
           <object class="GtkLabel" id="abaAjuda">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Aba com Informações Detalhadas Sobre o Programa e Suas Funcionalidades.</property>
             <property name="label" translatable="yes">Ajuda</property>
           </object>
           <packing>
@@ -858,7 +892,7 @@
     <property name="can_focus">False</property>
     <property name="type">popup</property>
     <property name="modal">True</property>
-    <property name="window_position">center-on-parent</property>
+    <property name="window_position">center-always</property>
     <property name="icon">icone.png</property>
     <property name="type_hint">dialog</property>
     <child>
@@ -888,6 +922,7 @@
           <object class="GtkComboBoxText" id="comboCores">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="tooltip_text" translatable="yes">Combo Box que Determina qual das Cores de Interesse Está Sendo Calibrada no Momento.</property>
             <property name="margin_left">5</property>
             <property name="margin_right">5</property>
             <property name="margin_bottom">10</property>
@@ -907,6 +942,20 @@
         <child>
           <placeholder/>
         </child>
+        <child>
+          <object class="GtkButton" id="botaoFecharCores">
+            <property name="label" translatable="yes">Ok</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">center</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">3</property>
+          </packing>
+        </child>
       </object>
     </child>
   </object>
@@ -914,7 +963,7 @@
     <property name="can_focus">False</property>
     <property name="type">popup</property>
     <property name="modal">True</property>
-    <property name="window_position">center-on-parent</property>
+    <property name="window_position">center-always</property>
     <property name="icon">icone.png</property>
     <property name="type_hint">dialog</property>
     <child>
@@ -924,6 +973,24 @@
         <property name="orientation">vertical</property>
         <child>
           <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <object class="GtkButton" id="botaoFecharLimites">
+            <property name="label" translatable="yes">Ok</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="halign">center</property>
+            <property name="relief">half</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">2</property>
+          </packing>
         </child>
       </object>
     </child>
