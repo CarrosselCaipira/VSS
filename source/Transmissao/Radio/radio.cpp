@@ -11,20 +11,26 @@ Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 
 	/* Tratamento de Erros */
 	/* Testado se foi possivel abrir a porta serial */
-	if(USB < 0)
+	if(USB < 0) {
 		std::cerr << "Erro " << errno << " @Radio->open " << caminho_dispositivo << ": " << std::strerror(errno) << std::endl;
+		exit(1); /**< Nao permite que o programa rode se nao foi possivel configurar a porta serial */
+	}
 
 	/* Testando se a porta serial aberta esta apontando para um dispositivo TTY (nosso radio eh TTY) */
-	if(isatty(USB) < 0)
+	if(isatty(USB) < 0) {
 		std::cerr << "Erro " << errno << " @Radio->isatty: " << std::strerror(errno) << std::endl;
-
+		exit(1); /**< Nao permite que o programa rode se nao foi possivel configurar a porta serial */
+	}
 	/* Testando se a atual configuracao da porta serial pode ser lida */
-	if(tcgetattr( USB, &dispositivo_tty ) < 0 )
+	if(tcgetattr( USB, &dispositivo_tty ) < 0 ) {
 	   std::cerr << "Erro " << errno << " @Radio->tcgetattr: " << std::strerror(errno) << std::endl;
-
+		 exit(1); /**< Nao permite que o programa rode se nao foi possivel configurar a porta serial */
+	}
 	/* Setando a frequencia de input e output do radio em 115200 */
-	if(cfsetspeed(&dispositivo_tty, (speed_t)B115200) < 0)
+	if(cfsetspeed(&dispositivo_tty, (speed_t)B115200) < 0){
 		std::cerr << "Erro " << errno << " @Radio->cfsetospeed: " << std::strerror(errno) << std::endl;
+		exit(1); /**< Nao permite que o programa rode se nao foi possivel configurar a porta serial */
+	}
 
 	/* Setando outras configuracoes da porta (no momento: aceite que funciona)*/
 	dispositivo_tty.c_iflag = IGNBRK | IGNPAR;
@@ -41,8 +47,10 @@ Radio::Radio(std::vector<Robo>& v) : vector_robos(v) {
 	/* Aplicando as configuracoes.
 	 * TCSANOW = aplica instantaneamente as configuracoes.
 	 */
-	if (tcsetattr(USB, TCSANOW, &dispositivo_tty ) < 0)
+	if (tcsetattr(USB, TCSANOW, &dispositivo_tty ) < 0) {
 	   std::cerr << "Error " << errno << " @Radio->tcsetattr " << std::strerror(errno) << std::endl;
+		 exit(1); /**< Nao permite que o programa rode se nao foi possivel configurar a porta serial */
+	}
 }
 
 /* enviando um byte para cada roda. Futuramente armazenaremos em um byte os valores de velocidade de ambas as rodas >> necessario corrigir robo.hpp robo.cpp tipoEstruturas.hpp e os codigos do arduino. */
@@ -62,15 +70,14 @@ void Radio::enviaDados() {
 
 	/* envia 0x80 como primeiro sinal (sera interpretado pelos robos) */
   unsigned char caractere_inicial = 0x80;
-	if(write(USB, &caractere_inicial, 1))
+	if(write(USB, &caractere_inicial, 1) < 0)
 		std::cerr << "Error " << errno << " @enviaDados->write_1 " << std::strerror(errno) << std::endl;
 
 	/* preenchendo o vetor de dados das rodas com os valores de velocidade dos robos */
 	for(int i = 0; i < vector_robos.size(); i++) {
 		/* deslocamos para esquerda os ultimos 4 bits para que eles sejam os primeiros do byte. Para os robos que receberao, apenas os primeiros 4 bytes sao importantes para os robos. */
-		dados[2 * i] = vector_robos[i].getVelocidadeAtualRobo().rodaEsq << 4;
-		dados[2 * i + 1] = vector_robos[i].getVelocidadeAtualRobo().rodaDir << 4;
-		getchar();
+		dados[2 * i] = vector_robos[i].getVelocidadeAtualRobo().rodaEsq;
+		dados[2 * i + 1] = vector_robos[i].getVelocidadeAtualRobo().rodaDir;
 	}
 	/* os dois ultimos bytes enviaodos sao zero. No momento, aceite... */
 	dados[2 * vector_robos.size()] = '0';
