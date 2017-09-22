@@ -21,19 +21,19 @@ void Roteiro::atacante(Robo& r){
 
 		// estadoAtacante = ATACA; ?
 
-		if (distBolaRoboX < TAM_ROBO && abs(distBolaRoboY) < TAM_ROBO / 2)
+		if ((distBolaRoboX < TAM_ROBO) && (abs(distBolaRoboY) < TAM_ROBO / 2))
 			r.setPosicaoObj(roboPos.x, CENTRO_Y_GOL);
 		else
 			r.setPosicaoObj(roboPos.x, CENTRO_Y_GOL);
 
 		r.setPosicaoObj(CENTRO_X_GOL, CENTRO_Y_GOL);
 
-		r.setAnguloObj(atang2x(-distBolaGolY, -distBolaGolX);
+		r.setAnguloObj(atang2x(-distBolaGolY, -distBolaGolX));
 
 	} else {
 		
 		//estadoAtacante = POSICIONA; ?
-		r.setAnguloObj(atang2x(-distBolaGolY, -distBolaGolX);
+		r.setAnguloObj(atang2x(-distBolaGolY, -distBolaGolX));
 		r.setPosicaoObj(bolaPos);
 	}
 
