@@ -190,6 +190,18 @@ void Robo::setPosicaoObj (const float x, const float y) {
   estadoObjRobo.posicao.y = y;
 }
 
+void Robo::setPosicaoObjX (const float x){
+	if(x <= 0)
+		std::cerr << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+  estadoObjRobo.posicao.x = x;
+}
+
+void Robo::setPosicaoObjY (const float y){
+	if(y <= 0)
+		std::cerr << "Erro " << "@Robo->setPosicaoObj " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
+  estadoObjRobo.posicao.y = y;
+}
+
 void Robo::setAnguloObj (const float angulo) {
   estadoObjRobo.angulo = angulo;
 }

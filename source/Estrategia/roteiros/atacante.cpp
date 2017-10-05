@@ -42,15 +42,15 @@ void Roteiro::atacante(Robo& r){
 	// O objetivo esta dentro da area do nosso gol? (antes da linha da area do nosso gol)
 	if (posObj.x < TAM_X_GOL + TAM_X_AREA_GOL + TAM_ROBO / 2) {
 		if (bolaPos.x > roboPos.x && bolaPos.x > INICIO_AREA_ATUACAO_ATACANTE)
-			r.setPosicaoObj(posBola.x, r.getPosicaoObj().y);
+			r.setPosicaoObjX(posBola.x);
 		else
-			r.setPosicaoObj(INICIO_AREA_ATUACAO_ATACANTE, r.getPosicaoObj().y);
+			r.setPosicaoObjX(INICIO_AREA_ATUACAO_ATACANTE);
 	}
 	/*
-	A bola esta no canto superior direito ou no canto inferior direito? (quadrado inutil ("zonas de escanteio"))
+	A bola esta no canto superior direito ou no canto inferior direito? (quadrado inutil ("zonas de escanteio"<-não é))
 	*/
-	if (bolaPos.x > 140 && bolaPos.y >= 100 || bolaPos.x > 140 && bolaPos.y <= 30) {
-		r.setPosicaoObj(140 - TAM_ROBO / 2, r.getPosicaoObj().y);
+	if (bolaQuadradosInuteis(bolaPos)) {
+		r.setPosicaoObjX(140 - TAM_ROBO / 2);
 		//r.setVelocidadeObj(0, 0); ???
 	}
 

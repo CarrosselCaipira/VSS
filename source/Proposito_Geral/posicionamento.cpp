@@ -99,3 +99,10 @@ bool faixaChuteGirandoAdv(const posXY posicao){
 float yBolaPrevisto(const float numQuadrosGol, const float vetorSentidoEmYBola, const float posYBola){
   return numQuadrosGol * vetorSentidoEmYBola + posYBola
 }
+
+bool bolaQuadradosInuteis (const posXY posicao) {
+	return ((bolaPos.x > 140 && bolaPos.y >= 100) || 
+			(bolaPos.x > 140 && bolaPos.y <= 30) || 
+			(bolaPos.x > 30 && bolaPos.y >= 100) || 
+			(bolaPos.x > 30 && bolaPos.y <= 30))
+}
