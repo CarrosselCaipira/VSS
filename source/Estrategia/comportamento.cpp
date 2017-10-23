@@ -50,13 +50,19 @@ void posiciona_faixa_inferior(){
 }
 
 // define como objetivo do robo o centro do campo em X
-void posicionaCentroCampoX (){
-	xObj = TAM_X_CAMPO/2;
+void posicionaCentroCampoX (Robo& r){
+	PosXY p;
+	p.y = r.getPosicaoObj().y;
+	p.x = TAM_X_CAMPO/2;
+	r.setPosicaoObj(p);
 }
 
 // define como objetivo do robo o centro do campo em Y
 void posicionaCentroCampoY () {
-	yObj = TAM_Y_CAMPO/2;
+	PosXY p;
+	p.x = r.getPosicaoObj().x;
+	p.y = TAM_Y_CAMPO/2;
+	r.setPosicaoObj(p);
 }
 
 // define como objetivo do robo o mesmo objetivo anterior mas impedindo que ele se movimente no eixo X

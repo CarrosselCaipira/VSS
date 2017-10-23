@@ -4,9 +4,15 @@ void Roteiro::volante(Robo& r){
 	/* funcao de comportamento do volante */
 
 	/*
-	Duvidas:
-		Ignorar previsão
-		O volante utiliza a posição do atacante, mas não temos acesso a estes dados
+	Duvidas e comentários:
+		O código antigo começava setando as variavais pelo estadoPrev.
+		Não sabemos se ainda funciona dessa forma, logo isso foi omitido do inicio do código.
+
+		O volante utiliza a posição do atacante, mas não temos acesso a estes dados, estamos
+		traduzindo o código como se esse acesso estivesse acontecendo.
+
+		O volante muitas vezes se preocupa em desviar da bola em várias situações, creio que seria
+		bom uma funça para fazer isso. (Ver se isso pode ser aprovado, pois deixaria o código mais limpo).
 	*/
 
 	const posXY bolaPos = bola.getPosicaoAtualBola();
@@ -120,38 +126,95 @@ void Roteiro::volante(Robo& r){
 		} else {
 			yAlinhamentoRoboBolaGol = yBola;
 		}
-		if (abs(distRoboBolaY) <= TAM_ROBO / 2 && xBola - xRobo < TAM_ROBO * 5 && estadoAtacante != ATACA && xAtacante > (xRobo + 4 * TAM_ROBO)) { // SBAI 2009
-			// trocarVolanteAtacante = indVolante; -  Creio que não funcionará mais desse jeito
-			// estadoAtacante = ATACA; //Coloca estado atacando - Creio que não funcionará mais desse jeito
-			// velObjetivo = 7; - aparentemente não setamos mais diretamente a velocidade dos robos
+		if (abs(distRoboBolaY) <= TAM_ROBO / 2 && distBolaRoboX < TAM_ROBO * 5 && estadoAtacante != ATACA && atacantePos.X > (roboPos.X + 4 * TAM_ROBO)) { // SBAI 2009 - Se isso é verdadeiro, o Volante e o atacante trocam de posições
+      /* !!O segmento a seguir FAZ PARTE DO CÓDIGO, não são só comentários.
+			É que existe a dúvida de como eles podem ser feitos nesse novo código
+
+			trocarVolanteAtacante = indVolante; -  Creio que não funcionará mais desse jeito
+			estadoAtacante = ATACA; //Coloca estado atacando - Creio que não funcionará mais desse jeito
+			velObjetivo = 7; - aparentemente não setamos mais diretamente a velocidade dos robos
+			*/
 			posiciona_segue_bola(*r); //Objetivo inicial é a bola
-			r.setAnguloObj(90);
+			r.setAnguloObj(90);  //Existe uma função em comportamento para isso, mas ela está com o Set errado, melhor esperar a sua correção.
 		} else {
-			if (abs(yRobo - yBola) <= TAM_ROBO / 2 && xBola - xRobo < TAM_ROBO / 2 + 4) {
+			if (abs(distRoboBolaY) <= TAM_ROBO / 2 && distBolaRoboX < TAM_ROBO / 2 + 4) {
+				//Se a bola estiver pertod o volante no eixo y, e em frente ao robô em direção ao campo adversário X,
+				//ele realiza o chute girando. Caso contrário, o mesmo não é realizado.
 				chuteGirando[indVolante] = true;
 			} else {
 				chuteGirando[indVolante] = false;
 			}
-			xObjetivo = xBola - TAM_ROBO * 2; //sbai2009
-			if (vetorSentidoEmXBola <= 0) { //Se Bola parada ou vindo para o gol
-				yObjetivo = yBola; //Acompanha a posicao da bola
-			}
-			if (xBola > TAM_X_CAMPO / 2) { //Se a bola passou do meio de campo
-				if (CENTRO_X_GOL - xBola != 0) {
-					yObjetivo = CENTRO_Y_GOL - (CENTRO_Y_GOL - yBola) * (CENTRO_X_GOL - xObjetivo) / (CENTRO_X_GOL - xBola); //Posiciona robo alinhado para chutar
-					if (yObjetivo < TAM_ROBO / 2 + d)
-						yObjetivo = TAM_ROBO / 2 + d;
-					else if (yObjetivo > TAM_Y_CAMPO - TAM_ROBO / 2 + d)
-						yObjetivo = TAM_Y_CAMPO - TAM_ROBO / 2 + d;
+			r.setObjetivo(bolaPos.x - TAM_ROBO * 2, bolaPos.y); //sbai2009 - o robo fica à uma certa distancia em x da bola, mas segue ela em y
+
+			if (!campoTime(bolaPos)) { //Se a bola passou do meio de campo
+				if (CENTRO_X_GOL - bolaPos.x != 0) {
+					r.setPosicaoObj(r.getPosicaoObj().x,  CENTRO_Y_GOL - (CENTRO_Y_GOL - yBola) * (CENTRO_X_GOL - xObjetivo) / (CENTRO_X_GOL - xBola)); //Posiciona robo alinhado para chutar
+					if (r.getPosicaoObj().y < 3*TAM_ROBO / 4) // Se o robo estiver muito colado da parede inferior, ele tenta se afastar um pouco
+						r.setObjetivo(r.getPosicaoObj().x, 3*TAM_ROBO / 4);
+					else if (yObjetivo > TAM_Y_CAMPO - TAM_ROBO / 2 + d) // Se o robo estiver muito colado da parede inferior, ele tenta se afastar um pouco
+  					r.setObjetivo(r.getPosicaoObj().x, TAM_Y_CAMPO - 3*TAM_ROBO / 4);
 				} else {
-					yObjetivo = CENTRO_Y_GOL;
+					posicionaCentroCampoY(*r)
 				}
-				angObjetivo = atang2(CENTRO_Y_GOL - yBola, CENTRO_X_GOL - xBola);
-			} else { //Se a bola esta no nosso campo
-				yObjetivo = yBola; //Acompanha a posicao da bola
+				r.setAnguloObj(atang2(CENTRO_Y_GOL - bolaPos.y, CENTRO_X_GOL - bolaPos.x));
 			}
 		}
 	}
 
 
+	float dx = xRobo - xAtacante;
+	dx *= dx;
+	float dy = yRobo - yAtacante;
+	dy *= dy;
+	float quadDist = TAM_ROBO * 2;
+	quadDist *= quadDist;
+		if (dx + dy < quadDist) { //Se robos muito proximos
+		if (yAtacante > yRobo) { //Repele em Y
+			yObjetivo = yAtacante - TAM_ROBO * 2;
+		} else {
+			yObjetivo = yAtacante + TAM_ROBO * 2;
+		}
+		if (xAtacante > xRobo) { //Repele em X
+			xObjetivo = xAtacante - TAM_ROBO * 2;
+		} else {
+			xObjetivo = xAtacante + TAM_ROBO * 2;
+		}
+	}
+
+	if (xRobo > TAM_X_CAMPO - TAM_X_DO_GOL * 1.5) {
+		xObjetivo = TAM_X_CAMPO * 0.8;
+		yObjetivo = TAM_Y_CAMPO / 2;
+	}
+
+	if (xObjetivo < TAM_X_DO_GOL + TAM_X_AREA + TAM_ROBO / 2)	// se o robo está na área de defesa
+		xObjetivo = TAM_X_DO_GOL + TAM_X_AREA + TAM_ROBO / 2;
+	// if (xObjetivo>TAM_X_CAMPO+15+TAM_ROBO/2)
+		// xObjetivo=TAM_X_CAMPO+15+TAM_ROBO/2;
+
+	if (xBola >= TAM_X_CAMPO / 2) {
+		xObjetivo = TAM_X_CAMPO / 2;
+		if (yBola > TAM_Y_CAMPO/2 + TAM_Y_DO_GOL/2){// Guarda a diagonal do meio quando a bola esta no canto superior do ataque
+			yObjetivo = TAM_Y_CAMPO/2 + TAM_Y_DO_GOL/2;
+		} else if (yBola < TAM_Y_CAMPO/2 - TAM_Y_DO_GOL/2){ // Guarda a diagonal do meio quando a bola esta no canto inferior do ataque
+			yObjetivo = TAM_Y_CAMPO/2 - TAM_Y_DO_GOL/2;
+		}
+		if (xBola <= xAtacante){// Se passou do atacante acompanha a bola tentando bloquear
+			yObjetivo = yBola;
+		}
+	}
+	if ((xObjetivo <= TAM_X_DO_GOL + 2 * TAM_X_AREA + TAM_ROBO / 2) || (xRobo <= TAM_X_DO_GOL + 2 * TAM_X_AREA + TAM_ROBO / 2)) {
+		xObjetivo = TAM_X_DO_GOL + 2 * TAM_X_AREA + TAM_ROBO / 2;
+	}
+
+	if (trocaEminente) {
+		xObjetivo = TAM_X_AREA;
+		yObjetivo = TAM_Y_CAMPO/2;
+	}
+
+	objetivoRobo[indVolante].x = xObjetivo;
+	objetivoRobo[indVolante].y = yObjetivo;
+	objetivoRobo[indVolante].angulo = angObjetivo;
+	objetivoRobo[indVolante].vel = velObjetivo;
+
+  //FIM da estratégia do volante, essa última parte precisa ser traduzida
 }
