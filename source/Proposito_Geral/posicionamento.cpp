@@ -97,12 +97,25 @@ bool faixaChuteGirandoAdv(const posXY posicao){
 }
 
 float yBolaPrevisto(const float numQuadrosGol, const float vetorSentidoEmYBola, const float posYBola){
-  return numQuadrosGol * vetorSentidoEmYBola + posYBola
+  return (numQuadrosGol * vetorSentidoEmYBola + posYBola);
 }
 
-bool bolaQuadradosInuteis (const posXY posicao) {
-	return ((bolaPos.x > 140 && bolaPos.y >= 100) || 
-			(bolaPos.x > 140 && bolaPos.y <= 30) || 
-			(bolaPos.x > 30 && bolaPos.y >= 100) || 
-			(bolaPos.x > 30 && bolaPos.y <= 30))
+bool quadradoInutilCantoSuperiorEsquerdo(const posXY posicao) {
+  return ((posicao.x > TAM_X_GOL && posicao.x < TAM_X_GOL + TAM_QUADRADO_INUTIL ) && ( posicao.y > TAM_Y_CAMPO - TAM_QUADRADO_INUTIL && posicao.y < TAM_Y_CAMPO));
+}
+
+bool quadradoInutilCantoInferiorEsquerdo(const posXY posicao) {
+  return ((posicao.x > TAM_X_GOL && posicao.x < TAM_X_GOL + TAM_QUADRADO_INUTIL ) && ( posicao.y > 0 && posicao.y < TAM_QUADRADO_INUTIL));
+}
+
+bool quadradoInutilCantoSuperiorDireito(const posXY posicao) {
+  return ((posicao.x > TAM_X_CAMPO - TAM_X_GOL - TAM_QUADRADO_INUTIL && posicao.x < TAM_X_CAMPO TAM_X_GOL) && ( posicao.y > TAM_Y_CAMPO - TAM_QUADRADO_INUTIL && posicao.y < TAM_Y_CAMPO));
+}
+
+bool quadradoInutilCantoInferiorDireito(const posXY posicao) {
+  return ((posicao.x > TAM_X_CAMPO - TAM_X_GOL - TAM_QUADRADO_INUTIL && posicao.x < TAM_X_CAMPO TAM_X_GOL) && ( posicao.y > 0 && posicao.y < TAM_QUADRADO_INUTIL));
+}
+
+bool quadradosInuteis (const posXY posicao) {
+	return (quadradoInutilCantoSuperiorDireito(posicao) || quadradoInutilCantoInferiorDireito(posicao) || quadradoInutilCantoSuperiorEsquerdo(posicao) || quadradoInutilCantoInferiorEsquerdo(posicao));
 }

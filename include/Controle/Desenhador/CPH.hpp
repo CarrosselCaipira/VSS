@@ -20,26 +20,30 @@ class CPH {
 
 	private:
 
-		/** @fn inicializaObstMeta()
-     *  @brief Função que inicializa a matriz de campo potenciais com os valores homogêneos
+		/** 
+		 *  @fn inicializaObstMeta()
+     	 *  @brief Função que inicializa a matriz de campo potenciais com os valores homogêneos
 		 */
 		void inicializaObstMeta();
 
-		/** @fn calculaCampoSOR()
-     *  @brief Calcula Campo Potencial Harmônico utilizando método de relaxação/relaxamento SOR
+		/** 
+		 *  @fn calculaCampoSOR()
+     	 *  @brief Calcula Campo Potencial Harmônico utilizando método de relaxação/relaxamento SOR
 		 */
 		void calculaCampoSOR();
 
 	public:
 
-		/** @fn CPH(Robo& r, std::vector<posXY>& obs)
+		/** 
+		 * 	@fn CPH(Robo& r, std::vector<posXY>& obs)
 		 *  @brief Construtor da classe CPH. Armazena as referencias do robo a ser trasada a rota e dos obstaculos em campo
 		 *  @param Referencia para um robo.
 		 *  @param Referencia para um vetor de posicoes dos obstaculos
 		 */
 		CPH(Robo& r, std::vector<posXY>& obs);
 
-		/** @fn calculaVelRodas()
+		/** 
+		 * 	@fn calculaVelRodas()
 		 *  @brief Calcula o valor de velocidade de cada roda
 		 */
 		calculaVelRodas();

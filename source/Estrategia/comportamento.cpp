@@ -1,163 +1,109 @@
 #include "comportamento.hpp"
 
+
 void Comportamento::posicionaCentroGolXY(Robo& r) {
 
 	r.setPosicaoObj(TAM_X_GOL, CENTRO_Y_GOL);
 }
 
-// define como objetivo do robo a trave superior do gol do nosso lado
-// SET ERRADO
-void posicionaTraveSupeior() {
-	yObj = (TAM_Y_CAMPO - 40)/2 + TAM_Y_GOL;
-	xObj = TAM_X_GOL;
+void Comportamento::tangenciaLinhaSuperiorAreaGol(Robo& r) {
+
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO/2 + TAM_Y_AREA_GOL/2 + TAM_ROBO/2);
 }
 
-// define como objetivo do robo a trave inferior do gol do nosso lado
-// SET ERRADO
-void posicionaTraveInferio() {
-	yObj = (TAM_Y_CAMPO - 40)/2;
-	xObj = TAM_X_GOL;
+void Comportamento::tangenciaLinhaInferiorAreaGol(Robo& r) {
+
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO/2 - TAM_Y_AREA_GOL/2 - TAM_ROBO/2);
 }
 
-// define como objetivo do robo de lado (90 graus)
-// SET ERRADO
-void posiciona90Graus(){
-	this->setAnguloAtualRobo(90);
+void Comportamento::tangenciaLinhaFrenteAreaGol(Robo& r) {
+
+	r.setPosicaoObj(TAM_X_GOL + TAM_X_AREA_GOL + TAM_ROBO/2, r.getPosicaoAtualRobo().y);
 }
 
-// define como objetivo do robo a posicao prevista para a chegada da bola
-// necessario utilizar o vetor sentido, calculando o ponto onde a bola ira atigir o gol(mesmo que muito distante), nao a prosicao prevista da bola
-void posiciona_pos_bola(Bola bola){
-   this->setPosicaoObj(bola.getPosicaoPrevistoBola());
+
+void Comportamento::posicionaTraveSuperior(Robo& r) {
+
+	r.setPosicaoObj(TAM_X_GOL, TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
 }
 
-// define como objetivo do robo a faixa superior do campo
-// @see posicionamento.hpp
-void posiciona_faixa_superior(){
-	PosXY p;
-	p.x = this->getPosicaoAtualRobo().x;
-	p.y = TAM_Y_CAMPO - (TAM_Y_CAMPO - TAM_Y_DO_GOL) / 2 + TAM_ROBO * 2;
-	this->setPosicaoObj(p);
+void Comportamento::posicionaTraveInferior(Robo& r) {
+
+	r.setPosicaoObj(TAM_X_GOL, TAM_Y_CAMPO/2 - TAM_Y_GOL/2);
 }
 
-// define como objetivo do robo a faixa superior do campo
-// @see posicionamento.hpp
-void posiciona_faixa_inferior(){
-	PosXY p;
-	p.x = this->getPosicaoAtualRobo().x;
-	p.y = (TAM_Y_CAMPO - TAMANHO_DO_GOL)/2 - TAM_ROBO*2;
-	this->setPosicaoObj(p);
+void Comportamento::posiciona90Graus(Robo& r){
+	
+	r.setAnguloAtualRobo(90f);
 }
 
-// define como objetivo do robo o centro do campo em X
-void posicionaCentroCampoX (Robo& r){
-	PosXY p;
-	p.y = r.getPosicaoObj().y;
-	p.x = TAM_X_CAMPO/2;
-	r.setPosicaoObj(p);
+void Comportamento::posicionaPosBola(Robo& r, Bola& b){
+   
+   r.setPosicaoObj(b.getPosicaoAtualBola().x, b.getPosicaoAtualBola().y);
 }
 
-// define como objetivo do robo o centro do campo em Y
-void posicionaCentroCampoY () {
-	PosXY p;
-	p.x = r.getPosicaoObj().x;
-	p.y = TAM_Y_CAMPO/2;
-	r.setPosicaoObj(p);
+void Comportamento::posicionaPosBolaEmX(Robo& r, Bola& b){
+   
+   r.setPosicaoObj(b.getPosicaoAtualBola().x, r.getPosicaoAtualRobo().y);
 }
 
-// define como objetivo do robo o mesmo objetivo anterior mas impedindo que ele se movimente no eixo X
-void comportamento::permanece_no_eixoX(Robo& r){
-	posXY atual, objetivo;
-	objetivo = getPosicaoObj();
-	atual = getPosicaoAtualRobo();
-	objetivo.x = atual.x;
-	r.setPosicaoObj(objetivo);
+void Comportamento::posicionaPosBolaEmY(Robo& r, Bola& b){
+   
+   r.setPosicaoObj(r.getPosicaoAtualRobo().x, b.getPosicaoAtualBola().y);
 }
 
-// define como objetivo do robo o mesmo objetivo anterior mas impedindo que ele se movimente no eixo Y
-void comportamento::permanece_no_eixoY(Robo& r){
-	posXY atual, objetivo;
-	objetivo = getPosicaoObj();
-	atual = getPosicaoAtualRobo();
-	objetivo.y = atual.y;
-	r.setPosicaoObj(objetivo);
+void Comportamento::posicionaFaixaSuperior(Robo& r){
+	
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
 }
 
-// define como objetivo do robo a posicao logo abaixo da bola (robo colado com a bola)
-void comportamento::posiciona_abaixo_da_bola(Robo& r){
-	posXY bola,obj;	//objetivo inicial e posicao da bola
-	posXY p;		//objetivo final
-	obj = getPosicaoObj();
-	bola = getPosicaoAtualBola();
-	p.x = obj.x;
-	p.y = bola.y - TAM_ROBO/2;
-	r.SetPosicaoObj(p);
+void Comportamento::posicionaFaixaInferior(Robo& r){
+	
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO/2 - TAM_Y_GOL/2);
 }
 
-// define como objetivo do robo a posicao logo acima da bola (robo colado com a bola)
-void comportamento::posiciona_acima_da_bola(Robo& r){
-	posXY bola,obj;	//objetivo inicial e posicao da bola
-	posXY p;		//objetivo final
-	obj = getPosicaoObj();
-	bola = getPosicaoAtualBola();
-	p.x = obj.x;
-	p.y = bola.y + TAM_ROBO/2;
-	r.SetPosicaoObj(p);
+void Comportamento::posicionaCentroCampoX(Robo& r){
+
+	r.setPosicaoObj(TAM_X_CAMPO/2, r.getPosicaoAtualRobo().y);
 }
 
-// define como objetivo do robo o meio de campo, mas sem tocar na linha de meio de campo, ficando atras da linha.
-void comportamento::posiciona_atras_do_meio_campo(Robo& r){
-	posXY p;
-	p = getPosicaoObj();
-	p.x = (TAM_X_CAMPO-TAM_ROBO)/2 // TAM_X_CAMPO/2 - TAM_ROBO/2
-	r.setPosicaoObj(p);
+void Comportamento::posicionaCentroCampoY (Robo& r) {
+	
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO/2);
 }
 
-// define como objetivo do robo a posicao prevista da bola
-void comportamento::posiciona_espera_bola(Robo& r){
-	posXY p;
-	p = estadoPrevistoBola();
-	r.setPosicaoObj(p);
+void Comportamento::permaneceNoEixoX(Robo& r){
+
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, r.getPosicaoObj().y);
 }
 
-// define como objetivo do robo
-// REESCRITA
-void comportamento::posiciona_abaixo_bola(Robo& r){
-	posXY destino, bola;
-	bola = getPosicaoAtualBola();
-	destino.y = bola.y - TAM_ROBO;
-	destino.x = getPosicaoAtualRobo().x;
-	r.setPosicaoObj(destino);
+void Comportamento::permaneceNoEixoY(Robo& r){
+	
+	r.setPosicaoObj(r.getPosicaoObj().x, r.getPosicaoAtualRobo().y);
 }
 
-// define como objetivo do robo
-// REESCRITA
-void comportamento::posiciona_acima_bola(Robo& r){
-	posXY destino, bola;
-	bola = getPosicaoAtualBola();
-	destino.y = bola.y + TAM_ROBO;
-	destino.x = getPosicaoAtualRobo().x;
-	r.setPosicaoObj(destino);
+void Comportamento::posicionaAbaixoBola(Robo& r,Bola& b){
+	
+	r.setPosicaoObj(b.getPosicaoAtualBola().x, b.getPosicaoAtualBola().y - TAM_ROBO/2);
 }
 
-// define como objetivo do robo, em y, a parede inferior do campo.
-void comportamento::posiciona_borda_inferior(Robo& r){
-   float y = TAM_ROBO / 2;
-   float x = getPosicaoAtualRobo().x;
-   r.setPosicaoObj(x, y);
+void Comportamento::posicionaAcimaBola(Robo& r,Bola& b){
+	
+	r.setPosicaoObj(b.getPosicaoAtualBola().x, b.getPosicaoAtualBola().y + TAM_ROBO/2);
 }
 
-// define como objetivo do robo, em y, a parede superior do campo.
-void comportamento::posiciona_borda_superior(Robo& r){
-   float y = TAM_Y_CAMPO - TAM_ROBO / 2;
-   float x = getPosicaoAtualRobo().x;
-   r.setPosicaoObj(x, y);
+void Comportamento::posicionaAtrasMeioCampo(Robo& r){
+	
+	r.setPosicaoObj(TAM_X_CAMPO/2 - TAM_ROBO/2, r.getPosicaoAtualRobo().y);
 }
 
-// define como objetivo do robo
-void comportamento::posiciona_segue_bola(Robo& r){
-   posXY p;
-   p = getPosicaoAtualBola();
+void Comportamento::posicionaParedeInferior(Robo& r){
 
-   r.setPosicaoObj(p);
+	r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_ROBO/2);
 }
+
+void Comportamento::posicionaParedeSuperior(Robo& r){
+   
+   r.setPosicaoObj(r.getPosicaoAtualRobo().x, TAM_Y_CAMPO - TAM_ROBO/2);
+}
+

@@ -10,13 +10,15 @@
 #define TAM_X_CAMPO TAM_X_CAMPO_SEM_GOL + TAM_X_GOL + TAM_X_GOL // 170
 #define TAM_Y_CAMPO 130	// em cemtimetros
 
+#define TAM_QUADRADO_INUTIL 7
+
 #define TAM_X_AREA_GOL 15
+#define TAM_Y_AREA_GOL 70
 #define CENTRO_X_GOL_ADV (TAM_X_CAMPO-TAM_X_GOL)
 #define CENTRO_Y_GOL TAM_Y_CAMPO / 2
 
 /* SOB ANALISE DE NECESSIDADE */
 // #define POS_X_NECESSARIA_PARA_GOLEIRO_TER_TEMPO_DEFENDER (TAM_X_GOL + TAM_ROBO/2 + 2)	// 2 cm a mais para o robo ter espaco para andar
-// #define TAM_Y_AREA_GOL 70
 // #define DIST_GIRO TAM_ROBO*2
 
 #define INICIO_AREA_ATUACAO_GOLEIRO (TAM_X_GOL) // 10 cm
@@ -105,6 +107,24 @@ bool faixaChuteGirandoTime(const posXY posicao);
 // Area definida para fazer o chute girando.
 // Faixa pertencente a faixaXDaAreaGolAdv() mas menor, onde o robo fara o chute girando.
 bool faixaChuteGirandoAdv(const posXY posicao);
+
+// Função que baseando-se em dados retorna o Y esperado da bola em NumQuadrosGol.
+float yBolaPrevisto(const float numQuadrosGol, const float vetorSentidoEmYBola, const float posYBola);
+
+// Area definida pelo quadrado inútil no canto superior esquerdo.
+bool quadradoInutilCantoSuperiorEsquerdo(const posXY posicao);
+
+// Area definida pelo quadrado inútil no canto inferior esquerdo.
+bool quadradoInutilCantoInferiorEsquerdo(const posXY posicao);
+
+// Area definida pelo quadrado inútil no canto superior direito.
+bool quadradoInutilCantoSuperiorDireito(const posXY posicao);
+
+// Area definida pelo quadrado inútil no canto inferior direito.
+bool quadradoInutilCantoInferiorDireito(const posXY posicao);
+
+// Area definida por qualquer dos quadrados inuteis.
+bool quadradosInuteis (const posXY posicao);
 
 /* POSICIONAMENTO_H */
 #endif

@@ -8,28 +8,21 @@ void CPH::inicializaObstMeta() {
 	int i, j, k;
 
 	/* Inicializa paredes do campo de futebol */
-	for (i = 0; i < MAX_Y; i++) { // Parede da esquerda
-		campoPotencial.matPot[0][i] = 1;
-		campoPotencial.matBoolPot[0][i] = true;
-	}
-	for (i = 0; i < MAX_Y; i++) { // Parede da direita
-		campoPotencial.matPot[MAX_X - 1][i] = 1;
-		campoPotencial.matBoolPot[MAX_X - 1][i] = true;
-	}
-	for (i = 0; i < MAX_X; i++) { // Parede de baixo
-		campoPotencial.matPot[i][0] = 1;
-		campoPotencial.matBoolPot[i][0] = true;
-	}
-	for (i = 0; i < MAX_X; i++) { // Parede de cima
-		campoPotencial.matPot[i][MAX_Y - 1] = 1;
-		campoPotencial.matBoolPot[i][MAX_Y - 1] = true;
-	}
+	for (i = 0; i < MAX_Y; i++) {
+	    
+		for (j=0; j<MAX_X; j++) {
 
-	/* Inicializa celulas livres */
-	for (i = 1; i < MAX_X - 1; i++) {
-		for (j = 1; j < MAX_Y - 1; j++) {
-			campoPotencial.matBoolPot[i][j] = false;
-			campoPotencial.matPot[i][j] = 0;
+			if (i==0 || i==MAX_Y-1 || j==0 || j==MAX_X-1) {
+
+				campoPotencial.matPot[i][j] = 1;
+				campoPotencial.matBoolPot[i][j] = true;
+			}
+
+			else {
+
+				campoPotencial.matPot[i][j] = 0;
+				campoPotencial.matBoolPot[i][j] = false;
+			}
 		}
 	}
 
@@ -43,7 +36,7 @@ void CPH::inicializaObstMeta() {
 	}
 	/*******************************************************************/
 
-	/* Define Celulas que contem o objetivo do robo */
+	/* Define Celula que contem o objetivo do robo */
 	campoPotencial.matBoolPot[(robo.getPosicaoObj().x / DIV_CAMPO)][(robo.getPosicaoObj().y / DIV_CAMPO)] = true;
 
 	/* Parede virtual atras da bola para evitar que o robo conduza a bola contra o proprio gol */
@@ -90,26 +83,33 @@ bool CPH::calculaCampoSOR() {
 	bool convergiu = true;
 
 	do {
+
 		convergiu = true;
+
 		for (i = 1; i < MAX_X - 1; i++) {
+
 			for (j = 1; j < MAX_Y - 1; j++) {
+
 				if (campoPotencial.matBoolPot[i][j] == false) {
-					resultTemp = W_SOR
-							* (campoPotencial.matPot[i + 1][j]
-									+ campoPotencial.matPot[i - 1][j]
-									+ campoPotencial.matPot[i][j + 1]
-									+ campoPotencial.matPot[i][j - 1]
-									- 4 * campoPotencial.matPot[i][j]) / 4
-							+ campoPotencial.matPot[i][j];
-					if ((campoPotencial.matPot[i][j] - resultTemp > PRECISAO_CONVERGENCIA)
-							|| (resultTemp - campoPotencial.matPot[i][j] > PRECISAO_CONVERGENCIA))
+					
+					resultTemp = W_SOR * (campoPotencial.matPot[i + 1][j]
+								 + campoPotencial.matPot[i - 1][j]
+								 + campoPotencial.matPot[i][j + 1]
+								 + campoPotencial.matPot[i][j - 1]
+								 - 4 * campoPotencial.matPot[i][j]) / 4
+								 + campoPotencial.matPot[i][j];
+
+					if ((campoPotencial.matPot[i][j] - resultTemp > PRECISAO_CONVERGENCIA) || (resultTemp - campoPotencial.matPot[i][j] > PRECISAO_CONVERGENCIA))
+						
 						convergiu = false;
+
 					campoPotencial.matPot[i][j] = resultTemp;
 				}
 
 			}
 		}
 	} while (!convergiu);
+	
 	return convergiu;
 }
 
