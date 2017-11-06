@@ -89,14 +89,17 @@ void Robo::getDistObjRobo(posXY& dist) {
 }
 
 double Robo::getDistEuclianaObjRobo() {
-    double soma;
-    int i;
-
-		soma = pow(estadoObjRobo.posicao.x - estadoAtualRobo.posicao.x, 2);
-    soma += pow(estadoObjRobo.posicao.y - estadoAtualRobo.posicao.y, 2);
-
-    return sqrt(soma);
+		return this->estadoAtualRobo.posicao.getDistEucliana(this->estadoObjRobo.posicao);
 }
+
+bool Robo::isRoboComBola(const posXY posicao, int raio) {
+	return (raioAtaque(posicao, raio) && (posicao.x >= (this->x + TAM_ROBO / 2)));
+}
+
+bool Robo::isInbolaNoIntervaloYRobo(const posXY posicao) {
+	return (this->y <= (posicao.y - TAM_ROBO / 2) && this->y >= (posicao.y + TAM_ROBO / 2));
+}
+
 /****************************************************************/
 
 /***************************** SETTERS **************************/

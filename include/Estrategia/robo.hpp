@@ -93,6 +93,12 @@ class Robo {
 
 				/* retorna a distancia euclidiana entre o Objetivo e o Robo */
 				double getDistEuclianaObjRobo();
+
+				// Checa se o robo está com a bola logo a frente.
+				bool isRoboComBola(const posXY posicao, int raio);
+
+				// Checa se a bola está no intervalo y do robô.
+				bool Robo::isInbolaNoIntervaloYRobo(const posXY posicao);
 				/****************************************************************/
 
         /***************************** SETTERS **************************/
