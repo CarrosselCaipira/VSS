@@ -76,17 +76,17 @@ struct posXY {
 	bool isInFaixaChuteGirandoAdv();
 
 	// Area definida pelo quadrado inútil no canto superior esquerdo.
-	bool posXY::isInQuadradoInutilCantoSuperiorEsquerdo();
+	bool isInQuadradoInutilCantoSuperiorEsquerdo();
 	// Area definida pelo quadrado inútil no canto inferior esquerdo.
-	bool posXY::isInQuadradoInutilCantoInferiorEsquerdo();
+	bool isInQuadradoInutilCantoInferiorEsquerdo();
 	// Area definida pelo quadrado inútil no canto superior direito.
-	bool posXY::isInQuadradoInutilCantoSuperiorDireito();
+	bool isInQuadradoInutilCantoSuperiorDireito();
 	// Area definida pelo quadrado inútil no canto inferior direito.
-	bool posXY::isInQuadradoInutilCantoInferiorDireito();
+	bool isInQuadradoInutilCantoInferiorDireito();
 	// Area definida por qualquer dos quadrados inuteis.
-	bool posXY::isInQuadradosInuteis ();
+	bool isInQuadradosInuteis ();
 	// Checa se a bola está no raio de ataque dado, baseando-se na posição do robô.
-	bool posXY::isInRaio (posXY posicao, int raio);
+	bool isInRaio (posXY posicao, int raio);
 
 
 	/** @fn posXY& operator=(const int i)

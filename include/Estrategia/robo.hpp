@@ -98,7 +98,7 @@ class Robo {
 				bool isRoboComBola(const posXY posicao, int raio);
 
 				// Checa se a bola está no intervalo y do robô.
-				bool Robo::isInbolaNoIntervaloYRobo(const posXY posicao);
+				bool Robo::isBolaNoIntervaloYRobo(const posXY posicao);
 				/****************************************************************/
 
         /***************************** SETTERS **************************/

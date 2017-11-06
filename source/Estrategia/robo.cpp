@@ -96,7 +96,7 @@ bool Robo::isRoboComBola(const posXY posicao, int raio) {
 	return (raioAtaque(posicao, raio) && (posicao.x >= (this->x + TAM_ROBO / 2)));
 }
 
-bool Robo::isInbolaNoIntervaloYRobo(const posXY posicao) {
+bool Robo::isBolaNoIntervaloYRobo(const posXY posicao) {
 	return (this->y <= (posicao.y - TAM_ROBO / 2) && this->y >= (posicao.y + TAM_ROBO / 2));
 }
 

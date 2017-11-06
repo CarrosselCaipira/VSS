@@ -2,7 +2,7 @@
 #define COMPORTAMENTO_H
 
 #include "robo.hpp"
-#include "posicionameto.hpp"
+#include "propositoGeralAtuadores.hpp"
 
 class Comportamento {
  public:

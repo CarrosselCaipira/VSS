@@ -1,6 +1,4 @@
 #include "roteiro.hpp"
-#include "auxiliares.hpp"
-#include <cmath>
 
 void Roteiro::atacanteBasico(Robo& r, Bola& b) {
 
