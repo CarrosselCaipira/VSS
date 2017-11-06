@@ -4,6 +4,18 @@ bool campoTime(const posXY posicao){
   return posicao.x < (TAM_X_CAMPO/2);
 }
 
+bool campoAdv(const posXY posicao) {
+	return posicao.x >= (TAM_X_CAMPO/2);
+}
+
+bool campoMetadeSuperior(const posXY posicao) {
+	return posicao.y > (TAM_Y_CAMPO/2);
+}
+
+bool campoMetadeInferior(const posXY posicao) {
+	return posicao.y <= (TAM_Y_CAMPO/2);
+}
+
 bool faixaSuperior(const posXY posicao){
   return posicao.y > (TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
 }
@@ -118,4 +130,16 @@ bool quadradoInutilCantoInferiorDireito(const posXY posicao) {
 
 bool quadradosInuteis (const posXY posicao) {
 	return (quadradoInutilCantoSuperiorDireito(posicao) || quadradoInutilCantoInferiorDireito(posicao) || quadradoInutilCantoSuperiorEsquerdo(posicao) || quadradoInutilCantoInferiorEsquerdo(posicao));
+}
+
+bool raioAtaque (const posXY posicao, int raio){
+  return (((posicao.x - this->x)^2 + (posicao.y - this->y)^2) <= raio);
+}
+
+bool roboComBola(const posXY posicao, int raio){
+	return (raioAtaque(posicao, raio) && (posicao.x >= (this->x + TAM_ROBO/2)));
+}
+
+bool bolaNoIntervaloYRobo(const posXY posicao){
+	return (r.getPosicaoAtualRobo().y <= (b.getPosicaoAtualBola().y - TAM_ROBO/2) && r.getPosicaoAtualRobo().y >= (b.getPosicaoAtualBola().y + TAM_ROBO/2));
 }

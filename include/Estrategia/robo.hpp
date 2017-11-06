@@ -14,7 +14,8 @@
 #define TAM_ROBO 8 //tamanho do lado do robo em cm
 
 enum INDEX_ATRIBUTOS {
-	CHUTE_GIRANDO,
+	CHUTE_GIRANDO_HORARIO,
+	CHUTE_GIRANDO_ANTI_HORARIO,
 	CHUTANDO,
 
 	/* Adicionar os novos atributos antes de BITSET_SIZE */

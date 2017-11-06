@@ -5,6 +5,7 @@
 
 #define TAM_X_GOL 10	// em cemtimetros
 #define TAM_Y_GOL 40
+#define RAIO_ATAQUE 6
 
 #define TAM_X_CAMPO_SEM_GOL 150	// em cemtimetros
 #define TAM_X_CAMPO TAM_X_CAMPO_SEM_GOL + TAM_X_GOL + TAM_X_GOL // 170
@@ -34,6 +35,15 @@
 
 // Nossa metade do campo.
 bool campoTime(const posXY posicao);
+
+// Metade do campo do adversario.
+bool campoAdv(const posXY posicao);
+
+// Metade superior do campo.
+bool campoMetadeSuperior(const posXY posicao);
+
+// Metade inferior do campo.
+bool campoMetadeInferior(const posXY posicao);
 
 // faixa superior do campo.
 bool faixaSuperior(const posXY posicao);
@@ -124,7 +134,16 @@ bool quadradoInutilCantoSuperiorDireito(const posXY posicao);
 bool quadradoInutilCantoInferiorDireito(const posXY posicao);
 
 // Area definida por qualquer dos quadrados inuteis.
-bool quadradosInuteis (const posXY posicao);
+bool quadradosInuteis(const posXY posicao);
+
+// Checa se a bola está no raio de ataque dado, baseando-se na posição do robô.
+bool raioAtaque(const posXY posicao, int raio);
+
+// Checa se o robo está com a bola logo a frente.
+bool roboComBola(const posXY posicao, int raio);
+
+// Checa se a bola está no intervalo y do robô.
+bool bolaNoIntervaloYRobo(cont posXY posicao);
 
 /* POSICIONAMENTO_H */
 #endif

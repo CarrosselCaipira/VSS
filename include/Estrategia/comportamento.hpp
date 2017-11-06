@@ -8,12 +8,28 @@ class Comportamento {
  public:
 
 	/**
+	 * @fn Comportamento::posicionaGolX(Robo& r)
+	 * @brief Define o obj do robo como sendo o x do gol.
+	 * @param Referencia para um robo
+	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
+	 */
+	static void posicionaGolX(Robo& r);
+
+	/**
 	 * @fn Comportamento::posicionaCentroGolXY(Robo& r)
- 	 * @brief Define o obj do robo como sendo o centro do gol adversario.
+ 	 * @brief Define o obj do robo como sendo o centro do nosso gol.
  	 * @param Referencia para um robo
  	 * @Author Danilo Weber Nunes
 	 */
  	static void posicionaCentroGolXY(Robo& r);
+
+	/**
+	 * @fn Comportamento::posicionaCentroGolXYAdv(Robo& r)
+ 	 * @brief Define o obj do robo como sendo o centro do gol adversario.
+ 	 * @param Referencia para um robo
+ 	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
+	 */
+ 	static void posicionaCentroGolXYAdv(Robo& r);
 
  	/**
 	 * @fn Comportamento::tangenciaLinhaSuperiorAreaGol(Robo& r)
@@ -179,6 +195,15 @@ class Comportamento {
  	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
  	 */
  	static void posicionaParedeSuperior(Robo& r);
+
+ 	/**
+ 	 * @fn Comportamento::segueBolaEmXFrente(Robo& r, Bola& b)
+ 	 * @brief Segue a bola em X mantendo uma distância de meio robô à frente.
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void segueBolaEmXFrente(Robo& r, Bola& b);
 
  };
 
