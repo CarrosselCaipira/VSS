@@ -51,6 +51,9 @@ struct posXY {
 	double getDistY(const posXY pos);
 
 	bool isInCampoTime();
+	bool isInCampoAdv();
+	bool isInCampoMetadeSuperior();
+	bool isIncampoMetadeInferior();
 	bool isInFaixaSuperior();
 	bool isInFaixaInferior();
 	bool isInFaixaCentral();

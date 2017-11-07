@@ -29,6 +29,18 @@ bool posXY::isInCampoTime() {
   return this->x < (TAM_X_CAMPO/2);
 }
 
+bool posXY::isInCampoAdv(const posXY posicao) {
+	return posicao.x >= (TAM_X_CAMPO/2);
+}
+
+bool posXY::isInCampoMetadeSuperior(const posXY posicao) {
+	return posicao.y > (TAM_Y_CAMPO/2);
+}
+
+bool posXY::isInCampoMetadeInferior(const posXY posicao) {
+	return posicao.y <= (TAM_Y_CAMPO/2);
+}
+
 bool posXY::isInFaixaSuperior() {
   return this->y > (TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
 }

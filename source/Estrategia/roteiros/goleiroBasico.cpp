@@ -1,20 +1,18 @@
 #include "roteiro.hpp"
-#include "auxiliares.hpp"
-#include <cmath>
 
 void Roteiro::goleiroBasico(Robo& r){
 
 	//Se o robô estiver com a bola
-	if(roboComBola(b.getPosicaoAtualBola(),RAIO_ATAQUE)) {
+	if(r.isRoboComBola(b.getPosicaoAtualBola(),RAIO_ATAQUE)) {
 
 		// Se estiver na metade superior do campo.
-		if(campoMetadeSuperior(b.getPosicaoAtualBola())) {
+		if(b.getPosicaoAtualBola().isInCampoMetadeSuperior()) {
 
 			// Gira no sentido anti horário.
 			r.atributos.set(CHUTE_GIRANDO_ANTI_HORARIO);
 		}
 
-		// Se estiver na metade inferior do campo.
+		// Se estiver na metade inferior do campofico.
 		else {
 
 			// Gira no sentido horário.
@@ -39,7 +37,7 @@ void Roteiro::goleiroBasico(Robo& r){
 	}
 
 	//Se estiver na metade do adversário
-	else if(campoAdv(b.getPosicaoAtualBola())) {
+	else if(b.getPosicaoAtualBola().isInCampoAdv()) {
 		//posiciona o robô no meio do gol
 		posicionaCentroGolXY(r);
 	}
@@ -48,13 +46,13 @@ void Roteiro::goleiroBasico(Robo& r){
 	else {
 
 		//Se estiver na faixa superior
-		if (faixaSuperior(b.getPosicaoAtualBola())) {
+		if (b.getPosicaoAtualBola().isInFaixaSuperior()) {
 			//Para na trave superior
 			posicionaTraveSuperior(r);
 		}
 
 		//Se estiver na faixa inferior
-		else if (faixaInferior(b.getPosicaoAtualBola())) {
+		else if (b.getPosicaoAtualBola().isInFaixaInferior()) {
 			//Para na trave inferior
 			posicionaTraveInferior(r);
 		}
