@@ -1,7 +1,7 @@
-#ifndef CPH_HPP
-#define CPH_HPP
-
 #include "robo.hpp"
+#include "comportamento.hpp"
+#include "roteiro.hpp"
+#include <vector>
 
 #define MAX_X 43
 #define MAX_Y 33			// Tem que ser 35 e deslocar 1 em todas as coordenadas em Y
@@ -9,6 +9,7 @@
 #define PRECISAO_CONVERGENCIA 0.00001			// PRECISÃO DE CONVERGÊNCIA
 #define KF 0.5 //Constante da força aplicada pelo campo potencial
 #define K_ALFA 0.07
+#define W_SOR 1.8
 
 struct campoPot {
 	float matPot[MAX_X][MAX_Y]; // Valores pertencentes ao intervalo [0,1]
@@ -32,7 +33,7 @@ class CPH {
 		 *  @fn calculaCampoSOR()
      	 *  @brief Calcula Campo Potencial Harmônico utilizando método de relaxação/relaxamento SOR
 		 */
-		void calculaCampoSOR();
+		bool calculaCampoSOR();
 
 	public:
 
@@ -50,6 +51,3 @@ class CPH {
 		 */
 		void calculaVelRodas();
 };
-
-#endif /* CPH_HPP */
-

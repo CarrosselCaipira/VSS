@@ -37,7 +37,7 @@ void CPH::inicializaObstMeta() {
 	/*******************************************************************/
 
 	/* Define Celula que contem o objetivo do robo */
-	campoPotencial.matBoolPot[(robo.getPosicaoObj().x / DIV_CAMPO)][(robo.getPosicaoObj().y / DIV_CAMPO)] = true;
+	campoPotencial.matBoolPot[(int)(robo.getPosicaoObj().x / DIV_CAMPO)][(int)(robo.getPosicaoObj().y / DIV_CAMPO)] = true;
 
 	/* Parede virtual atras da bola para evitar que o robo conduza a bola contra o proprio gol */
 	if (robo.getRoteiro() == ATACANTE_BASICO) {
@@ -71,8 +71,8 @@ void CPH::inicializaObstMeta() {
 
 	/* Insere no campo potencial os obstaculos (robos adversarios, por exemplo) */
 	for (i = 0; i < posOstaculos.size(); i++) {
-		campoPotencial.matPot[((int) posOstaculos.x / DIV_CAMPO)][((int) posOstaculos.y / DIV_CAMPO)] = 1;
-		campoPotencial.matBoolPot[((int) posOstaculos.x / DIV_CAMPO)][((int) posOstaculos.y / DIV_CAMPO)] = true;
+		campoPotencial.matPot[((int) posOstaculos[i].x / DIV_CAMPO)][((int) posOstaculos[i].y / DIV_CAMPO)] = 1;
+		campoPotencial.matBoolPot[((int) posOstaculos[i].x / DIV_CAMPO)][((int) posOstaculos[i].y / DIV_CAMPO)] = true;
 	}
 
 }
@@ -229,7 +229,7 @@ void CPH::calculaVelRodas() {
 
 			if (abs(vObj) > 127)
 				vObj = 127 * vSignal;
-			if (indJogador != indAtacante){ // Robo defensor
+			if (robo.getRoteiro() == ATACANTE_BASICO){ // Robo defensor
 				if (distEuclidianaObjRobo < RAIO_DISTANCIA){ // Se a distancia for menor que o raio de distancia aceitavel chegou no objetivo
 					if (abs(vObj) > 0)
 						vObj = 0;
@@ -239,7 +239,7 @@ void CPH::calculaVelRodas() {
 				if (abs(vObj) < 42)
 					vObj = 42 * vSignal;
 			} else {
-				if (abs(dAng) >= 80 || velObjetivo == 0)
+				if (abs(dAng) >= 80)
 					if (vObj > 0)
 						vObj = 0;
 			}
