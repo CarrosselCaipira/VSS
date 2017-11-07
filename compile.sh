@@ -1,0 +1,12 @@
+g++ -c atacanteBasico.cpp -std=c++11
+g++ -c camera.cpp -std=c++11
+g++ -c comportamento.cpp -std=c++11
+g++ -c CPH.cpp -std=c++11
+g++ -c gestorArq.cpp -std=c++11
+g++ -c goleiroBasico.cpp -std=c++11
+g++ -c propositoGeralAtuadores.cpp -std=c++11
+g++ -c propositoGeralCamera.cpp -std=c++11
+g++ -c radio.cpp -std=c++11
+g++ -c robo.cpp -std=c++11
+g++ -c volanteBasico.cpp -std=c++11
+g++ -o MAIN MAIN.cpp volanteBasico.o robo.o radio.o propositoGeralCamera.o propositoGeralAtuadores.o goleiroBasico.o gestorArq.o CPH.o comportamento.o camera.o atacanteBasico.o `pkg-config --cflags --libs opencv` -std=c++11
