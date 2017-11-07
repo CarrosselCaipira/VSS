@@ -52,14 +52,14 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - ALARANJADO:
-      H_MIN: 4
-      H_MAX: 12
-      S_MIN: 139
-      S_MAX: 195
-      V_MIN: 192
-      V_MAX: 255
-      AreaMinima: 100
-      AreaMaxima: 700
+      H_MIN: 0
+      H_MAX: 179
+      S_MIN: 103
+      S_MAX: 142
+      V_MIN: 50
+      V_MAX: 217
+      AreaMinima: 500
+      AreaMaxima: 1000
       NumObjetosCor: 1
       VezesErode: 2
       LarguraRetanguloErode: 3
