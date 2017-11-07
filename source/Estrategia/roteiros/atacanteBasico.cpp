@@ -5,7 +5,7 @@ void Roteiro::atacanteBasico(Robo& r, Bola& b) {
 	//Se o robô estiver com a bola
 	if(r.isRoboComBola(b.getPosicaoAtualBola(),RAIO_ATAQUE)) {
 		//Se a bola está no intervalo do robô em y
-		if(b.getPosicaoAtualBola().isBolaNoIntervaloYRobo()) {
+		if(r.isBolaNoIntervaloYRobo(b.getPosicaoAtualBola())){
 			//O objetivo vai ser o meio do gol do adversário
 			posicionaCentroGolXYAdv(r);
 		}
