@@ -9,7 +9,7 @@ void CPH::inicializaObstMeta() {
 
 	/* Inicializa paredes do campo de futebol */
 	for (i = 0; i < MAX_Y; i++) {
-	    
+
 		for (j=0; j<MAX_X; j++) {
 
 			if (i==0 || i==MAX_Y-1 || j==0 || j==MAX_X-1) {
@@ -40,7 +40,7 @@ void CPH::inicializaObstMeta() {
 	campoPotencial.matBoolPot[(robo.getPosicaoObj().x / DIV_CAMPO)][(robo.getPosicaoObj().y / DIV_CAMPO)] = true;
 
 	/* Parede virtual atras da bola para evitar que o robo conduza a bola contra o proprio gol */
-	if (robo.getRoteiro() == ATACANTE) {
+	if (robo.getRoteiro() == ATACANTE_BASICO) {
 		for (j = (robo.getPosicaoObj().y / DIV_CAMPO) - 1; j <= (robo.getPosicaoObj().y / DIV_CAMPO) + 2; j++) {
 			for (i = (robo.getPosicaoObj().x / DIV_CAMPO) + 1; i < (robo.getPosicaoObj().x / DIV_CAMPO) + 4; i++) {
 				campoPotencial.matBoolPot[i][j] = true; // parede virtual da meta
@@ -91,7 +91,7 @@ bool CPH::calculaCampoSOR() {
 			for (j = 1; j < MAX_Y - 1; j++) {
 
 				if (campoPotencial.matBoolPot[i][j] == false) {
-					
+
 					resultTemp = W_SOR * (campoPotencial.matPot[i + 1][j]
 								 + campoPotencial.matPot[i - 1][j]
 								 + campoPotencial.matPot[i][j + 1]
@@ -100,7 +100,7 @@ bool CPH::calculaCampoSOR() {
 								 + campoPotencial.matPot[i][j];
 
 					if ((campoPotencial.matPot[i][j] - resultTemp > PRECISAO_CONVERGENCIA) || (resultTemp - campoPotencial.matPot[i][j] > PRECISAO_CONVERGENCIA))
-						
+
 						convergiu = false;
 
 					campoPotencial.matPot[i][j] = resultTemp;
@@ -109,7 +109,7 @@ bool CPH::calculaCampoSOR() {
 			}
 		}
 	} while (!convergiu);
-	
+
 	return convergiu;
 }
 
@@ -121,11 +121,15 @@ void CPH::calculaVelRodas() {
 
 	/* Controle dos Robôs Atacante e Defensor */
 	/* NA CBR2016 ESTA CONDICAO ESTAVA DEFINIDA PARA SEMPRE VERDADEIRA ("if(true)") >> NECESSARIA ANALISE */
-	if (robo.getRoteiro() == ATACANTE || robo.getRoteiro() == VOLANTE) {
-		if(robo.atributos.test(CHUTANDO) == false){
+	if (robo.getRoteiro() == ATACANTE_BASICO || robo.getRoteiro() == VOLANTE_BASICO) {
+		if(robo.atributos.test(CHUTE_GIRANDO_HORARIO))
+			robo.setVelocidadeAtualRobo(-5, 5);
+		else if(robo.atributos.test(CHUTE_GIRANDO_ANTI_HORARIO))
+			robo.setVelocidadeAtualRobo(5, -5);
+		else {
 
-			inicializa_obst_meta();
-			calcula_campo_SOR();
+			CPH::inicializaObstMeta();
+			CPH::calculaCampoSOR();
 
 			robo.setEstadoAtualComoEstadoPrev();
 			/* analizar utilidade de salvarmos estado anterior, atualmente removida */
@@ -194,7 +198,7 @@ void CPH::calculaVelRodas() {
 
 			//Velocidade do robô calculada em função da força vinda do campo potencial
 			vObj = (2 / MASSA_ROBO) * (forcaCelulaCampoPot * sin(directionAngle * (M_PI / 180)) * (distObjRobo.y) + forcaCelulaCampoPot * cos(directionAngle * (M_PI / 180)) * (distObjRobo.x));
-			
+
 			K_ro = vObj/(distEuclidianaObjRobo * cos(dAng * (M_PI / 180)));
 
 			if (vObj < 127 && vObj >= 0){
@@ -320,14 +324,6 @@ void CPH::calculaVelRodas() {
 		/**
 		 * CHUTE_GIRANDO
 		 */
-		}
-		else {
-			robo.setEstadoAtualComoEstadoPrev();
-			/* SUBSTITUIR POR FUNCOES DE POSICIONAMENTO */
-			if (yRobo <= 65) //Canto inferior
-				robo.setVelocidadeAtualRobo(-5, 5);
-			else // Canto superior
-				robo.setVelocidadeAtualRobo(5, -5);
 		}
 	}
 	/**
