@@ -98,6 +98,9 @@ struct posXY {
 	 *  @return Endereco de um posXY para atribuicao sequencial
 	 */
 	posXY& operator=(const int i);
+
+	/* quando um numero multiplica um objeto posXY suas duas componentes sao multiplicas pelo valor*/
+	posXY& operator*(const double i);
 };
 
 /**

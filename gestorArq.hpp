@@ -23,9 +23,12 @@ class GestorArq {
 		int proporcaoAumentoAmplitudeROI; /**< Proporcao de aumento da amplitude de cor para a regiao definida pelo retanguloDeRecorte. Exemplo: para uma proporcao = 3, a cada nova tentativa de busca a amplitude de cor sera expandia em 3. Entao para uma cor com parametros iniciais de H_MIN: 59, H_MAX: 137, S_MIN: 173, S_MAX: 255, V_MIN: 147, V_MAX: 255, na segunda busca ficaria H_MIN: 59 - 3, H_MAX: 137 + 3, S_MIN: 173 - 3, S_MAX: 255 + 3, V_MIN: 147 - 3, V_MAX: 255 + 3, na terceira busca H_MIN: 59 - 6, H_MAX: 137 + 6, S_MIN: 173 - 6, S_MAX: 255 + 6, V_MIN: 147 - 6, V_MAX: 255 + 6 e na quarta busca H_MIN: 59 - 9, H_MAX: 137 + 9, S_MIN: 173 - 9, S_MAX: 255 + 9, V_MIN: 147 - 9, V_MAX: 255 + 9. */
 		int numeroTentativasBuscaCampoTodo; /**< Mesma ideia do parametro numeroTentativasBuscaROI, mas agora para o campo todo. Aqui eh necessario ainda mais cuidado pois aumentos drasticos de amplitude poderao gerar muitos falsos positivos. */
 		int proporcaoAumentoAmplitudeCampoTodo; /**< Mesma ideia do parametro proporcaoAumentoAmplitudeROI, mas com uma proporcao menor, ja que pode-se gerar muitos falsos positivos com aumentos drasticos de amplitude. */
-
+		double TamanhoEmPixelsObjeto; /* Tamanaho do objeto, em pixels, para fazermos a conversao de pixels para centimetros. Exemplo: Um objeto deixado no campo para medirmos possui 60 pixels. Combinado com o valor de TamanhoEmCentimetrosObjeto de, por exemplo, 10cm, cada centimetro do "mundo real" corresponde a 6 pixels do mundo visto pela camera. Ou ainda, cada pixel da imagem seria 0,166666667 cm */
+		double TamanhoEmCentimetrosObjeto; /* Tamanho do objeto mencionado acima, em centimetros. */
 
 	public:
+		double proporcaoPixelCentimetro; /* Numero de centimetros que corresponde cada pixel. Para converter um valor me pixels para centimetros, basta multiplicar por este valor. */
+		
 		/** @fn GestoArq()
 		 *  @brief Construtor da Classe GestorArq. Faz a configuracao do mapa que assossia um numero inteiro com a string que sera buscada no arquivo de configuracaoes
 		 *

@@ -163,3 +163,10 @@ posXY& posXY::operator=(const int i) {
 
 	return *this;
 }
+
+posXY& posXY::operator*(const double i) {
+	this->x *= i;
+	this->y *= i;
+
+	return *this;
+}

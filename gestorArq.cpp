@@ -32,19 +32,24 @@ void GestorArq::getConfigCorDoArquivo() {
 	cv::FileNode itensLista; // nodo usado para caminhar pelo arquivo e acessar os elementos da lista da secao 'cores' do arquivo de configuracao
 
 	itensLista =  this->arq["AreaCampo"]; // posicionando o FileNode para pegar as configuracoes de AreaCampo
-	retanguloCampo.x = (int)itensLista["X"];
-	retanguloCampo.y = (int)itensLista["Y"];
-	retanguloCampo.width = (int)itensLista["Largura"];
-	retanguloCampo.height = (int)itensLista["Altura"];
+	this->retanguloCampo.x = (int)itensLista["X"];
+	this->retanguloCampo.y = (int)itensLista["Y"];
+	this->retanguloCampo.width = (int)itensLista["Largura"];
+	this->retanguloCampo.height = (int)itensLista["Altura"];
+
+	itensLista =  this->arq["EscalaConversao"]; // posicionando o FileNode para pegar as configuracoes de EscalaConversao
+	this->TamanhoEmPixelsObjeto = (int)itensLista["TamanhoEmPixelsObjeto"];
+	this->TamanhoEmCentimetrosObjeto = (int)itensLista["TamanhoEmCentimetrosObjeto"];
+	this->proporcaoPixelCentimetro = TamanhoEmCentimetrosObjeto / TamanhoEmPixelsObjeto;
 
 	itensLista =  this->arq["BuscaROIFrameAnterior"]; // posicionando o FileNode para pegar as configuracoes referente a busca de objetos com relacao ao frame anterior que usa a area onde se encotrava o objeto
-	areaROIFrameAnterior = (int)itensLista["Area"];
-	numeroTentativasBuscaROI = (int)itensLista["numeroTentativasBuscaROI"];
-	proporcaoAumentoAmplitudeROI = (int)itensLista["proporcaoAumentoAmplitudeROI"];
+	this->areaROIFrameAnterior = (int)itensLista["Area"];
+	this->numeroTentativasBuscaROI = (int)itensLista["numeroTentativasBuscaROI"];
+	this->proporcaoAumentoAmplitudeROI = (int)itensLista["proporcaoAumentoAmplitudeROI"];
 
 	itensLista =  this->arq["BuscaCampoTodo"]; // posicionando o FileNode para pegar as configuracoes do referente a busca de objetos com relacao ao campo todo
-	numeroTentativasBuscaCampoTodo = (int)itensLista["numeroTentativasBuscaCampoTodo"];
-	proporcaoAumentoAmplitudeCampoTodo = (int)itensLista["proporcaoAumentoAmplitudeCampoTodo"];
+	this->numeroTentativasBuscaCampoTodo = (int)itensLista["numeroTentativasBuscaCampoTodo"];
+	this->proporcaoAumentoAmplitudeCampoTodo = (int)itensLista["proporcaoAumentoAmplitudeCampoTodo"];
 
 	itensLista = this->arq["Cores"]; // posicionando o FileNode para pegar as configuracoes de Cores. (Cores eh uma sequencia, entao o FileNode itensLista contem outros FileNode's)
 	// verificando se o que retornou da busca por 'Cores' eh mesmo uma sequencia/lista

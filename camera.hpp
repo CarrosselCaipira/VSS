@@ -100,7 +100,7 @@ class Camera : public GestorArq {
 		void eliminaExtrasPorArea(const Cores cor);
 		bool processaCor2();
 		bool processaCor1();
-		void getIndexMaisProximo(int& indexVect1, int& indexVect2);
+		void getIndexMaisProximo(std::vector<Retangulo>& vect1, std::vector<Retangulo>& vect2, int& indexVect1, int& indexVect2);
 
 	public:
 		cv::Mat getFrameOriginalRecortado();
@@ -140,7 +140,9 @@ class Camera : public GestorArq {
 		 */
 	 	void liberaCamera();
 
-		int getPosicaoAtualObjeto(posXY& posicaoObj);
+		// quando emCentimetros = true retorna a posicao em centimetros do objeto. Do contrario, retorna a posicao em pixels
+		int getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros = true);
+		int getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentimetros = true);
 
 		/** @fn setNumObjetos(const int n)
 		 *  @brief Define o numero de objetos a serem detectados.

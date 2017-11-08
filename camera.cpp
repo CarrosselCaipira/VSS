@@ -334,7 +334,8 @@ processaCor1
 // se em todas as areas que deveriam ter objetos foram os objetos da cor procurada, a cor eh considerada processada e a funcao retorna true, do contrario, retorna false
 bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 	bool falseEncontrado; /**< indica se foram re-encontrados todos os objetos que foram encontrados no frame anterior. Ex.: Existiam 3 objetos no frame anterior, se, envolta das posicoes anteriores desses 3 objetos forem encontrados mais 3 objetos, o vector encontradosRegiao em todas suas posicoes sera true. */
-	bool encontrado = false; /**< indica se foram encontrados todos os objetos da cor. */
+	bool encontrado = false; /**< indica se foram encontrados TODOS os objetos da cor. */
+	bool encontradoTodosPossiveis = false; /**< indica se foram encontrados todos os objetos da cor considerando todas as areas possiveis que temos. Ex.: encontradoTodosPossiveis eh true quando temos 5 objetos no total, mas no frame anterior so temos 3 encontrados e os 3 anteriores foram encontrados fazendo a busca local */
 	std::vector<bool> encontradosRegiao(this->centroAntRetangulos[cor].size(), false); /**< Cada posicao i deste vector representa se uma regiao i da cor base ja foi processada e foi encontrado UM elemento da corBuscada no local. */
 
 	/* BEGIN DEBUG
@@ -349,7 +350,7 @@ bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 	// existe registro anterior da cor2 no frame anterior
 	if(this->centroAntRetangulos[cor].size() > 0) {
 		// Para cada tentativa, procura em todos as possiveis regioes. Se nao encontrar em nenhuma das regioes o elemento procurado, vai para a proxima tentativa com um aumento de amplitude definido em camera.hpp. Faz isso ate encontrar uma regiao que contem o elemento ou ate acabarem as tentativas.
-		for(int k = 0; k <= GestorArq::numeroTentativasBuscaROI && !encontrado; k++) {
+		for(int k = 0; k <= GestorArq::numeroTentativasBuscaROI && !encontradoTodosPossiveis; k++) {
 
 			/* BEGIN DEBUG
 			std::cout << "@procuraEnvoltaPosFrameAnterior Temos: " << this->centroAntRetangulos[cor].size() << " locais para procurar correspondencias"<< '\n';
@@ -382,33 +383,20 @@ bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 				 END DEBUG */
 
 				// checa se encontrou UM objeto da cor do parametro na regiao para a busca.
-				if(numDetectados == 1) {
+				// checa se existem mais objetos encontrados do que devem ser procurados
+				if(numDetectados >= 1) {
+					encontradosRegiao[i] = true;
 
 					/* BEGIN DEBUG
-					std::cout << "@procuraEnvoltaPosFrameAnterior numDetectados eh 1" << '\n';
+					std::cout << "@procuraEnvoltaPosFrameAnterior Numero de objetos ja encontrado da cor atual: " << this->centroAtualRetangulos[cor].size() << '\n';
 					END DEBUG */
 
-					// como so encontrou um elemento, so ele foi adicionado o vector de encontrados entao so ele precisa ter sua posicao corrigida
-					Camera::corrigeCoodernadas(this->centroAtualRetangulos[cor].back().posicao);
-					// informando que ja foi encontrado o elemento da cor do parametro no local esperado.
-					encontradosRegiao[i] = true;
-				}
-				else {
-					// checa se existem mais objetos encontrados do que devem ser procurados
-					if(numDetectados > 1) {
-						encontradosRegiao[i] = true;
+					//std::max((int)(this->centroAtualRetangulos[cor].size() - numDetectados), 0)
 
-						/* BEGIN DEBUG 11
-						std::cout << "@procuraEnvoltaPosFrameAnterior Numero de objetos ja encontrado da cor atual: " << this->centroAtualRetangulos[cor].size() << '\n';
-						END DEBUG */
-
-						//std::max((int)(this->centroAtualRetangulos[cor].size() - numDetectados), 0)
-
-						// como foram encontrados (e adicionados ao vetor de encontrados) mais de um elemento, percorre todos os encontrados nessa regiao e corrige suas posicoes
-						for(int j = (this->centroAtualRetangulos[cor].size() - 1); j >= ((int)this->centroAtualRetangulos[cor].size() - numDetectados); j--) {
-							// retornando para a posicao relativa ao campo todo (antes estava com relacao a ROI)
-							Camera::corrigeCoodernadas(this->centroAtualRetangulos[cor][j].posicao);
-						}
+					// como foram encontrados (e adicionados ao vetor de encontrados) mais de um elemento, percorre todos os encontrados nessa regiao e corrige suas posicoes
+					for(int j = (this->centroAtualRetangulos[cor].size() - 1); j >= ((int)this->centroAtualRetangulos[cor].size() - numDetectados); j--) {
+						// retornando para a posicao relativa ao campo todo (antes estava com relacao a ROI)
+						Camera::corrigeCoodernadas(this->centroAtualRetangulos[cor][j].posicao);
 					}
 				}
 			}
@@ -419,7 +407,7 @@ bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 				std::cout << "@procuraEnvoltaPosFrameAnterior encontradosRegiao[" << q << "]: " << encontradosRegiao[q] << '\n';
 			END DEBUG */
 
-			// verificando se todos os objetos da cor foram encontrados. Se um false for encontrado significa que ainda nao foram encontrados todos os elementos (find retorna true e nao entra no if de 'todos encontrados'). Se nao for encontrado nenhum false, significa que todos os elementos foram encontrados
+			// verificando se todos os objetos da cor foram encontrados. Se um false for encontrado significa que ainda nao foram encontrados todos os elementos. Se nao for encontrado nenhum false, significa que todos os elementos foram encontrados
 			falseEncontrado = false;
 			for(int l = 0; l < encontradosRegiao.size(); l++) {
 				if(encontradosRegiao[l] == false)
@@ -432,7 +420,7 @@ bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 
 			// se foram encontrados todos os objetos, entao informa que a cor foi processada como um todo. Se nao encontrou falsos, a funcao fez seu trabalho
 			if(falseEncontrado == false) {
-				encontrado = true;
+				encontradoTodosPossiveis = true;
 
 				/* BEGIN DEBUG
 				std::cout << "@procuraEnvoltaPosFrameAnterior Todos os valores possiveis foram encontrados." << std::endl;
@@ -441,8 +429,10 @@ bool Camera::procuraEnvoltaPosFrameAnterior(const Cores cor) {
 				// impede centros repetidos e, caso ainda existam mais centros que o maximo, fica com os que possuem maior area. Se o texte abaixo de quantidade de encontrados receber duplicatas suficientes para completar o numero de cores, estaremos com problemas, pois seria registrado que nao precisamos mais procurar a bor buscada porque esta ja foi processada
 				Camera::controlaOcorrenciasDuplicadas(cor);
 				// se sem as duplicatas encontrou todos ou mais objetos, assumios a cor como processada
-				if(this->centroAtualRetangulos[cor].size() >=  GestorArq::paramHSVCores[cor].NumObjetosCor)
+				if(this->centroAtualRetangulos[cor].size() >=  GestorArq::paramHSVCores[cor].NumObjetosCor) {
 					this->corProcessada.set(cor);
+					encontrado = true;
+				}
 			}
 
 		}
@@ -667,19 +657,19 @@ void Camera::corrigeCoodernadas(posXY& p) {
 // 	return indexCorPrimariaProxima;
 // }
 
-/* indexVect1: indice do vector de cor1 (tag time). Existem mais dessas que de jogador teoricamente; */
-/* indexVect2: indice do vector de cor2 (tag jogador); */
+/* indexVect1: indice do vect1 (marcador time geralmente). Existem mais dessas que de jogador teoricamente; */
+/* indexVect2: indice do vect2 (marcador jogador geralmente); */
 // determina qual eh a combinacao de cores mais proxima entre a cor2 e a cor1. Ex.: Estamos procurando cor1: Amarelo, cor2: Verde. Encontramos 3 Amarelos e 2 Verdes, essa funcao ira determinar quais elementos dos vetors de amarelos e de verdes estao mais proximos um do outro.
-void Camera::getIndexMaisProximo(int& indexVect1, int& indexVect2) {
+void Camera::getIndexMaisProximo(std::vector<Retangulo>& vect1, std::vector<Retangulo>& vect2, int& indexVect1, int& indexVect2) {
 	indexVect1 = -1;
 	indexVect2 = -1;
 	double minDist = std::numeric_limits<double>::max(); // definindo a menor distancia inicial como a maior possivel para um double
 
 	// para todos os objetos da cor2 (tag jogador)
-	for(int i = 0; i < this->centroAtualRetangulos[this->cor2].size(); i ++) {
-		for(int j = 0; j < this->centroAtualRetangulos[this->cor1].size(); j++) {
+	for(int i = 0; i < vect2.size(); i ++) {
+		for(int j = 0; j < vect1.size(); j++) {
 			// calculando a distancia de um centro da cor1 para um centro da cor2
-			double atualDist = this->centroAtualRetangulos[this->cor2][i].posicao.getDistEucliana(this->centroAtualRetangulos[this->cor1][j].posicao);
+			double atualDist = vect2[i].posicao.getDistEucliana(vect1[j].posicao);
 			// se a nova posicao eh mais proxima que a anterior, atualiza o possivel par
 			if(atualDist < minDist) {
 				// atualizando a menor distancia como sendo a atual
@@ -693,7 +683,13 @@ void Camera::getIndexMaisProximo(int& indexVect1, int& indexVect2) {
 
 }
 
-int Camera::getPosicaoAtualObjeto(posXY& posicaoObj) {
+// retornos: -1 -> Nao foi definida cor primaria
+// 						0 -> Tudo ocorreu como planejado
+// 						1 -> Nao conseguiu encontrar os objetos de forma alguma
+// 						2 -> Conseguiu encontrar o objeto mas apenas para a cor1
+// 						3 -> Conseguiu encontrar o objeto mas apenas para a cor2
+// 						4 -> Nao fez absolumente nada (nao entrou em if algum)
+int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = true */) {
 	bool resuCor1 = false;
 	bool resuCor2 = false;
 
@@ -708,47 +704,138 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj) {
 			resuCor1 = Camera::processaCor1();
 	}
 	else {
-		std::cerr << "ERRO: " << "@Camera->getPosicaoAtualObjeto: " << "COR INDEFINIDA PARA COR PRIMARIA. CERTIFIQUE-SE DE DEFINIR UMA COR PRIMARIA ANTES DE UTILIZAR A FUNCAO, ELA EH A PRINCIPAL COR DA BUSCA Camera::getPosicaoAtualObjeto." << std::endl;
+		std::cerr << std::endl << "ERRO: " << "@Camera->getPosicaoAtualObjeto: " << "COR INDEFINIDA PARA COR PRIMARIA. CERTIFIQUE-SE DE DEFINIR UMA COR PRIMARIA ANTES DE UTILIZAR A FUNCAO, ELA EH A PRINCIPAL COR DA BUSCA Camera::getPosicaoAtualObjeto." << std::endl;
+		return -1;
 	}
 
 	// se a cor2 ja foi processada, encontra o par mais proximo, calcula o ponto medio entre a cor2 e a cor1 e faz um retorno sem erros.
 	// NOTA: AQUI ASSUMINOS A IDEIA QUE EH PREFERIVEL RETORNAR A ULTIMA POSICAO DO OBJETO DO QUE UMA POSICAO ATUAL DUVIDOSA
-	if(resuCor2 == true) {
-		/* BEGIN DEBUG
-		std::cout << "@getPosicaoAtualObjeto Entrei pra calcular o ponto medio guys." << '\n';
-		//getchar();
-		 END DEBUG */
+	//
+	// checando se deve existir objetos da cor2
+	if(this->cor2 != INDEFINIDA) {
+		// checando se foi processada corretamente a cor2
+		if(resuCor2 == true) {
+			/* BEGIN DEBUG
+			std::cout << "@getPosicaoAtualObjeto Entrei pra calcular o ponto medio guys." << '\n';
+			//getchar();
+			 END DEBUG */
 
-		int indexCor1;
-		int indexCor2;
-		getIndexMaisProximo(indexCor1, indexCor2);
+			/* BEGIN DEBUG
+			std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor1].size(): " <<  centroAtualRetangulos[this->cor1].size() << '\n';
+			if(indexCor1 >= 0)
+				std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor1][indexCor1]: " << centroAtualRetangulos[this->cor1][indexCor1].posicao.x << "e " << centroAtualRetangulos[this->cor1][indexCor1].posicao.y << '\n';
+			else
+				std::cout << "@getPosicaoAtualObjeto Na verdade, nosso objeto teve problemas com cores e retornaremos apenas a posicao da dor 2." << '\n';
+			std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor2].size(): " <<  centroAtualRetangulos[this->cor2].size() << '\n';
+			std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor2][indexCor2]: " << centroAtualRetangulos[this->cor2][indexCor2].posicao.x << "e " << centroAtualRetangulos[this->cor2][indexCor2].posicao.y << '\n';
+			//getchar();
+			END DEBUG */
 
-		/* BEGIN DEBUG
-		std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor1].size(): " <<  centroAtualRetangulos[this->cor1].size() << '\n';
-		if(indexCor1 >= 0)
-			std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor1][indexCor1]: " << centroAtualRetangulos[this->cor1][indexCor1].posicao.x << "e " << centroAtualRetangulos[this->cor1][indexCor1].posicao.y << '\n';
-		else
-			std::cout << "@getPosicaoAtualObjeto Na verdade, nosso objeto teve problemas com cores e retornaremos apenas a posicao da dor 2." << '\n';
-		std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor2].size(): " <<  centroAtualRetangulos[this->cor2].size() << '\n';
-		std::cout << "@getPosicaoAtualObjeto centroAtualRetangulos[this->cor2][indexCor2]: " << centroAtualRetangulos[this->cor2][indexCor2].posicao.x << "e " << centroAtualRetangulos[this->cor2][indexCor2].posicao.y << '\n';
-		//getchar();
-		END DEBUG */
+			// se a cor1 foi processada corretamente, retorna o ponto medio das cores mais proximas umas das outras
+			if(resuCor1 == true) {
+				int indexCor1;
+				int indexCor2;
+				Camera::getIndexMaisProximo(this->centroAtualRetangulos[this->cor1], this->centroAtualRetangulos[this->cor2], indexCor1, indexCor2);
 
-		// se a cor1 foi processada corretamente, retorna o ponto medio das cores
-		if(resuCor1 == true)
-			posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao.getPontoMedio(this->centroAtualRetangulos[this->cor2][indexCor2].posicao);
-		else { // se ocorreu uma falha ao processarmos a cor1 sabemos onde esta a cor2, entao o centro do objeto eh o centro da cor2
-			std::cerr << "ERRO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO ATUAL DO OBJETO. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
+				posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao.getPontoMedio(this->centroAtualRetangulos[this->cor2][indexCor2].posicao);
+
+				// convertendo para centimetros o valor das posicoes
+				if(emCentimetros)
+					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+				/* TODO: REMOVER AS CORES EXTRAS POR AREA DE FORMA A MANTER AS QUE FORAM USADAS ANTES DE FINALZAR O PROCESSAMENTO POIS DA FOMAR COMO ESTA, ESTAMOS SALVANDO AS POSICOES ANTERIORES DE TODAS AS ENCONTRADAS. IDEIA: AUMENTAR A AREA DOS RETANGULOS ESCOLHIDOS E USAR ELIMINACAO POR AREA. */
+				return 0;
+			}
+			else { // se ocorreu uma falha ao processarmos a cor1 sabemos onde esta a cor2, entao o centro do objeto eh o centro da cor2
+				// ficando com as areas maiores. Aqui estamos supondo que deve exister soh uma cor correspondente da cor2. Talvez no futuro implementaremos de uma forma diferente para escolhermos as posicoes da cor2
+				Camera::eliminaExtrasPorArea(this->cor2);
+				posicaoObj = this->centroAtualRetangulos[this->cor2][0].posicao;
+
+				// convertendo para centimetros o valor das posicoes
+				if(emCentimetros)
+					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+				std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR1, ESTAMOS RETORNANDO A POSICAO DA COR2 APENAS. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
+				return 3;
+			}
+		}
+		// cor2 nao processada corretamente, tenta retornar apenas a cor1 mais proxima da ultima posicao conhecida da cor2
+		else {
+			// checa se eh possivel utilizar a posicao atual da cor1 (se foi processaca corretamente)
+			if(resuCor1 == true) {
+				// se existe uma posicao antiga conhecida para a cor2, vamos procurar em todas as localizacoes conhecidas da cor1 e ver qual delas esta mais proxima da localizacao antiga da cor2 e retornamos apenas a localizacao do marcador de time.
+				if(this->centroAntRetangulos[this->cor2].size() > 0) {
+					int indexCor1;
+					int indexCor2;
+					Camera::getIndexMaisProximo(this->centroAtualRetangulos[this->cor1], this->centroAntRetangulos[this->cor2], indexCor1, indexCor2);
+
+					posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao;
+
+					// convertendo para centimetros o valor das posicoes
+					if(emCentimetros)
+						posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+					std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR2, ESTAMOS RETORNANDO A POSICAO DA COR1 MAIS PROXIMA DA ANTERIOR CONHECIDA PARA A COR2. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
+					return 2;
+				}
+			}
+			else {
+				std::cerr << std::endl << "ERRO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO O OBJETO DE FORMA ALGUMA. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
+				return 1;
+			}
 		}
 	}
-	// NAO EXISTE COR2 DEFINIDA OU PROCESSADA CORRETAMENTE, TENTA RETORNAR APENAS A COR1
+	// so precisamos encontrar um objeto da cor1
 	else {
 		// testando se a cor primaria foi corretamente processada
 		if(resuCor1 == true) {
 			Camera::eliminaExtrasPorArea(this->cor1);
 			posicaoObj = this->centroAtualRetangulos[this->cor1][0].posicao;
+
+			// convertendo para centimetros o valor das posicoes
+			if(emCentimetros)
+				posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+			return 0;
+		}
+		else {
+			std::cerr << std::endl << "ERRO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO O OBJETO DE FORMA ALGUMA. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
+			return 1;
 		}
 	}
 
-	return 0;
+}
+
+int Camera::getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentimetros /* = true */) {
+	bool resuCor1 = false;
+
+	if(this->cor1 != INDEFINIDA) {
+		if(this->corProcessada.test(this->cor1) == false)
+			resuCor1 = Camera::processaCor1();
+	}
+	else {
+		std::cerr << std::endl << "ERRO: " << "@Camera->getPosicaoAtualObjeto: std::vector : " << "COR INDEFINIDA PARA COR PRIMARIA. CERTIFIQUE-SE DE DEFINIR UMA COR PRIMARIA ANTES DE UTILIZAR A FUNCAO, ELA EH A PRINCIPAL COR DA BUSCA Camera::getPosicaoAtualObjeto." << std::endl;
+		return -1;
+	}
+
+	// se existe algum objeto encontrado da cor1, vamos acreditar que sao os robos adversarios. Normalmente esse numero eh maior ou igual ao numero correto de robos do time adversario (logo, resuCor1 = true), mas caso nao for (resu = false), repassamos as posicoes de tudo o que conseguimos descorbrir
+	if(this->centroAtualRetangulos[this->cor1].size() > 0) {
+		// eliminando as cores menores caso tenham extras
+		Camera::eliminaExtrasPorArea(this->cor1);
+		// realocando o vector de posicoes para ficar do tamanho certo
+		posicaoObj.resize(this->centroAtualRetangulos[this->cor1].size());
+		for(int i = 0; i < this->centroAtualRetangulos[this->cor1].size(); i++) {
+			posicaoObj[i] = this->centroAtualRetangulos[this->cor1][i].posicao;
+
+			// convertendo para centimetros o valor das posicoes
+			if(emCentimetros)
+				posicaoObj[i] = posicaoObj[i] * GestorArq::proporcaoPixelCentimetro;
+		}
+	}
+	else{
+		std::cerr << std::endl << "ERRO: " << "@Camera->getPosicaoAtualObjeto std::vector : " << "NAO FOI POSSIVEL ENCONTRAR NENHUM OBJETO DA COR INFORMADA. CONSIDERE CORRIGUIR OS FILTROS." << std::endl;
+		return 1;
+	}
+
+	return 4;
 }
