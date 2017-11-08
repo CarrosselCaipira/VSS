@@ -5,14 +5,14 @@ void Roteiro::goleiroBasico(Robo& r, posXY& b){
 	//Se o robô estiver com a bola
 	if(r.isRoboComBola(b, RAIO_ATAQUE)) {
 
-		// Se estiver na metade superior do campo.
+		// Se a bola estiver na metade superior do campo.
 		if(b.isInCampoMetadeSuperior()) {
 
 			// Gira no sentido anti horário.
 			r.atributos.set(CHUTE_GIRANDO_ANTI_HORARIO);
 		}
 
-		// Se estiver na metade inferior do campofico.
+		// Se a bola estiver na metade inferior do campo.
 		else {
 
 			// Gira no sentido horário.
@@ -64,4 +64,5 @@ void Roteiro::goleiroBasico(Robo& r, posXY& b){
 			Comportamento::posicionaPosBolaEmY(r, b);
 		}
 	}
+	
 }

@@ -1,11 +1,14 @@
 #include "roteiro.hpp"
+#include <iostream>
 
 void Roteiro::atacanteBasico(Robo& r, posXY& b) {
 
 	//Se o robô estiver com a bola
 	if(r.isRoboComBola(b, RAIO_ATAQUE)) {
+
 		//Se a bola está no intervalo do robô em y
 		if(r.isBolaNoIntervaloYRobo(b)){
+
 			//O objetivo vai ser o meio do gol do adversário
 			Comportamento::posicionaCentroGolXYAdv(r);
 		}

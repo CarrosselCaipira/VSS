@@ -1,8 +1,9 @@
 #include "roteiro.hpp"
 
 void Roteiro::volanteBasico(Robo& r, posXY& b){
+
 	//Se o robô estiver com a bola
-	if(r.isRoboComBola(b,RAIO_ATAQUE)) {
+	if(r.isRoboComBola(b, RAIO_ATAQUE)) {
 		//Se a bola está no intervalo do robô em y
 		if(r.isBolaNoIntervaloYRobo(b)){
 			//O objetivo vai ser o meio do gol do adversário
@@ -14,17 +15,14 @@ void Roteiro::volanteBasico(Robo& r, posXY& b){
 			Comportamento::posicionaPosBolaEmY(r, b);
 		}
 	}
-	//Se estiver na faixa superior ou na faixa inferior
-	if (b.isInFaixaSuperior() || b.isInFaixaInferior()){
-		//segue a bola em X, mantendo-se um robô à frente e segue a bola em y
-		Comportamento::segueBolaEmXFrente(r, b);
-		Comportamento::posicionaPosBolaEmY(r, b);
-
-	}
 	//Se estiver na faixa central
 	else {
-		//Se estiver no campo sem area gol do nosso time
-		if(b.isInCampoSemAreaGolTime()){
+		//Se estiver na faixa superior ou na faixa inferior
+		if ((b.isInFaixaSuperior() || b.isInFaixaInferior()) && b.isInCampoSemAreaGolTime()){
+			std::cout << "Neste if" << '\n';
+			//segue a bola em X, mantendo-se um robô à frente e segue a bola em y e estiver no campo sem area gol do nosso time
+			Comportamento::segueBolaEmXFrente(r, b);
+			Comportamento::posicionaPosBolaEmY(r, b);
 			//marca a passagem da bola
 			Comportamento::tangenciaLinhaFrenteAreaGol(r);
 			Comportamento::posicionaPosBolaEmY(r, b);
@@ -38,4 +36,5 @@ void Roteiro::volanteBasico(Robo& r, posXY& b){
 			Comportamento::posicionaAtrasMeioCampo(r);
 		}
 	}
+	// getchar()
 }
