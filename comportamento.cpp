@@ -117,7 +117,5 @@ void Comportamento::posicionaParedeSuperior(Robo& r){
 }
 
 void Comportamento::segueBolaEmXFrente(Robo& r, posXY& b){
-	std::cout << b.x - TAM_ROBO << '\n';
    r.setPosicaoObj(b.x - TAM_ROBO, r.getPosicaoAtualRobo().y);
-	//  std::cout << "erro aqui" << '\n';
 }

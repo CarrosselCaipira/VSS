@@ -17,8 +17,8 @@ int main() {
 	robosTime[2].setRoteiro(ATACANTE_BASICO);
 
 
-	for (int i = 10; i < 130; i=i+5) {
-		for (int j = 0; j < 160; j=j+5) {
+	for (int i = 1; i < 130; i=i+10) {
+		for (int j = 10; j < 160; j=j+5) {
 			// while(true) {
 			// pegando as informacoes de localizacao a partir da camera para os robos e a bola
 			posXY localObjeto;
@@ -26,24 +26,24 @@ int main() {
 			posXY aux;
 			posXY aux2;
 
-			aux2.x = i;
-			aux2.y = j;
+			aux2.x = j;
+			aux2.y = i;
 			//pegando a posição atual do robô
 
 
-			robosTime[0].setPosicaoAtualRobo(10, 10);
+			robosTime[0].setPosicaoAtualRobo(10, 75);
 			robosTime[0].setPosicaoAtualBola(aux2);
 			// std::cout << "ROBO1" << '\n';
 			aux = robosTime[0].getPosicaoAtualRobo();
 			// std::cout << "Posição do robô 1: " << aux.y<<'\n';
 			/*--*/
-			robosTime[1].setPosicaoAtualRobo(20, 10);
+			robosTime[1].setPosicaoAtualRobo(50, 50);
 			robosTime[1].setPosicaoAtualBola(aux2);
 			// std::cout << "ROBO2" << '\n';
 			aux = robosTime[1].getPosicaoAtualRobo();
 			// std::cout << "Posição do robô 1: " << aux.y<<'\n';
 			/*--*/
-			robosTime[2].setPosicaoAtualRobo(20, 30);
+			robosTime[2].setPosicaoAtualRobo(50, 100);
 			robosTime[2].setPosicaoAtualBola(aux2);
 			// std::cout << "ROBO3" << '\n';
 			aux = robosTime[2].getPosicaoAtualRobo();
@@ -67,8 +67,8 @@ int main() {
 			std::cout << "Objetivo do ROBO3-> x:" << aux.x << " e y:"<< aux.y << '\n' <<'\n';
 			// getchar();
 			std::cout << "------------------" << '\n';
-			usleep(400000);
-
+			usleep(500000);
+			system("clear");
 		}
 	}
 	// }

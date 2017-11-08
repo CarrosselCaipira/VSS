@@ -19,7 +19,6 @@ void Roteiro::volanteBasico(Robo& r, posXY& b){
 	else {
 		//Se estiver na faixa superior ou na faixa inferior
 		if ((b.isInFaixaSuperior() || b.isInFaixaInferior()) && b.isInCampoSemAreaGolTime()){
-			std::cout << "Neste if" << '\n';
 			//segue a bola em X, mantendo-se um robô à frente e segue a bola em y e estiver no campo sem area gol do nosso time
 			Comportamento::segueBolaEmXFrente(r, b);
 			Comportamento::posicionaPosBolaEmY(r, b);

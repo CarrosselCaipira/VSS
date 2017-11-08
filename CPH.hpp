@@ -7,6 +7,7 @@
 #define MAX_Y 33			// Tem que ser 35 e deslocar 1 em todas as coordenadas em Y
 #define DIV_CAMPO 4   // O que exatamente isso representa?
 #define PRECISAO_CONVERGENCIA 0.00001			// PRECISÃO DE CONVERGÊNCIA
+#define NUM_MAX_ITERACOES 500
 #define KF 0.5 //Constante da força aplicada pelo campo potencial
 #define K_ALFA 0.07
 #define W_SOR 1.8

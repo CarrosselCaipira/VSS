@@ -81,6 +81,7 @@ bool CPH::calculaCampoSOR() {
 	int i, j;
 	float resultTemp;
 	bool convergiu = true;
+	int numIteracoes=0;
 
 	do {
 
@@ -108,6 +109,14 @@ bool CPH::calculaCampoSOR() {
 
 			}
 		}
+
+		numIteracoes++;
+
+		if (numIteracoes > NUM_MAX_ITERACOES) {
+
+			convergiu=true;
+		}
+		
 	} while (!convergiu);
 
 	return convergiu;
