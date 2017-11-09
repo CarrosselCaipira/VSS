@@ -8,12 +8,12 @@
 #define TAM_X_GOL 10	// em cemtimetros
 #define TAM_Y_GOL 40
 #define TAM_X_CAMPO_SEM_GOL 150	// em cemtimetros
-#define TAM_X_CAMPO TAM_X_CAMPO_SEM_GOL + TAM_X_GOL + TAM_X_GOL // 170
+#define TAM_X_CAMPO 170
 #define TAM_Y_CAMPO 130	// em cemtimetros
 #define TAM_X_AREA_GOL 15
 #define TAM_Y_AREA_GOL 70
-#define CENTRO_X_GOL_ADV (TAM_X_CAMPO-TAM_X_GOL)
-#define CENTRO_Y_GOL TAM_Y_CAMPO / 2
+#define CENTRO_X_GOL_ADV 160
+#define CENTRO_Y_GOL 65
 #define ESPACO_CHUTE_GIRANDO 6
 #define TAM_QUADRADO_INUTIL 7
 #define RAIO_ATAQUE 6
@@ -90,6 +90,8 @@ struct posXY {
 	bool isInQuadradosInuteis ();
 	// Checa se a bola está no raio de ataque dado, baseando-se na posição do robô.
 	bool isInRaio (posXY posicao, int raio);
+	// Checa se a bola está na área de ataque do volante
+	bool isInAreaAtaqueVolatante ();
 
 
 	/** @fn posXY& operator=(const int i)

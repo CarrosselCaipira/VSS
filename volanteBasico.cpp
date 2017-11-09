@@ -18,21 +18,14 @@ void Roteiro::volanteBasico(Robo& r, posXY& b){
 	//Se estiver na faixa central
 	else {
 		//Se estiver na faixa superior ou na faixa inferior
-		if ((b.isInFaixaSuperior() || b.isInFaixaInferior()) && b.isInCampoSemAreaGolTime()){
-			//segue a bola em X, mantendo-se um robô à frente e segue a bola em y e estiver no campo sem area gol do nosso time
-			Comportamento::segueBolaEmXFrente(r, b);
-			Comportamento::posicionaPosBolaEmY(r, b);
-			//marca a passagem da bola
-			Comportamento::tangenciaLinhaFrenteAreaGol(r);
-			Comportamento::posicionaPosBolaEmY(r, b);
-
-		}
-		//Se não estiver no campo do nosso time
-		else if(b.isInCampoAdv()){
-			//fica no meio de campo e segue a bola em y com 90 graus
-			Comportamento::posiciona90Graus(r);
-			Comportamento::posicionaPosBolaEmY(r, b);
-			Comportamento::posicionaAtrasMeioCampo(r);
+		if ((b.isInCampoSemAreaGolTime() || b.isInCampoSemAreaGolAdv())){
+			//segue bola em Y
+			Comportamento::posicionaVolantePosNatural(r, b);
+			r.setPosicaoAtualRobo(r.getPosicaoObj());
+			//Se y do voltante é igual ao y da bola e está no campo do adversário
+			if(r.getPosicaoAtualRobo().y == b.y && b.isInCampoSemAreaGolAdv() && b.isInAreaAtaqueVolatante()){
+				Comportamento::chutaFrente(r, b);
+			}
 		}
 	}
 	// getchar()

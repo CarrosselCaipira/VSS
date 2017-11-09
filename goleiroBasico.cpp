@@ -1,7 +1,6 @@
 #include "roteiro.hpp"
 
 void Roteiro::goleiroBasico(Robo& r, posXY& b){
-
 	//Se o robô estiver com a bola
 	if(r.isRoboComBola(b, RAIO_ATAQUE)) {
 
@@ -44,7 +43,6 @@ void Roteiro::goleiroBasico(Robo& r, posXY& b){
 
 	//Se estiver na nossa metade do campo
 	else {
-
 		//Se estiver na faixa superior
 		if (b.isInFaixaSuperior()) {
 			//Para na trave superior
@@ -64,5 +62,5 @@ void Roteiro::goleiroBasico(Robo& r, posXY& b){
 			Comportamento::posicionaPosBolaEmY(r, b);
 		}
 	}
-	
+
 }

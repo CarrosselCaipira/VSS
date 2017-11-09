@@ -1,5 +1,5 @@
 #include "propositoGeralAtuadores.hpp"
-
+#include <iostream>
 posXY posXY::getPontoMedio(const posXY pos) {
 	posXY resu;
 
@@ -30,7 +30,7 @@ bool posXY::isInCampoTime() {
 }
 
 bool posXY::isInCampoAdv() {
-	return this->x >= (TAM_X_CAMPO/2);
+	return this->x > TAM_X_CAMPO/2;
 }
 
 bool posXY::isInCampoMetadeSuperior() {
@@ -155,6 +155,11 @@ bool posXY::isInQuadradosInuteis () {
 
 bool posXY::isInRaio (posXY posicao, int raio){
   return (posXY::getDistEucliana(posicao) <= raio);
+}
+
+bool posXY::isInAreaAtaqueVolatante (){
+	std::cout << TAM_X_CAMPO*0.6 << '\n';
+  return (this->x < TAM_X_CAMPO*0.6);
 }
 
 posXY& posXY::operator=(const int i) {

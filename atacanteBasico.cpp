@@ -2,7 +2,7 @@
 #include <iostream>
 
 void Roteiro::atacanteBasico(Robo& r, posXY& b) {
-
+	
 	//Se o robô estiver com a bola
 	if(r.isRoboComBola(b, RAIO_ATAQUE)) {
 
