@@ -57,6 +57,7 @@ int main() {
 		// procurando pelos robos aliados
 		cam.setCorObjeto(AMARELO, ROSA);
 		cam.getPosicaoAtualObjeto(posRobosTime[0]);
+		robosTime[0].setAnguloAtualRobo(cam.getAnguloObjeto());
 		robosTime[0].setPosicaoAtualRobo(posRobosTime[0]);
 		robosTime[0].setPosicaoAtualBola(bola);
 
@@ -75,6 +76,7 @@ int main() {
 
 		cam.setCorObjeto(AMARELO, ROXO);
 		cam.getPosicaoAtualObjeto(posRobosTime[1]);
+		robosTime[1].setAnguloAtualRobo(cam.getAnguloObjeto());
 		robosTime[1].setPosicaoAtualRobo(posRobosTime[1]);
 		robosTime[1].setPosicaoAtualBola(bola);
 
@@ -93,6 +95,7 @@ int main() {
 
 		cam.setCorObjeto(AMARELO, VERDE);
 		cam.getPosicaoAtualObjeto(posRobosTime[2]);
+		robosTime[2].setAnguloAtualRobo(cam.getAnguloObjeto());
 		robosTime[2].setPosicaoAtualRobo(posRobosTime[2]);
 		robosTime[2].setPosicaoAtualBola(bola);
 

@@ -6,6 +6,7 @@
 #include <bitset>
 #include <iostream>
 #include <algorithm>
+#include <cmath>
 
 class Camera : public GestorArq {
 	protected:
@@ -40,7 +41,8 @@ class Camera : public GestorArq {
 		Cores cor2; /**< Cor do objeto a ser procurado. Cor secundaria (tags de jogador) */
 		int numObjetosCor1; /**< Numero de objetos que devem ser procurados da cor1. Cor1 eh a cor primaria (tag de time ou bola) */
 		int numObjetosCor2; /**< Numero de objetos que devem ser procurados. Cor2 eh a cor secundaria(tag jogador) */
-
+		float anguloObjeto;
+		vetorSentido vetorDiagonalObjeto; /**< Vetor de origem em cor1 e fim em cor2. Caso nao exista cor2, o vetor sera a posicao central da cor1. */
 	public:
 		/** @var centroRetangulos
 		 *  @brief Vetor de vetores de posicoes XY para o retangulo de cada cor no instante atual.
@@ -102,8 +104,10 @@ class Camera : public GestorArq {
 		bool processaCor1();
 		void getIndexMaisProximo(std::vector<Retangulo>& vect1, std::vector<Retangulo>& vect2, int& indexVect1, int& indexVect2);
 		void converteCoordenadasParaOrigemNoInferiorEsquerdo(posXY& p);
+		void determinaAngulo();
 
 	public:
+		float getAnguloObjeto();
 		cv::Mat getFrameOriginalRecortado();
 		cv::Mat getFrameOriginalRecortadoFlip();
 

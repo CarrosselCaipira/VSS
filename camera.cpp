@@ -708,7 +708,15 @@ void Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posXY& p) {
 	p.y = this->frameOriginalRecortado.rows - p.y;
 }
 
-// NOTA: PARA PRINTAR OS ELEMENTOS ENCONTRADOS NO CAMPO EH NECESSARIO UTILIZAR A FUNCAO: cv::flip(FrameOrigem, FrameDestino, 0); que vai espelhar a imagem no eixo x (o que estava embaixo agora estara em cima e vice versa). O ponto retornado desta funcao devera ser colocado na imagem invertida FrameDestino
+float Camera::getAnguloObjeto() {
+	return this->anguloObjeto;
+}
+
+void Camera::determinaAngulo() {
+	this->anguloObjeto = (atan2(this->vetorDiagonalObjeto.x, this->vetorDiagonalObjeto.y) * 180 / M_PI) - 135;
+}
+
+// NOTA: PARA PRINTAR OS ELEMENTOS ENCONTRADOS NO CAMPO EH NECESSARIO UTILIZAR A FUNCAO: getFrameOriginalRecortadoFlip(), ela ira retornar uma Matriz(FrameDestino) invertiva com relacao a x. O ponto retornado da funcao de localizacao de cor devera ser colocado na imagem invertida FrameDestino, depois eh necessario utilizar a funcao cv::flip(FrameOrigem, FrameDestino, 0); novamente na imagem FrameDestino que ja tem um ponto desenhado nela para que volte a orientacao normal.
 // retornos: -1 -> Nao foi definida cor primaria
 // 						0 -> Tudo ocorreu como planejado
 // 						1 -> Nao conseguiu encontrar os objetos de forma alguma
@@ -765,6 +773,9 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 
 				posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao.getPontoMedio(this->centroAtualRetangulos[this->cor2][indexCor2].posicao);
 
+				vetorDiagonalObjeto.x = this->centroAtualRetangulos[this->cor2][indexCor2].posicao.x - this->centroAtualRetangulos[this->cor1][indexCor1].posicao.x;
+				vetorDiagonalObjeto.y = this->centroAtualRetangulos[this->cor2][indexCor2].posicao.y - this->centroAtualRetangulos[this->cor1][indexCor1].posicao.y;
+
 				// colocando a origem no canto inferior esquerdo (estava originalmente no canto superior esquerdo)
 				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
@@ -772,6 +783,8 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 				if(emCentimetros)
 					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
 
+				Camera::determinaAngulo();
+				
 				/* TODO: REMOVER AS CORES EXTRAS POR AREA DE FORMA A MANTER AS QUE FORAM USADAS ANTES DE FINALZAR O PROCESSAMENTO POIS DA FOMAR COMO ESTA, ESTAMOS SALVANDO AS POSICOES ANTERIORES DE TODAS AS ENCONTRADAS. IDEIA: AUMENTAR A AREA DOS RETANGULOS ESCOLHIDOS E USAR ELIMINACAO POR AREA. */
 				return 0;
 			}
