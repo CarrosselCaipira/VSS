@@ -64,5 +64,5 @@ void Roteiro::goleiroBasico(Robo& r, posXY& b){
 			Comportamento::posicionaPosBolaEmY(r, b);
 		}
 	}
-	
+
 }

@@ -58,7 +58,7 @@ void Comportamento::posicionaPosBolaEmX(Robo& r, posXY& b){
 
 void Comportamento::posicionaPosBolaEmY(Robo& r, posXY& b){
 
-   r.setPosicaoObj(r.getPosicaoAtualRobo().x, b.y);
+   r.setPosicaoObj(10, b.y);
 }
 
 void Comportamento::posicionaFaixaSuperior(Robo& r){

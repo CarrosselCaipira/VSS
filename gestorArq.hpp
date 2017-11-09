@@ -25,10 +25,11 @@ class GestorArq {
 		int proporcaoAumentoAmplitudeCampoTodo; /**< Mesma ideia do parametro proporcaoAumentoAmplitudeROI, mas com uma proporcao menor, ja que pode-se gerar muitos falsos positivos com aumentos drasticos de amplitude. */
 		double TamanhoEmPixelsObjeto; /* Tamanaho do objeto, em pixels, para fazermos a conversao de pixels para centimetros. Exemplo: Um objeto deixado no campo para medirmos possui 60 pixels. Combinado com o valor de TamanhoEmCentimetrosObjeto de, por exemplo, 10cm, cada centimetro do "mundo real" corresponde a 6 pixels do mundo visto pela camera. Ou ainda, cada pixel da imagem seria 0,166666667 cm */
 		double TamanhoEmCentimetrosObjeto; /* Tamanho do objeto mencionado acima, em centimetros. */
+		int isLadoEsquerdo; /* 1 se estamos do lado esquerdo do campo, 0 caso estejamos do lado direito. DEVERIA SER UM BOOL, MAS TEMOS PROBLEMAS DE COMPATIBILIDADE COM A EXTRACAO NO YAML. ANALIZAR! */
 
 	public:
-		double proporcaoPixelCentimetro; /* Numero de centimetros que corresponde cada pixel. Para converter um valor me pixels para centimetros, basta multiplicar por este valor. */
-		
+		double proporcaoPixelCentimetro; /* Numero de centimetros que corresponde cada pixel. Para converter um valor de pixels para centimetros, basta multiplicar por este valor. */
+
 		/** @fn GestoArq()
 		 *  @brief Construtor da Classe GestorArq. Faz a configuracao do mapa que assossia um numero inteiro com a string que sera buscada no arquivo de configuracaoes
 		 *
