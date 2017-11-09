@@ -101,9 +101,11 @@ class Camera : public GestorArq {
 		bool processaCor2();
 		bool processaCor1();
 		void getIndexMaisProximo(std::vector<Retangulo>& vect1, std::vector<Retangulo>& vect2, int& indexVect1, int& indexVect2);
+		void converteCoordenadasParaOrigemNoInferiorEsquerdo(posXY& p);
 
 	public:
 		cv::Mat getFrameOriginalRecortado();
+		cv::Mat getFrameOriginalRecortadoFlip();
 
 		/** @fn Camera(const int indexEntrada, const std::string caminhoArquivoConfiguracoes)
 		 *  @brief Construtor da classe de camera. Cria a instancia do objeto camera tetando abrir a camera definida pelo index passado como parametro e define manualmente o caminho para o arquivo de configuracao de cores.

@@ -116,8 +116,22 @@ void Camera::filtragemHSVParamYMLParcial(const Cores cor, int aumentoAmplitudeCo
 	cv::inRange(ROI, cv::Scalar(H_MIN, S_MIN, V_MIN), cv::Scalar(H_MAX, S_MAX, V_MAX), this->imgBinarizada);
 }
 
+// retorna o frame recortado do campo
 cv::Mat Camera::getFrameOriginalRecortado() {
-	return this->frameOriginalRecortado;
+	// fazendo uma copia profunda do frame recortado
+	cv::Mat Frame = this->frameOriginalRecortado.clone();
+
+	return Frame;
+}
+
+// retorna o frame recortado do campo para colocar os pontos retornados das funcoes de localizacao de cores
+cv::Mat Camera::getFrameOriginalRecortadoFlip() {
+	// fazendo uma copia profunda do frame recortado
+	cv::Mat Frame = this->frameOriginalRecortado.clone();
+	// girando o Frame no eixo x (o que esta embaixo fica em cima e vice versa)
+	cv::flip(Frame, Frame, 0);
+
+	return Frame;
 }
 
 int Camera::getNextFrame(bool liberaAoFimDeAquivo /* = true */) {
@@ -134,28 +148,35 @@ int Camera::getNextFrame(bool liberaAoFimDeAquivo /* = true */) {
 	// fazendo o recorte da imagem original para ficarmos apenas com o campo
 	this->frameOriginalRecortado = this->frameOriginal(GestorArq::retanguloCampo);
 
+	// se estamos do lado esquerdo, nao faz nada com a imagem. MAs caso estejamos do lado direito (isLadoEsquerdo == 0) invertemos a imagem
+	if(GestorArq::isLadoEsquerdo == 0) {
+		// invertendo a imagem no eixo y (o que esta na direita vai para a esquerda e vice-versa)
+		cv::flip(this->frameOriginalRecortado, this->frameOriginalRecortado, 1);
+	}
+
+	// IDEIA: FUTURAMENTE, TROCAR O TIPO lab PARA O TIPO HSV PARA POUPARMOS UMA CONVERSAO
 	cv::Mat lab_image;
   cv::cvtColor(this->frameOriginalRecortado, lab_image, CV_BGR2Lab);
-   // Extract the L channel
+   // Extraindo o canal L
   std::vector<cv::Mat> lab_planes(3);
-  cv::split(lab_image, lab_planes);  // now we have the L image in lab_planes[0]
+  cv::split(lab_image, lab_planes);  // lab_planes[0] contem o canal L
 
-  // apply the CLAHE algorithm to the L channel
+  // aplicando o algorimo do CLAHE no canal L
   cv::Ptr<cv::CLAHE> clahe = cv::createCLAHE();
   clahe->setClipLimit(4);
   cv::Mat dst;
   clahe->apply(lab_planes[0], dst);
 
-  // Merge the the color planes back into an Lab image
+	// Fundindo o canal L equalizado devolta a imagem lab
   dst.copyTo(lab_planes[0]);
   cv::merge(lab_planes, lab_image);
 
-	// convert back to RGB
+	// convertendo para BGR
 	cv::Mat image_clahe;
 	cv::cvtColor(lab_image, image_clahe, CV_Lab2BGR);
 
-	// appling a blur to reduce the noise
-	cv::GaussianBlur( image_clahe, image_clahe, cv::Size(3, 3), 2, 2 );
+	// Aplicando um blur para reducao de ruido
+	cv::GaussianBlur(image_clahe, image_clahe, cv::Size(3, 3), 2, 2 );
 
 	/* BEGIN DEBUG */
 	// display the results  (you might also want to see lab_planes[0] before and after).
@@ -683,6 +704,11 @@ void Camera::getIndexMaisProximo(std::vector<Retangulo>& vect1, std::vector<Reta
 
 }
 
+void Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posXY& p) {
+	p.y = this->frameOriginalRecortado.rows - p.y;
+}
+
+// NOTA: PARA PRINTAR OS ELEMENTOS ENCONTRADOS NO CAMPO EH NECESSARIO UTILIZAR A FUNCAO: cv::flip(FrameOrigem, FrameDestino, 0); que vai espelhar a imagem no eixo x (o que estava embaixo agora estara em cima e vice versa). O ponto retornado desta funcao devera ser colocado na imagem invertida FrameDestino
 // retornos: -1 -> Nao foi definida cor primaria
 // 						0 -> Tudo ocorreu como planejado
 // 						1 -> Nao conseguiu encontrar os objetos de forma alguma
@@ -743,6 +769,9 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 				if(emCentimetros)
 					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
 
+				// colocando a origem no canto inferior esquerdo (estava originalmente no canto superior esquerdo)
+				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 				/* TODO: REMOVER AS CORES EXTRAS POR AREA DE FORMA A MANTER AS QUE FORAM USADAS ANTES DE FINALZAR O PROCESSAMENTO POIS DA FOMAR COMO ESTA, ESTAMOS SALVANDO AS POSICOES ANTERIORES DE TODAS AS ENCONTRADAS. IDEIA: AUMENTAR A AREA DOS RETANGULOS ESCOLHIDOS E USAR ELIMINACAO POR AREA. */
 				return 0;
 			}
@@ -754,6 +783,8 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 				// convertendo para centimetros o valor das posicoes
 				if(emCentimetros)
 					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 				std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR1, ESTAMOS RETORNANDO A POSICAO DA COR2 APENAS. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
 				return 3;
@@ -774,6 +805,8 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 					// convertendo para centimetros o valor das posicoes
 					if(emCentimetros)
 						posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
+
+					Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 					std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR2, ESTAMOS RETORNANDO A POSICAO DA COR1 MAIS PROXIMA DA ANTERIOR CONHECIDA PARA A COR2. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
 					return 2;
@@ -796,6 +829,8 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 			if(emCentimetros)
 				posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
 
+			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 			return 0;
 		}
 		else {
@@ -803,7 +838,7 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 			return 1;
 		}
 	}
-
+	return 4;
 }
 
 int Camera::getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentimetros /* = true */) {
@@ -830,6 +865,8 @@ int Camera::getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentime
 			// convertendo para centimetros o valor das posicoes
 			if(emCentimetros)
 				posicaoObj[i] = posicaoObj[i] * GestorArq::proporcaoPixelCentimetro;
+
+			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj[i]);
 		}
 	}
 	else{
@@ -837,5 +874,5 @@ int Camera::getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentime
 		return 1;
 	}
 
-	return 4;
+	return 0;
 }

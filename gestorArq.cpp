@@ -36,6 +36,7 @@ void GestorArq::getConfigCorDoArquivo() {
 	this->retanguloCampo.y = (int)itensLista["Y"];
 	this->retanguloCampo.width = (int)itensLista["Largura"];
 	this->retanguloCampo.height = (int)itensLista["Altura"];
+	this->isLadoEsquerdo = (int)itensLista["isLadoEsquerdo"];
 
 	itensLista =  this->arq["EscalaConversao"]; // posicionando o FileNode para pegar as configuracoes de EscalaConversao
 	this->TamanhoEmPixelsObjeto = (int)itensLista["TamanhoEmPixelsObjeto"];
