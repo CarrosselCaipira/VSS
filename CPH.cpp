@@ -28,7 +28,7 @@ void CPH::inicializaObstMeta() {
 
 	/* ANALISE DE NECESSIDADE E FUNCIONALIDADE - ADICIONADO EM CBR2016 */
 	// Fazer verificacao do robo goleiro estando atras da linha imaginaria
-	if ((robo.getRoteiro() == GOLEIRO) && (robo.getPosicaoPrevRobo().x / DIV_CAMPO) < MAX_X / 6){
+	if ((robo.getRoteiro() == GOLEIRO_BASICO) && (robo.getPosicaoPrevRobo().x / DIV_CAMPO) < MAX_X / 6){
 		for (i = 0; i < MAX_Y; i++) { // Parede da esquerda
 			campoPotencial.matPot[MAX_X / 6][i] = 1;
 			campoPotencial.matBoolPot[MAX_X / 6][i] = true;

@@ -5,7 +5,7 @@
 #include "radio.hpp"
 
 #define FRAME_TIME 30
-#define DESLOCA_BITS 4
+#define DESLOCA_BITS 2
 
 int main() {
 	const int quadrosPulados = 0;
@@ -17,11 +17,8 @@ int main() {
 	// A BOLA ESTA NA MESMA CATEGORIA DOS ADVERSARIOS, NO MOMENTO EH APENAS UM PONTO NO CAMPO
 	posXY bola;
 
-	Camera cam(1);
-	Radio radio(robosTime);
-	CPH campoPotencial1(robosTime[0], robosTimeAdv);
-	CPH campoPotencial2(robosTime[1], robosTimeAdv);
-	CPH campoPotencial3(robosTime[2], robosTimeAdv);
+	Camera cam("outcpp4.avi");
+	//Radio radio(robosTime);
 
 	// setando os roteiros
 	robosTime[0].setRoteiro(GOLEIRO_BASICO);
@@ -41,6 +38,9 @@ int main() {
 	}
 
 	while(true) {
+    CPH campoPotencial1(robosTime[0], robosTimeAdv);
+    CPH campoPotencial2(robosTime[1], robosTimeAdv);
+    CPH campoPotencial3(robosTime[2], robosTimeAdv);
 		// procurando pela bola
 		cam.setCorObjeto(ALARANJADO);
 		cam.getPosicaoAtualObjeto(bola);
@@ -149,7 +149,7 @@ int main() {
 		}
 
 		// getchar();
-		radio.enviaDados();
+		//radio.enviaDados();
 		cv::waitKey(FRAME_TIME);
 		cam.getNextFrame();
 

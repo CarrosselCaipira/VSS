@@ -269,17 +269,17 @@ void Robo::run() {
 		//   break;
 
 		case ATACANTE_BASICO:
-			std::cout << "Roteiro do atacante rodando" << '\n';
+			std::cout << "@Robo: Roteiro do atacante rodando" << '\n';
 			Roteiro::atacanteBasico(*this, bola);
 		break;
 
 		case VOLANTE_BASICO:
-			std::cout << "Roteiro do volante rodando" << '\n';
+			std::cout << "@Robo: Roteiro do volante rodando" << '\n';
 			Roteiro::volanteBasico(*this, bola);
 		break;
 
 		case GOLEIRO_BASICO:
-			std::cout << "Roteiro do goleiro rodando" << '\n';
+			std::cout << "@Robo: Roteiro do goleiro rodando" << '\n';
 			Roteiro::goleiroBasico(*this, bola);
 		break;
 	}
