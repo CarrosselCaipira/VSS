@@ -765,12 +765,12 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 
 				posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao.getPontoMedio(this->centroAtualRetangulos[this->cor2][indexCor2].posicao);
 
+				// colocando a origem no canto inferior esquerdo (estava originalmente no canto superior esquerdo)
+				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 				// convertendo para centimetros o valor das posicoes
 				if(emCentimetros)
 					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
-
-				// colocando a origem no canto inferior esquerdo (estava originalmente no canto superior esquerdo)
-				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 				/* TODO: REMOVER AS CORES EXTRAS POR AREA DE FORMA A MANTER AS QUE FORAM USADAS ANTES DE FINALZAR O PROCESSAMENTO POIS DA FOMAR COMO ESTA, ESTAMOS SALVANDO AS POSICOES ANTERIORES DE TODAS AS ENCONTRADAS. IDEIA: AUMENTAR A AREA DOS RETANGULOS ESCOLHIDOS E USAR ELIMINACAO POR AREA. */
 				return 0;
@@ -780,11 +780,11 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 				Camera::eliminaExtrasPorArea(this->cor2);
 				posicaoObj = this->centroAtualRetangulos[this->cor2][0].posicao;
 
+				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 				// convertendo para centimetros o valor das posicoes
 				if(emCentimetros)
 					posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
-
-				Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 				std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR1, ESTAMOS RETORNANDO A POSICAO DA COR2 APENAS. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
 				return 3;
@@ -802,11 +802,11 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 
 					posicaoObj = this->centroAtualRetangulos[this->cor1][indexCor1].posicao;
 
+					Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 					// convertendo para centimetros o valor das posicoes
 					if(emCentimetros)
 						posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
-
-					Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 					std::cerr << std::endl << "AVISO: " << "@Camera->getPosicaoAtualObjeto: " << "NAO FOI POSSIVEL ENCONTRAR A POSICAO PARA A COR2, ESTAMOS RETORNANDO A POSICAO DA COR1 MAIS PROXIMA DA ANTERIOR CONHECIDA PARA A COR2. TENTE AJUSTAR OS FILTROS OU AJUSTAR A AREA DE BUSCA ENVOLTA DO FRAME ANTERIOR." << std::endl;
 					return 2;
@@ -825,11 +825,11 @@ int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = tru
 			Camera::eliminaExtrasPorArea(this->cor1);
 			posicaoObj = this->centroAtualRetangulos[this->cor1][0].posicao;
 
+			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
+
 			// convertendo para centimetros o valor das posicoes
 			if(emCentimetros)
 				posicaoObj = posicaoObj * GestorArq::proporcaoPixelCentimetro;
-
-			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj);
 
 			return 0;
 		}
@@ -862,11 +862,11 @@ int Camera::getPosicaoAtualObjeto(std::vector<posXY>& posicaoObj, bool emCentime
 		for(int i = 0; i < this->centroAtualRetangulos[this->cor1].size(); i++) {
 			posicaoObj[i] = this->centroAtualRetangulos[this->cor1][i].posicao;
 
+			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj[i]);
+
 			// convertendo para centimetros o valor das posicoes
 			if(emCentimetros)
 				posicaoObj[i] = posicaoObj[i] * GestorArq::proporcaoPixelCentimetro;
-
-			Camera::converteCoordenadasParaOrigemNoInferiorEsquerdo(posicaoObj[i]);
 		}
 	}
 	else{

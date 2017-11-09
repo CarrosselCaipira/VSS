@@ -3,12 +3,11 @@
 #include "CPH.hpp"
 #include "radio.hpp"
 
-#define FRAME_TIME 10
+#define FRAME_TIME 30
 #define DESLOCA_BITS 0
-#define LADO 1 /* 1: ESQUERDO, 0: DIREITO */
 
 int main() {
-	const int quadrosPulados = 0;
+	const int quadrosPulados = 180;
 	std::vector<Robo> robosTime(3);
 	// USANDO ESTE VECTOR PARA MANTER AS POSICOES ANTERIORES CASO NAO CONSIGA ENCONTRAR NOVAS, RETORNA AS ANTERIORES MESMO
 	std::vector<posXY> posRobosTime(3);
@@ -17,7 +16,7 @@ int main() {
 	// A BOLA ESTA NA MESMA CATEGORIA DOS ADVERSARIOS, NO MOMENTO EH APENAS UM PONTO NO CAMPO
 	posXY bola;
 
-	Camera cam(1);
+	Camera cam("outcpp4.avi");
 	// Radio radio(robosTime);
 	CPH campoPotencial1(robosTime[0], robosTimeAdv);
 	CPH campoPotencial2(robosTime[1], robosTimeAdv);
@@ -28,13 +27,16 @@ int main() {
 	robosTime[1].setRoteiro(VOLANTE_BASICO);
 	robosTime[2].setRoteiro(ATACANTE_BASICO);
 
-	cv::Mat Frame;
+	cv::Mat Frame1;
+	cv::Mat Frame2;
+	cv::Mat Frame3;
+	cv::Mat Frame4;
 
 	posXY aux;
 	for(int i = 0; i < quadrosPulados; i++) {
 		cam.getNextFrame();
 		std::cout << "Pulando frames guys" << std::endl;
-		cv::waitKey(30);
+		cv::waitKey(1);
 	}
 
 	while(true) {
@@ -43,11 +45,12 @@ int main() {
 		cam.getPosicaoAtualObjeto(bola);
 		/* BEGIN DEBUG */
 	  std::cout << " bola: " << "x: " << bola.x << " y: "<< bola.y << std::endl;
-		Frame = cam.getFrameOriginalRecortado();
+		Frame1 = cam.getFrameOriginalRecortadoFlip();
 		cv::Point centroCirculoBola(bola.x / cam.proporcaoPixelCentimetro, bola.y / cam.proporcaoPixelCentimetro);
 		int raioCirculo = 5;
-		cv::circle(Frame, centroCirculoBola, raioCirculo, cv::Scalar(204, 0, 204), 5);
-		cv::imshow("FrameOriginal Bola Detectada", Frame);
+		cv::circle(Frame1, centroCirculoBola, raioCirculo, cv::Scalar(204, 0, 204), 5);
+		cv::flip(Frame1, Frame1, 0);
+		cv::imshow("FrameOriginal Bola Detectada", Frame1);
 		/* END DEBUG */
 
 		// procurando pelos robos aliados
@@ -58,13 +61,14 @@ int main() {
 
 		/* BEGIN DEBUG */
 	  std::cout << " ROBO0: " << "x: " << posRobosTime[0].x << " y: "<< posRobosTime[0].y;
-		Frame = cam.getFrameOriginalRecortado();
+		Frame2 = cam.getFrameOriginalRecortadoFlip();
 		cv::Point centroCirculoRobo0(posRobosTime[0].x / cam.proporcaoPixelCentimetro, posRobosTime[0].y / cam.proporcaoPixelCentimetro);
 		cv::Point localEstrategiaRobo0(robosTime[0].getPosicaoObj().x / cam.proporcaoPixelCentimetro, robosTime[0].getPosicaoObj().y / cam.proporcaoPixelCentimetro);
 		raioCirculo = 5;
-		cv::circle(Frame, centroCirculoRobo0, raioCirculo, cv::Scalar(100, 100, 100), 5);
-		cv::circle(Frame, localEstrategiaRobo0, raioCirculo, cv::Scalar(255, 0, 0), 5);
-		cv::imshow("FrameOriginal Robo Detectado E Obj Robo0 AZUL", Frame);
+		cv::circle(Frame2, centroCirculoRobo0, raioCirculo, cv::Scalar(100, 100, 100), 5);
+		cv::circle(Frame2, localEstrategiaRobo0, raioCirculo, cv::Scalar(255, 0, 0), 5);
+		cv::flip(Frame2, Frame2, 0);
+		cv::imshow("FrameOriginal Robo Detectado E Obj Robo0 AZUL", Frame2);
 		/* END DEBUG */
 		// getchar();
 
@@ -75,15 +79,16 @@ int main() {
 
 		/* BEGIN DEBUG */
 	  std::cout << " ROBO1: " << "x: " << posRobosTime[1].x << " y: "<< posRobosTime[1].y;
-		Frame = cam.getFrameOriginalRecortado();
+		Frame3 = cam.getFrameOriginalRecortadoFlip();
 		cv::Point centroCirculoRobo1(posRobosTime[1].x / cam.proporcaoPixelCentimetro, posRobosTime[1].y / cam.proporcaoPixelCentimetro);
-		cv::Point localEstrategiaRobo1(robosTime[1].getPosicaoObj().x / cam.proporcaoPixelCentimetro, robosTime[0].getPosicaoObj().y / cam.proporcaoPixelCentimetro);
+		cv::Point localEstrategiaRobo1(robosTime[1].getPosicaoObj().x / cam.proporcaoPixelCentimetro, robosTime[1].getPosicaoObj().y / cam.proporcaoPixelCentimetro);
 		raioCirculo = 5;
-		cv::circle(Frame, centroCirculoRobo1, raioCirculo, cv::Scalar(100, 100, 100), 5);
-		cv::circle(Frame, localEstrategiaRobo1, raioCirculo, cv::Scalar(0, 255, 0), 5);
-		cv::imshow("FrameOriginal Robo Detectado E Obj Robo1 VERDE", Frame);
-		/* END DEBUG */
+		cv::circle(Frame3, centroCirculoRobo1, raioCirculo, cv::Scalar(100, 100, 100), 5);
+		cv::circle(Frame3, localEstrategiaRobo1, raioCirculo, cv::Scalar(0, 255, 0), 5);
+		cv::flip(Frame3, Frame3, 0);
+		cv::imshow("FrameOriginal Robo Detectado E Obj Robo1 VERDE", Frame3);
 		// getchar();
+		/* END DEBUG */
 
 		cam.setCorObjeto(AMARELO, VERDE);
 		cam.getPosicaoAtualObjeto(posRobosTime[2]);
@@ -92,13 +97,14 @@ int main() {
 
 		/* BEGIN DEBUG */
 	  std::cout << " ROBO2: " << "x: " << posRobosTime[2].x << " y: "<< posRobosTime[2].y;
-		Frame = cam.getFrameOriginalRecortado();
+		Frame4 = cam.getFrameOriginalRecortadoFlip();
 		cv::Point centroCirculoRobo2(posRobosTime[2].x / cam.proporcaoPixelCentimetro, posRobosTime[2].y / cam.proporcaoPixelCentimetro);
 		cv::Point localEstrategiaRobo2(robosTime[2].getPosicaoObj().x / cam.proporcaoPixelCentimetro,  robosTime[2].getPosicaoObj().y / cam.proporcaoPixelCentimetro );
 		raioCirculo = 5;
-		cv::circle(Frame, centroCirculoRobo2, raioCirculo, cv::Scalar(100, 100, 100), 5);
-		cv::circle(Frame, localEstrategiaRobo2, raioCirculo, cv::Scalar(0, 0, 255), 5);
-		cv::imshow("FrameOriginal Robo Detectado E Obj Robo2 VERMELHO", Frame);
+		cv::circle(Frame4, centroCirculoRobo2, raioCirculo, cv::Scalar(100, 100, 100), 5);
+		cv::circle(Frame4, localEstrategiaRobo2, raioCirculo, cv::Scalar(0, 0, 255), 5);
+		cv::flip(Frame4, Frame4, 0);
+		cv::imshow("FrameOriginal Robo Detectado E Obj Robo2 VERMELHO", Frame4);
 		/* END DEBUG */
 		// getchar();
 
@@ -133,13 +139,18 @@ int main() {
 		}
 
 		for(int i = 0; i < robosTime.size(); i++) {
-			std::cout << "Velocidade Robo " << i << ": " << "Roda esquerda: " << robosTime[i].getVelocidadeAtualRobo().rodaEsq << " Roda direita: " << robosTime[i].getVelocidadeAtualRobo().rodaDir << '\n';
+			std::cout << "Velocidade Robo " << i << ": " << "Roda esquerda: " << (int)(robosTime[i].getVelocidadeAtualRobo().rodaEsq) << " Roda direita: " << (int)(robosTime[i].getVelocidadeAtualRobo().rodaDir) << '\n';
 		}
-		aux =robosTime[0].getPosicaoObj();
-		std::cout << "Objetivo do ROBO1-> x:" << aux.x << " e y:"<< aux.y << '\n' <<'\n';
-		getchar();
+
+		// getchar();
 		// radio.enviaDados();
 		cv::waitKey(FRAME_TIME);
 		cam.getNextFrame();
+
+		Frame1.release();
+		Frame2.release();
+		Frame3.release();
+		Frame4.release();
+
 	}
 }
