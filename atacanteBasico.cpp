@@ -40,9 +40,18 @@ void Roteiro::atacanteBasico(Robo& r, posXY& b) {
 	}
 	//Se não estiver na metade do adversario
 	else {
-		//Espera para contra-ataquie
-		Comportamento::posicionaPosBolaEmY(r, b);
-		Comportamento::permaneceNoEixoX(r);
+		//Espera para contra-ataque
+		//Se estiver na faixa central ou na faixa superior
+		if(b.isInFaixaCentral() || b.isInFaixaSuperior()){
+			//espera no lado contrário para o contra-ataque
+			Comportamento::posicionaAtacanteParaEsperarSuperior(r, b);
+		}
+		//se estiver na faixa inferior
+		else if(b.isInFaixaInferior()){
+			Comportamento::posicionaAtacanteParaEsperarInferior(r, b);
+			//espera do lado contrário para o contra-ataque
+		}
+
 	}
 
 }

@@ -29,10 +29,18 @@ class Comportamento {
  	 * @param Referencia para um robo
  	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
 	 */
+
  	static void posicionaCentroGolXYAdv(Robo& r);
+	/**
+	 * @fn Comportamento::posicionaVolantePosNatural(Robo& r)
+ 	 * @brief Volta o volante para sua posição natural
+ 	 * @param Referencia para um robo
+ 	 * @Author Luis Uzai
+	 */
+ 	static void posicionaVolantePosNatural(Robo& r, posXY b);
 
  	/**
-	 * @fn Comportamento::tangenciaLinhaSuperiorAreaGol(Robo& r)
+	 * @fn Comportamento::tangenciaLinhaSuperiorAreaGol(Robo& r, posXY b)
  	 * @brief Define o obj do robo como manter x e y de modo que tangencie a linha superior da area do gol.
  	 * @param Referencia para um robo
  	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
@@ -204,6 +212,51 @@ class Comportamento {
  	 * @Author Luis Fernando Uzai
  	 */
  	static void segueBolaEmXFrente(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::chutaFrente(Robo& r, Bola& b)
+ 	 * @brief Chuta a bola
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void chutaFrente(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteFaixaSuperior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa superior
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteFaixaSuperior(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteFaixaInferior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa inferior
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteFaixaInferior(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteParaEsperarSuperior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa superior para esperar contra-ataque
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteParaEsperarSuperior(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteParaEsperarInferior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa inferior para esperar contra-ataque
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteParaEsperarInferior(Robo& r, posXY& b);
 
  };
 

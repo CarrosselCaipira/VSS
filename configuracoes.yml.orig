@@ -1,0 +1,130 @@
+%YAML:1.0
+% Nao se esqueca que ao realizar qualquer adicao ou remocao neste arquivo, eh necessario adaptar a enumeracao 'Cores' em camera.hpp e na funcao inicializaMapa em camera.cpp
+%AreaCampo:
+%  isLadoEsquerdo: indica se estamos do lado esquerdo do campo (= 1) ou se estamos do lado direito (= 0)
+%EscalaConversao:
+% TamanhoEmPixelsObjeto: tamanho em pixels do objeto utilizado como base.
+% TamanhoEmCentimetrosObjeto: tamanho do mesmo objeto mas em centimetros.
+---
+AreaCampo:
+  X: 90
+  Y: 33
+  Largura: 548
+  Altura: 420
+  isLadoEsquerdo: 0
+
+EscalaConversao:
+  TamanhoEmPixelsObjeto: 548
+  TamanhoEmCentimetrosObjeto: 170
+
+BuscaROIFrameAnterior:
+  Area: 90
+  numeroTentativasBuscaROI: 3
+  proporcaoAumentoAmplitudeROI: 5
+
+BuscaCampoTodo:
+  numeroTentativasBuscaCampoTodo: 3
+  proporcaoAumentoAmplitudeCampoTodo: 5
+
+Cores:
+  - AMARELO:
+      H_MIN: 27
+      H_MAX: 34
+      S_MIN: 76
+      S_MAX: 172
+      V_MIN: 190
+      V_MAX: 255
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 3
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6
+
+  - AZUL:
+      H_MIN: 59
+      H_MAX: 137
+      S_MIN: 173
+      S_MAX: 255
+      V_MIN: 147
+      V_MAX: 255
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 3
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6
+
+  - ALARANJADO:
+      H_MIN: 1
+      H_MAX: 19
+      S_MIN: 103
+      S_MAX: 197
+      V_MIN: 112
+      V_MAX: 255
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 1
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6
+
+  - ROSA:
+      H_MIN: 146
+      H_MAX: 162
+      S_MIN: 32
+      S_MAX: 85
+      V_MIN: 176
+      V_MAX: 255
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 1
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6
+
+  - ROXO:
+      H_MIN: 121
+      H_MAX: 131
+      S_MIN: 53
+      S_MAX: 86
+      V_MIN: 220
+      V_MAX: 255
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 1
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6
+
+  - VERDE:
+      H_MIN: 37
+      H_MAX: 43
+      S_MIN: 93
+      S_MAX: 151
+      V_MIN: 221
+      V_MAX: 244
+      AreaMinima: 100
+      AreaMaxima: 700
+      NumObjetosCor: 1
+      VezesErode: 2
+      LarguraRetanguloErode: 3
+      AlturaRetanguloErode: 3
+      VezesDilatate: 2
+      LarguraRetanguloDilatate: 6
+      AlturaRetanguloDilatate: 6

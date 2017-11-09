@@ -5,7 +5,6 @@
 #include <unistd.h>
 // #include "CPH.hpp"
 // #include "radio.hpp"
-
 #define FRAME_TIME 30
 
 int main() {
@@ -16,39 +15,38 @@ int main() {
 	robosTime[1].setRoteiro(VOLANTE_BASICO);
 	robosTime[2].setRoteiro(ATACANTE_BASICO);
 
-
-	for (int i = 1; i < 130; i=i+10) {
-		for (int j = 10; j < 160; j=j+5) {
-			// while(true) {
+	int temp;
+	posXY aux2;
+	posXY aux;
+	aux2.x = 2;
+	aux2.y = 2;
+	for (int i = 25; i < 85; i=i+10) {
+		for (int j = 5; j < 130; j=j+5) {
+		robosTime[0].setPosicaoAtualRobo(10, 75);
+		robosTime[1].setPosicaoAtualRobo(50, 50);
+		robosTime[2].setPosicaoAtualRobo(50, 100);
+		// while(true) {
 			// pegando as informacoes de localizacao a partir da camera para os robos e a bola
 			posXY localObjeto;
 			posXY bola;
-			posXY aux;
-			posXY aux2;
-
-			aux2.x = j;
-			aux2.y = i;
-			//pegando a posição atual do robô
 
 
-			robosTime[0].setPosicaoAtualRobo(10, 75);
+			// if(aux2.y < 128)
+			// 	aux2.y = aux2.y = aux2.y + 15;
+			// else{
+			// 	aux2.y = 2;
+			// 	aux2.x = 122;
+			// }
+			aux2.x = i;
+			aux2.y = j;
+
+
 			robosTime[0].setPosicaoAtualBola(aux2);
-			// std::cout << "ROBO1" << '\n';
 			aux = robosTime[0].getPosicaoAtualRobo();
-			// std::cout << "Posição do robô 1: " << aux.y<<'\n';
-			/*--*/
-			robosTime[1].setPosicaoAtualRobo(50, 50);
 			robosTime[1].setPosicaoAtualBola(aux2);
-			// std::cout << "ROBO2" << '\n';
 			aux = robosTime[1].getPosicaoAtualRobo();
-			// std::cout << "Posição do robô 1: " << aux.y<<'\n';
-			/*--*/
-			robosTime[2].setPosicaoAtualRobo(50, 100);
 			robosTime[2].setPosicaoAtualBola(aux2);
-			// std::cout << "ROBO3" << '\n';
 			aux = robosTime[2].getPosicaoAtualRobo();
-			// std::cout << "Posição do robô 1: " << aux.x<<'\n';
-			/*--*/
 
 			// correndo os roteiros de cada robo
 			std::cout << "BOLA X:" << aux2.x << '\n';
@@ -56,18 +54,21 @@ int main() {
 
 			robosTime[0].run();
 			aux =robosTime[0].getPosicaoObj();
+			robosTime[0].setPosicaoAtualRobo(aux);
 			std::cout << "Objetivo do ROBO1-> x:" << aux.x << " e y:"<< aux.y << '\n' <<'\n';
 
 			robosTime[1].run();
 			aux =robosTime[1].getPosicaoObj();
+			robosTime[1].setPosicaoAtualRobo(aux);
 			std::cout << "Objetivo do ROBO2-> x:" << aux.x << " e y:"<< aux.y << '\n' <<'\n';
 
 			robosTime[2].run();
 			aux =robosTime[2].getPosicaoObj();
+			robosTime[2].setPosicaoAtualRobo(aux);
 			std::cout << "Objetivo do ROBO3-> x:" << aux.x << " e y:"<< aux.y << '\n' <<'\n';
-			// getchar();
 			std::cout << "------------------" << '\n';
-			usleep(500000);
+			// usleep(500000);
+			getchar();
 			system("clear");
 		}
 	}

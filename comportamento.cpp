@@ -6,13 +6,16 @@ void Comportamento::posicionaGolX(Robo& r) {
 }
 
 void Comportamento::posicionaCentroGolXY(Robo& r) {
-
 	r.setPosicaoObj(TAM_X_GOL, CENTRO_Y_GOL);
 }
 
 void Comportamento::posicionaCentroGolXYAdv(Robo& r) {
 
 	r.setPosicaoObj(TAM_X_GOL + TAM_X_CAMPO, CENTRO_Y_GOL);
+}
+
+void Comportamento::posicionaVolantePosNatural(Robo& r, posXY b){
+	r.setPosicaoObj(TAM_X_CAMPO/4, b.y);
 }
 
 void Comportamento::tangenciaLinhaSuperiorAreaGol(Robo& r) {
@@ -118,4 +121,24 @@ void Comportamento::posicionaParedeSuperior(Robo& r){
 
 void Comportamento::segueBolaEmXFrente(Robo& r, posXY& b){
    r.setPosicaoObj(b.x - TAM_ROBO, r.getPosicaoAtualRobo().y);
+}
+
+void Comportamento::chutaFrente(Robo& r, posXY& b){
+   r.setPosicaoObj(b.x + TAM_ROBO, r.getPosicaoAtualRobo().y);
+}
+
+void Comportamento::posicionaAtacanteFaixaSuperior(Robo& r, posXY& b){
+   r.setPosicaoObj(b.x - TAM_ROBO, b.y);
+}
+
+void Comportamento::posicionaAtacanteFaixaInferior(Robo& r, posXY& b){
+   r.setPosicaoObj(b.x + TAM_ROBO, b.y);
+}
+
+void Comportamento::posicionaAtacanteParaEsperarSuperior(Robo& r, posXY& b){
+   r.setPosicaoObj((TAM_X_CAMPO/2) + TAM_ROBO, TAM_ROBO + 8);
+}
+
+void Comportamento::posicionaAtacanteParaEsperarInferior(Robo& r, posXY& b){
+   r.setPosicaoObj((TAM_X_CAMPO/2) + TAM_ROBO, TAM_Y_CAMPO - 8);
 }
