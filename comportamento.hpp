@@ -240,6 +240,24 @@ class Comportamento {
  	 */
  	static void posicionaAtacanteFaixaInferior(Robo& r, posXY& b);
 
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteParaEsperarSuperior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa superior para esperar contra-ataque
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteParaEsperarSuperior(Robo& r, posXY& b);
+
+ 	/**
+ 	 * @fn Comportamento::posicionaAtacanteParaEsperarInferior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o atacante na faixa inferior para esperar contra-ataque
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Luis Fernando Uzai
+ 	 */
+ 	static void posicionaAtacanteParaEsperarInferior(Robo& r, posXY& b);
+
  };
 
  #endif /* COMPORTAMENTO_H */

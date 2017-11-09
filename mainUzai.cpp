@@ -20,8 +20,8 @@ int main() {
 	posXY aux;
 	aux2.x = 2;
 	aux2.y = 2;
+	for (int i = 25; i < 85; i=i+10) {
 		for (int j = 5; j < 130; j=j+5) {
-			for (int i = 10; i < 160; i=i+10) {
 		robosTime[0].setPosicaoAtualRobo(10, 75);
 		robosTime[1].setPosicaoAtualRobo(50, 50);
 		robosTime[2].setPosicaoAtualRobo(50, 100);

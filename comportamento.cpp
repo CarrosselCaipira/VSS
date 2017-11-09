@@ -134,3 +134,11 @@ void Comportamento::posicionaAtacanteFaixaSuperior(Robo& r, posXY& b){
 void Comportamento::posicionaAtacanteFaixaInferior(Robo& r, posXY& b){
    r.setPosicaoObj(b.x + TAM_ROBO, b.y);
 }
+
+void Comportamento::posicionaAtacanteParaEsperarSuperior(Robo& r, posXY& b){
+   r.setPosicaoObj((TAM_X_CAMPO/2) + TAM_ROBO, TAM_ROBO + 8);
+}
+
+void Comportamento::posicionaAtacanteParaEsperarInferior(Robo& r, posXY& b){
+   r.setPosicaoObj((TAM_X_CAMPO/2) + TAM_ROBO, TAM_Y_CAMPO - 8);
+}

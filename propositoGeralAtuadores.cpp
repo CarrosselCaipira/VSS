@@ -158,7 +158,6 @@ bool posXY::isInRaio (posXY posicao, int raio){
 }
 
 bool posXY::isInAreaAtaqueVolatante (){
-	std::cout << TAM_X_CAMPO*0.6 << '\n';
   return (this->x < TAM_X_CAMPO*0.6);
 }
 
