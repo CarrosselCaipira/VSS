@@ -1,10 +1,11 @@
 #include "camera.hpp"
 #include "robo.hpp"
 #include "CPH.hpp"
+// #include "AEstrela.hpp"
 #include "radio.hpp"
 
 #define FRAME_TIME 30
-#define DESLOCA_BITS 0
+#define DESLOCA_BITS 4
 
 int main() {
 	const int quadrosPulados = 180;
@@ -122,19 +123,21 @@ int main() {
 		robosTime[2].run();
 
 		// calculando velocidade das rodas para o robo 1
-		std::cout << "Calculando vel rodas Robo1" << '\n';
 		campoPotencial1.calculaVelRodas();
+		std::cout << "Calculanda vel rodas Robo1" << '\n';
 		// calculando velocidade das rodas para o robo 2
-		std::cout << "Calculando vel rodas Robo2" << '\n';
 		campoPotencial2.calculaVelRodas();
+		std::cout << "Calculanda vel rodas Robo2" << '\n';
 		// calculando velocidade das rodas para o robo 3
-		std::cout << "Calculando vel rodas Robo3" << '\n';
 		campoPotencial3.calculaVelRodas();
+		std::cout << "Calculanda vel rodas Robo3" << '\n';
     // corrigindo a velocidade das rodas para funcionar com o radio novo
     for(int i = 0; i < robosTime.size(); i++) {
 			velocidadeRobo v = robosTime[i].getVelocidadeAtualRobo();
 			v.rodaEsq = v.rodaEsq << DESLOCA_BITS;
 			v.rodaDir = v.rodaDir << DESLOCA_BITS;
+			// v.rodaEsq = 255;
+			// v.rodaDir = 255;
 			robosTime[i].setVelocidadeAtualRobo(v);
 		}
 

@@ -3,7 +3,8 @@
 #include "roteiro.hpp"
 #include <unordered_set>
 #include <queue>
-#include <unordered_map> 
+#include <unordered_map>
+#include <iostream>
 #include <vector>
 #include <tuple>
 #include <string>
@@ -12,6 +13,8 @@
 #define MAX_X 77
 #define MAX_Y 67
 #define NUM_VIZINHOS 8
+#define MAX_ITER 100
+#define TAM_CELULA 2
 
 using namespace std;
 
@@ -89,7 +92,7 @@ class FilaPrioridades{
   		priority_queue<itemFilaPrioridade, vector<itemFilaPrioridade>,greater<itemFilaPrioridade>> fila;
 
   	public:
-  		
+
   		bool isVazia();
 
   		void colocar(Posicao i, double p);
@@ -120,7 +123,7 @@ class AEstrela {
 		vector<Posicao> posXYtoPosicao(vector<posXY> v);
 
   	public:
-  		
+
   		AEstrela(Robo& r, std::vector<posXY>& obs);
 
   		/**

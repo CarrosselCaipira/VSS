@@ -55,21 +55,21 @@ vector<Posicao> GrafoEmGrade::retornaVizinhos(Posicao coordenada) {
 
 			resultados.push_back(p);
      	}
-    }	
+    }
 
     return resultados;
 }
 
 void GrafoEmGrade::adicionaMultiplosObstaculos(Posicao coordenada, int larg, int alt) {
-  
+
 	int x,y;
 
 	tie(x,y) = coordenada;
 
     for (int i = y; i < y + alt; i++) {
-  			
+
   		for (int j = x; j < x + larg; j++) {
-    	
+
     		this->obstaculos.insert(Posicao{j, i});
     	}
   	}
@@ -77,7 +77,7 @@ void GrafoEmGrade::adicionaMultiplosObstaculos(Posicao coordenada, int larg, int
 
 
 void GrafoEmGrade::adicionaUmObstaculo(Posicao obstaculo) {
-  
+
 	int linha, coluna;
 
 	tie(coluna,linha) = obstaculo;
@@ -100,13 +100,13 @@ int GrafoEmGrade::pesoNoNo (Posicao noInicial, Posicao noFinal) {
 	return (distNosX > distNosY) ? distNosX : distNosY;
 }
 
-bool FilaPrioridades::isVazia() { 
+bool FilaPrioridades::isVazia() {
 
-  	return fila.empty(); 
+  	return fila.empty();
 }
 
 void FilaPrioridades::colocar(Posicao i, double p) {
-    
+
     fila.emplace(i, p);
 }
 
@@ -144,7 +144,7 @@ vector<Posicao> AEstrela::posXYtoPosicao(vector<posXY> v) {
 
 	for (auto item: v) {
 
-		resul.push_back(Posicao{item.x, item.y});
+		resul.push_back(Posicao{item.x / TAM_CELULA, item.y / TAM_CELULA});
 	}
 
 	return resul;
@@ -153,7 +153,7 @@ vector<Posicao> AEstrela::posXYtoPosicao(vector<posXY> v) {
 AEstrela::AEstrela (Robo& r, std::vector<posXY>& obs) : robo(r), posObstaculos(obs) {}
 
 void AEstrela::calculaVelRodas() {
-	
+
 	posXY distObjRobo;
 	int flagDirection, i, j, wSignal, vSignal;
 	float ang, directionAngle, distEuclidianaObjRobo, vObj, wObj, K_ro, vRodaEsq, vRodaDir;
@@ -171,24 +171,20 @@ void AEstrela::calculaVelRodas() {
 			posXY posInicial = robo.getPosicaoAtualRobo();
 			posXY posMeta = robo.getPosicaoObj();
 
-			Posicao inicio = Posicao{posInicial.x, posInicial.y};
-			Posicao fim = Posicao{posMeta.x, posMeta.y};
-
+			Posicao inicio = Posicao{posInicial.x / TAM_CELULA, posInicial.y / TAM_CELULA};
+			Posicao fim = Posicao{posMeta.x / TAM_CELULA, posMeta.y / TAM_CELULA};
 			grafo = AEstrela::preparaGrafo(this->grafo, posXYtoPosicao(posObstaculos));
 			AEstrela::aEstrela(this->grafo, inicio, fim, this->tracado, this->gasto);
-
 			vector<Posicao> rota = AEstrela::reconstruirCaminho(inicio,fim,tracado);
-
 			robo.setEstadoAtualComoEstadoPrev();
 			/* analizar utilidade de salvarmos estado anterior, atualmente removida */
-
 			if (rota.size() > 2) {
 
 				int xNoInicial, yNoInicial;
 				int xProxNo, yProxNo;
 
 				tie(yNoInicial, xNoInicial) = rota[0];
-				tie(yProxNo, xProxNo) = rota[1];			
+				tie(yProxNo, xProxNo) = rota[1];
 
 				directionAngle = atan2(xNoInicial - xProxNo, yNoInicial - yProxNo) * 180 / M_PI;
 
@@ -432,7 +428,7 @@ void AEstrela::calculaVelRodas() {
 }
 
 double AEstrela::heuristica(Posicao a, Posicao b) {
-  
+
 	int xa, ya, xb, yb;
 
 	tie(ya,xa) = a;
@@ -448,7 +444,8 @@ void AEstrela::aEstrela (GrafoEmGrade *grafo, Posicao inicio, Posicao meta, Cami
 
   	caminho[inicio] = inicio;
   	custo[inicio] = 0;
-  
+
+		int i = 0;
   	while (!fila.isVazia()) {
 
     	Posicao noAtual = fila.retirarPop();
@@ -456,7 +453,6 @@ void AEstrela::aEstrela (GrafoEmGrade *grafo, Posicao inicio, Posicao meta, Cami
     	if (noAtual == meta) {
       		break;
     	}
-
     	for (Posicao proximoNo : grafo->retornaVizinhos(noAtual)) {
 
       		double novoCusto = custo[noAtual] + grafo->pesoNoNo(noAtual, proximoNo);
@@ -468,7 +464,11 @@ void AEstrela::aEstrela (GrafoEmGrade *grafo, Posicao inicio, Posicao meta, Cami
         		fila.colocar(proximoNo, prioridade);
         		caminho[proximoNo] = noAtual;
       		}
+
     	}
+			if(i > MAX_ITER)
+				break;
+			i++;
   	}
 }
 
