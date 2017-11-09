@@ -116,7 +116,7 @@ bool CPH::calculaCampoSOR() {
 
 			convergiu=true;
 		}
-		
+
 	} while (!convergiu);
 
 	return convergiu;
@@ -137,10 +137,11 @@ void CPH::calculaVelRodas() {
 			robo.setVelocidadeAtualRobo(5, -5);
 		else {
 
+			robo.setEstadoPrevComoEstadoAtual();
+
 			CPH::inicializaObstMeta();
 			CPH::calculaCampoSOR();
 
-			robo.setEstadoAtualComoEstadoPrev();
 			/* analizar utilidade de salvarmos estado anterior, atualmente removida */
 			robo.getDistObjRobo(distObjRobo);
 			distEuclidianaObjRobo = robo.getDistEuclianaObjRobo();

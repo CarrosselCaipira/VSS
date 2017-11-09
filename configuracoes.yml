@@ -7,11 +7,11 @@
 % TamanhoEmCentimetrosObjeto: tamanho do mesmo objeto mas em centimetros.
 ---
 AreaCampo:
-  X: 90
-  Y: 33
-  Largura: 548
-  Altura: 420
-  isLadoEsquerdo: 0
+  X: 2
+  Y: 2
+  Largura: 636
+  Altura: 477
+  isLadoEsquerdo: 1
 
 EscalaConversao:
   TamanhoEmPixelsObjeto: 548
@@ -28,12 +28,12 @@ BuscaCampoTodo:
 
 Cores:
   - AMARELO:
-      H_MIN: 26
-      H_MAX: 33
-      S_MIN: 74
-      S_MAX: 170
-      V_MIN: 235
-      V_MAX: 255
+      H_MIN: 27
+      H_MAX: 31
+      S_MIN: 97
+      S_MAX: 147
+      V_MIN: 192
+      V_MAX: 233
       AreaMinima: 100
       AreaMaxima: 700
       NumObjetosCor: 3
@@ -45,11 +45,11 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - AZUL:
-      H_MIN: 59
-      H_MAX: 137
-      S_MIN: 173
-      S_MAX: 255
-      V_MIN: 147
+      H_MIN: 113
+      H_MAX: 118
+      S_MIN: 88
+      S_MAX: 129
+      V_MIN: 155
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -62,11 +62,11 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - ALARANJADO:
-      H_MIN: 3
-      H_MAX: 12
+      H_MIN: 5
+      H_MAX: 10
       S_MIN: 138
-      S_MAX: 205
-      V_MIN: 228
+      S_MAX: 179
+      V_MIN: 255
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -80,10 +80,10 @@ Cores:
 
   - ROSA:
       H_MIN: 150
-      H_MAX: 162
-      S_MIN: 57
-      S_MAX: 87
-      V_MIN: 246
+      H_MAX: 159
+      S_MIN: 62
+      S_MAX: 103
+      V_MIN: 219
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -96,12 +96,12 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - ROXO:
-      H_MIN: 121
-      H_MAX: 128
-      S_MIN: 58
-      S_MAX: 88
-      V_MIN: 221
-      V_MAX: 255
+      H_MIN: 118
+      H_MAX: 129
+      S_MIN: 41
+      S_MAX: 75
+      V_MIN: 180
+      V_MAX: 226
       AreaMinima: 100
       AreaMaxima: 700
       NumObjetosCor: 1
@@ -113,12 +113,12 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - VERDE:
-      H_MIN: 38
-      H_MAX: 46
-      S_MIN: 89
-      S_MAX: 148
-      V_MIN: 221
-      V_MAX: 246
+      H_MIN: 40
+      H_MAX: 45
+      S_MIN: 95
+      S_MAX: 139
+      V_MIN: 180
+      V_MAX: 239
       AreaMinima: 100
       AreaMaxima: 700
       NumObjetosCor: 1

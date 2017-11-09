@@ -8,7 +8,7 @@
 #define DESLOCA_BITS 4
 
 int main() {
-	const int quadrosPulados = 180;
+	const int quadrosPulados = 0;
 	std::vector<Robo> robosTime(3);
 	// USANDO ESTE VECTOR PARA MANTER AS POSICOES ANTERIORES CASO NAO CONSIGA ENCONTRAR NOVAS, RETORNA AS ANTERIORES MESMO
 	std::vector<posXY> posRobosTime(3);
@@ -17,8 +17,8 @@ int main() {
 	// A BOLA ESTA NA MESMA CATEGORIA DOS ADVERSARIOS, NO MOMENTO EH APENAS UM PONTO NO CAMPO
 	posXY bola;
 
-	Camera cam("outcpp4.avi");
-	// Radio radio(robosTime);
+	Camera cam(1);
+	Radio radio(robosTime);
 	CPH campoPotencial1(robosTime[0], robosTimeAdv);
 	CPH campoPotencial2(robosTime[1], robosTimeAdv);
 	CPH campoPotencial3(robosTime[2], robosTimeAdv);
@@ -74,7 +74,7 @@ int main() {
 		/* END DEBUG */
 		// getchar();
 
-		cam.setCorObjeto(AMARELO, ROXO);
+		cam.setCorObjeto(AMARELO, VERDE);
 		cam.getPosicaoAtualObjeto(posRobosTime[1]);
 		robosTime[1].setAnguloAtualRobo(cam.getAnguloObjeto());
 		robosTime[1].setPosicaoAtualRobo(posRobosTime[1]);
@@ -93,7 +93,7 @@ int main() {
 		// getchar();
 		/* END DEBUG */
 
-		cam.setCorObjeto(AMARELO, VERDE);
+		cam.setCorObjeto(AMARELO, ROXO);
 		cam.getPosicaoAtualObjeto(posRobosTime[2]);
 		robosTime[2].setAnguloAtualRobo(cam.getAnguloObjeto());
 		robosTime[2].setPosicaoAtualRobo(posRobosTime[2]);
@@ -114,7 +114,7 @@ int main() {
 
         /**************************************************************************/
 		// procurando pelos robos adversarios
-		cam.setCorObjeto(AZUL);
+		cam.setCorObjeto(AMARELO);
 		cam.getPosicaoAtualObjeto(robosTimeAdv);
 
 		// correndo os roteiros de cada robo
@@ -149,7 +149,7 @@ int main() {
 		}
 
 		// getchar();
-		// radio.enviaDados();
+		radio.enviaDados();
 		cv::waitKey(FRAME_TIME);
 		cam.getNextFrame();
 

@@ -164,6 +164,7 @@ class Robo {
 				/****************************************************************/
 
 				/*********************** ESTADOS DO ROBO *************************/
+				// ALTERAR NOMES PARA COPIA...
 				/* define o estado atual como sendo o estado previsto (faz a copia das variaveis de estadoPrevRobo para estadoAtualRobo) */
 				void setEstadoAtualComoEstadoPrev();
 
