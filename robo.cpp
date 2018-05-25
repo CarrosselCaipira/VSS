@@ -93,7 +93,7 @@ double Robo::getDistEuclianaObjRobo() {
 	return this->estadoAtualRobo.posicao.getDistEucliana(this->estadoObjRobo.posicao);
 }
 
-bool Robo::isRoboComBola(const posXY posicao, int raio) {
+bool Robo::isRoboComBola(const posXY posicao, int raio) { //Considerar alteração da forma como identificamos se o robo está com a bola
 	return (this->estadoAtualRobo.posicao.isInRaio(posicao, raio) && (posicao.x >= (this->estadoAtualRobo.posicao.x + TAM_ROBO / 2)));
 }
 

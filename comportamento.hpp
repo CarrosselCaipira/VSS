@@ -229,34 +229,34 @@ class Comportamento {
  	 * @param Referencia para a bola
  	 * @Author Luis Fernando Uzai
  	 */
- 	static void posicionaAtacanteFaixaSuperior(Robo& r, posXY& b);
+ 	static void posicionaAntesBola(Robo& r, posXY& b);
 
  	/**
- 	 * @fn Comportamento::posicionaAtacanteFaixaInferior(Robo& r, Bola& b)
- 	 * @brief Posiciona o atacante na faixa inferior
+ 	 * @fn Comportamento::posicionaAntesBola(Robo& r, Bola& b)
+ 	 * @brief Posiciona o robo antes de bola
  	 * @param Referencia para um robo
  	 * @param Referencia para a bola
  	 * @Author Luis Fernando Uzai
  	 */
- 	static void posicionaAtacanteFaixaInferior(Robo& r, posXY& b);
+ 	static void posicionaDepoisBola(Robo& r, posXY& b);
 
  	/**
- 	 * @fn Comportamento::posicionaAtacanteParaEsperarSuperior(Robo& r, Bola& b)
- 	 * @brief Posiciona o atacante na faixa superior para esperar contra-ataque
+ 	 * @fn Comportamento::posicionaDepoisBola(Robo& r, Bola& b)
+ 	 * @brief Posiciona o robo depois da bola
  	 * @param Referencia para um robo
  	 * @param Referencia para a bola
  	 * @Author Luis Fernando Uzai
  	 */
- 	static void posicionaAtacanteParaEsperarSuperior(Robo& r, posXY& b);
+ 	static void posicionaRoboParaEsperarSuperior(Robo& r, posXY& b);
 
  	/**
- 	 * @fn Comportamento::posicionaAtacanteParaEsperarInferior(Robo& r, Bola& b)
- 	 * @brief Posiciona o atacante na faixa inferior para esperar contra-ataque
+ 	 * @fn Comportamento::posicionaRoboParaEsperarSuperior(Robo& r, Bola& b)
+ 	 * @brief Posiciona o robo na faixa inferior para esperar contra-ataque
  	 * @param Referencia para um robo
  	 * @param Referencia para a bola
  	 * @Author Luis Fernando Uzai
  	 */
- 	static void posicionaAtacanteParaEsperarInferior(Robo& r, posXY& b);
+ 	static void posicionaRoboParaEsperarInferior(Robo& r, posXY& b);
 
  };
 

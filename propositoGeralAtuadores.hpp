@@ -65,8 +65,8 @@ struct posXY {
 	bool isInAreaEscanteioInferiorTime();
 	bool isInAreaEscanteioSuperiorAdv();
 	bool isInAreaEscanteioInferiorAdv();
-	bool isInAreaAntesMetadeCampoTime();
-	bool isInAreaAntesMetadeCampoAdv();
+	bool isInFrenteAreaGolCentroTime();
+	bool isInFrenteAreaGolCentroAdv();
 	bool isInQuinaSuperiorAreaGolTime();
 	bool isInQuinaInferiorAreaGolTime();
 	bool isInQuinaSuperiorAreaGolAdv();
@@ -91,7 +91,7 @@ struct posXY {
 	// Checa se a bola está no raio de ataque dado, baseando-se na posição do robô.
 	bool isInRaio (posXY posicao, int raio);
 	// Checa se a bola está na área de ataque do volante
-	bool isInAreaAtaqueVolatante ();
+	bool isInAreaAtaqueVolante ();
 
 
 	/** @fn posXY& operator=(const int i)

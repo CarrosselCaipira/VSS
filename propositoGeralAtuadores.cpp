@@ -66,7 +66,7 @@ bool posXY::isInCampoSemAreaGolTime() {
 }
 
 bool posXY::isInCampoSemAreaGolAdv() {
-  return (!posXY::isInCampoTime() && !posXY::isInFaixaXDaAreaGolAdv());
+  return (posXY::isInCampoAdv() && !posXY::isInFaixaXDaAreaGolAdv());
 }
 
 bool posXY::isInAreaEscanteioSuperiorTime() {
@@ -85,12 +85,12 @@ bool posXY::isInAreaEscanteioInferiorAdv() {
   return (posXY::isInFaixaInferior() && posXY::isInFaixaXDaAreaGolAdv());
 }
 
-bool posXY::isInAreaAntesMetadeCampoTime() {
+bool posXY::isInFrenteAreaGolCentroTime() {
   return (posXY::isInCampoTime() && !posXY::isInFaixaXDaAreaGolTime() && posXY::isInFaixaCentral());
 }
 
-bool posXY::isInAreaAntesMetadeCampoAdv() {
-  return (!posXY::isInCampoTime() && !posXY::isInFaixaXDaAreaGolAdv() && posXY::isInFaixaCentral());
+bool posXY::isInFrenteAreaGolCentroAdv() {
+  return (posXY::isInCampoAdv() && !posXY::isInFaixaXDaAreaGolAdv() && posXY::isInFaixaCentral());
 }
 
 bool posXY::isInQuinaSuperiorAreaGolTime() {
@@ -117,13 +117,27 @@ bool posXY::isInAreaGolAdv() {
   return ((posXY::isInQuinaSuperiorAreaGolAdv() || posXY::isInFaixaCentral()  || posXY::isInQuinaInferiorAreaGolAdv()) && posXY::isInFaixaXDaAreaGolAdv());
 }
 
-bool posXY::isInFaixaSuperiorChuteGirando() {
+bool posXY::isInFaixaSuperiorChuteGirando() { //Sujeito à alterações por implicar uma estratégia dentro de propositoGeralAtuadores
   return (this->y > (TAM_Y_CAMPO - ESPACO_CHUTE_GIRANDO));
 }
 
-bool posXY::isInFaixaInferiorChuteGirando() {
+/*Sugestão - Talvez deixar genérico para poder enviar algum valor mais adequado para a respectiva estratégia
+
+bool posXY::isInFaixaSuperiorChuteGirando(int faixa = TAM_Y_CAMPO - ESPACO_CHUTE_GIRANDO) {
+  return (this->y > faixa);
+}
+*/
+
+bool posXY::isInFaixaInferiorChuteGirando() { //Sujeito à alterações por implicar uma estratégia dentro de propositoGeralAtuadores
   return (this->y < ESPACO_CHUTE_GIRANDO);
 }
+
+/*Sugestão - Talvez deixar genérico para poder enviar algum valor mais adequado para a respectiva estratégia
+
+bool posXY::isInFaixaInferiorChuteGirando(int faixa = ESPACO_CHUTE_GIRANDO) {
+  return (this->y < faixa);
+}
+*/
 
 bool posXY::isInFaixaChuteGirandoTime() {
   return (!posXY::isInFaixaCentral() && this->x < (TAM_X_GOL + 6));
@@ -157,7 +171,7 @@ bool posXY::isInRaio (posXY posicao, int raio){
   return (posXY::getDistEucliana(posicao) <= raio);
 }
 
-bool posXY::isInAreaAtaqueVolatante (){
+bool posXY::isInAreaAtaqueVolante (){ //Sujeito à alterações por implicar uma estratégia dentro de propositoGeralAtuadores
   return (this->x < TAM_X_CAMPO*0.6);
 }
 
