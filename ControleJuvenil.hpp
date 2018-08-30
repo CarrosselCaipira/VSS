@@ -4,12 +4,14 @@
 #include "robo.hpp"
 #include "comportamento.hpp"
 #include "roteiro.hpp"
+#include "bola.hpp"
 #include <vector>
 
 
 class CJ{
-
+    posXY const float dist_sombra_bola = 5x1.44;
     Robo& robo;
+    Bola& bola;
     std::vector<posXY>& posOstaculos; /* < Vector contendo as posicoes dos obtaculos em campo (outros robos do time, robos da equipe adversaria, etc.), eh interessante que se use as posicoes previstas desses objetos, mas nada impede que as posicoes atuais sejam usadas. */
     private:
 

@@ -78,6 +78,8 @@ struct posXY {
 	bool isInFaixaChuteGirandoTime();
 	bool isInFaixaChuteGirandoAdv();
 
+	//criar isInCampo - checar se o ponto está dentro do campo
+
 	// Area definida pelo quadrado inútil no canto superior esquerdo.
 	bool isInQuadradoInutilCantoSuperiorEsquerdo();
 	// Area definida pelo quadrado inútil no canto inferior esquerdo.
@@ -103,6 +105,8 @@ struct posXY {
 
 	/* quando um numero multiplica um objeto posXY suas duas componentes sao multiplicas pelo valor*/
 	posXY& operator*(const double i);
+
+	// fazer sobrecarga soma e subtração de posXY
 };
 
 /**

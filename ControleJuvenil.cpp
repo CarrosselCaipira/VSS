@@ -8,10 +8,15 @@
 //     - Não: É menor que um theta crítico?
 //         - Sim: PID (passo 5)
 //         - Não: Cálculo caminhos (passo 1)
-// 1) Calcula a "sombra da bola" = SB(XB - 5, YB - 5) para metade inferior
-//                                 SB(XB - 5, YB + 5) para metade superior
+// 1) Calcula a "sombra da bola" = SB(XB - sombra, YB - sombra) para metade inferior
+//                                 SB(XB - sombra, YB + sombra) para metade superior
+//      var dist_sombra = distancia antes da bola pro robo conseguir se alinhar
 // 2) Traca reta entre robo e a sombra
-// 3) Checa por obstaculos na faixa
+//      m = deltaY / deltaX
+//      m > 0 para robo embaixo da bola
+//      m < 0 para robo acima da bola
+// 3) Checa por obstaculos na faixa com reta mais espessa
+//      var espessura = margem de seguranca da reta
 //     - Não há: Fim
 //     - Há: Calcula as demais retas
 // 4) Rotaciona o robô até alinhar com a reta 
@@ -27,7 +32,24 @@ CJ::CJ(Robo& r, std::vector<posXY>& obs): robo(r), posObstaculos(obs) {}
 
 void CJ::pid() {}
 
-void CJ::calculaSombra() {}
+void CJ::calculaSombra() {
+    posXY sombra;
+    // Reta entre a bola e o objetivo dela
+    Reta r(this->bola.estadoAtualBola.posicao, this->bola.estadoObjBola.posicao);
+
+    // Calcula a sombra de fato, usando a equacao da reta
+    // A coordenada x é sempre inferior (para trás)
+    sombra.posicao.x = this->bola.estadoAtualBola.posicao.x - distancia * cos(r.angulo);
+    // A coordenada y depende em qual campo está a bola
+    if(this->bola.estadoAtualBola.posicao.isInCampoMetadeSuperior()) {
+        sombra.posicao.y = this->bola.estadoAtualBola.posicao.y + distancia * sin(r.angulo);
+    }
+    else {
+        sombra.posicao.y = this->bola.estadoAtualBola.posicao.y - distancia * sin(r.angulo);
+    }
+    // Verifica se a projeção da sombra fica dentro do campo. Se ficar fora, sombra.y = bola.y
+    if(!sombra.isInCampo()) sombra.y = this->bola.estadoAtualBola.posicao.y;
+}
 
 void CJ::calculaVelRodas{
     if(this->robo.getPosicaoAtualRobo().isInRaio(sombra, raioDaSombra)) {
