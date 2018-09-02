@@ -147,6 +147,18 @@ bool posXY::isInFaixaChuteGirandoAdv() {
   return (!posXY::isInFaixaCentral() && this->x < (TAM_X_CAMPO - TAM_X_GOL - 6));
 }
 
+bool inInCampoX() {
+  return (this->x < TAM_X_CAMPO && this->x > 0);
+}
+
+bool inInCampoY() {
+  return (this->y < TAM_Y_CAMPO && this->y > 0);
+}
+
+bool inInCampo() {
+  return (posXY::isInCampoX() && posXY::isInCampoY());
+}
+
 bool posXY::isInQuadradoInutilCantoSuperiorEsquerdo() {
   return ((this->x > TAM_X_GOL && this->x < TAM_X_GOL + TAM_QUADRADO_INUTIL ) && ( this->y > TAM_Y_CAMPO - TAM_QUADRADO_INUTIL && this->y < TAM_Y_CAMPO));
 }
@@ -185,6 +197,20 @@ posXY& posXY::operator=(const int i) {
 posXY& posXY::operator*(const double i) {
 	this->x *= i;
 	this->y *= i;
+
+	return *this;
+}
+
+posXY& posXY::operator+(const posXY& p) {
+  this->x += p.x;
+	this->y += p.y;
+
+	return *this;
+}
+
+posXY& posXY::operator-(const posXY& p) {
+  this->x -= p.x;
+	this->y -= p.y;
 
 	return *this;
 }

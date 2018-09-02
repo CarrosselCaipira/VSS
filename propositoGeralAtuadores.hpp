@@ -78,7 +78,12 @@ struct posXY {
 	bool isInFaixaChuteGirandoTime();
 	bool isInFaixaChuteGirandoAdv();
 
-	//criar isInCampo - checar se o ponto está dentro do campo
+  /* Checa se o ponto está dentro do campo com relacao a componete X. Ja que eh possivel que o ponto ultrapasse apenas em uma componete os limites do campo. Este teste inclue a posicao (0,0) como pertencente ao campo. Futuramente talvez seja interessante fazer um recorte mais preciso do campo testando apenas para a area 'jogavel'. */
+  bool isInCampoX();
+  /* Checa se o ponto está dentro do campo com relacao a componete Y. Ja que eh possivel que o ponto ultrapasse apenas em uma componete os limites do campo. Futuramente talvez seja interessante fazer um recorte mais preciso do campo testando apenas para a area 'jogavel'. */
+  bool isInCampoY();
+  /* Checa se o ponto está dentro do campo como um todo. Futuramente talvez seja interessante fazer um recorte mais preciso do campo testando apenas para a area 'jogavel'. */
+	bool isInCampo();
 
 	// Area definida pelo quadrado inútil no canto superior esquerdo.
 	bool isInQuadradoInutilCantoSuperiorEsquerdo();
@@ -106,7 +111,19 @@ struct posXY {
 	/* quando um numero multiplica um objeto posXY suas duas componentes sao multiplicas pelo valor*/
 	posXY& operator*(const double i);
 
-	// fazer sobrecarga soma e subtração de posXY
+  /** @fn posXY& operator+(const posXY& p)
+	 *  @brief Operador de atribuicao sobrecarregado para que, quando um posXY eh somado a outro posXY, é efetuada a soma de cada uma das componentes individualmente. Exemplo: tendo-se um posXY p1 com p1.x = 1, p1.y = 1  e outro posXY p2.x = 2, p2.y = 2, ao fazermos p3 = p1 + p2 temos p3 com p3.x = 3 e p3.y = 3.
+	 *  @param p ponto com o qual será feita a atribuicao
+	 *  @return outro posXY resultante da soma
+	 */
+	posXY& operator+(const posXY& p);
+
+  /** @fn posXY& operator-(const posXY& p)
+	 *  @brief Operador de subtação sobrecarregado para que, quando um posXY eh subtraido a outro posXY, é efetuada a subtracao de cada uma das componentes individualmente. Exemplo: tendo-se um posXY p1 com p1.x = 1, p1.y = 1  e outro posXY p2.x = 2, p2.y = 2, ao fazermos p3 = p1 - p2 temos p3 com p3.x = -2 e p3.y = -2.
+	 *  @param p ponto com o qual será feita a subtração
+	 *  @return outro posXY resultante da subtracao
+	 */
+	posXY& operator-(const posXY& p);
 };
 
 /**
