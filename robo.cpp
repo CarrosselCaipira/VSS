@@ -36,6 +36,11 @@ velocidadeRobo Robo::getVelocidadeAtualRobo () {
 }
 /****************************************************************/
 
+/*  Retorna  a orientacao do robo*/
+bool Robo::getFrenteAtual(){
+	return estadoAtualRobo.frente;
+}
+
 /********************* POSICAO PREVISTA ROBO ********************/
 posXY Robo::getPosicaoPrevRobo () {
 	return estadoPrevRobo.posicao;
@@ -151,6 +156,11 @@ void Robo::setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigne
 	estadoAtualRobo.velocidade.rodaDir = velRodaDir;
 }
 /****************************************************************/
+
+/*  Retorna  a orientacao do robo*/
+void Robo::setFrenteAtual(bool f){
+	estadoAtualRobo.frente = f;
+}
 
 /********************* POSICAO PREVISTA ROBO ********************/
 void Robo::setPosicaoPrevRobo (const posXY posicao) {

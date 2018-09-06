@@ -58,6 +58,9 @@ class Robo {
         velocidadeRobo getVelocidadeAtualRobo ();
         /****************************************************************/
 
+        // retorna a frente do robo
+        bool getFrenteAtual();
+
         /********************* POSICAO PREVISTA ROBO ********************/
         // Retorna as coordenadas previstas do robo.
         posXY getPosicaoPrevRobo ();
@@ -157,6 +160,9 @@ class Robo {
         void setVelocidadeObj(const velocidadeRobo velocidade);
         void setVelocidadeObj (const unsigned char velRodaEsq, const unsigned char velRodaDir);
         /****************************************************************/
+
+        /*  Retorna  a orientacao do robo*/
+        void Robo::setFrenteAtual(bool f);
 
         /*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */

@@ -138,7 +138,7 @@ struct vetorSentido {
  * @brief      velocidade de cada roda dos robos (0 a 127 (primeiro bit indica o sentido da rotacao)).
  */
 struct velocidadeRobo {
-	unsigned char rodaEsq, rodaDir;
+	char rodaEsq, rodaDir;
 };
 
 /**
@@ -147,6 +147,7 @@ struct velocidadeRobo {
 struct estadoRobo {
 	float angulo; /** angulacao atual do robo com relacao a horizontal (linha imaginaria que liga um gol ao outro) */
 	float velocidadeAngular; /** velocidade de rotacao do robo */
+	bool frente; /* 0: Frente original/ 1: Bundinha */
 	velocidadeRobo velocidade;
 	posXY posicao;
 	vetorSentido direcao;

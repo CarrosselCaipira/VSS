@@ -76,6 +76,12 @@ void Radio::enviaDados() {
 	/* preenchendo o vetor de dados das rodas com os valores de velocidade dos robos */
 	for(int i = 0; i < vector_robos.size(); i++) {
 		/* deslocamos para esquerda os ultimos 4 bits para que eles sejam os primeiros do byte. Para os robos que receberao, apenas os primeiros 4 bytes sao importantes para os robos. */
+		// Verifica se a frente adotada é a original ou foi alterada
+		if(this->vector_robos[i].getFrenteAtual()){
+			char vEsq = vector_robos[i].getVelocidadeAtualRobo().rodaEsq;
+			char vDir = vector_robos[i].getVelocidadeAtualRobo().rodaDir;
+			this->vector_robos[0].setVelocidadeAtualRobo(-vDir, -vEsq);
+		}
 		dados[2 * i] = vector_robos[i].getVelocidadeAtualRobo().rodaEsq;
 		dados[2 * i + 1] = vector_robos[i].getVelocidadeAtualRobo().rodaDir;
 	}
