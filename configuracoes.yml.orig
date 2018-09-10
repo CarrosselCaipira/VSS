@@ -7,10 +7,10 @@
 % TamanhoEmCentimetrosObjeto: tamanho do mesmo objeto mas em centimetros.
 ---
 AreaCampo:
-  X: 2
-  Y: 2
-  Largura: 636
-  Altura: 477
+  X: 90
+  Y: 33
+  Largura: 548
+  Altura: 420
   isLadoEsquerdo: 0
 
 EscalaConversao:
@@ -28,11 +28,11 @@ BuscaCampoTodo:
 
 Cores:
   - AMARELO:
-      H_MIN: 26
-      H_MAX: 33
-      S_MIN: 74
-      S_MAX: 170
-      V_MIN: 235
+      H_MIN: 27
+      H_MAX: 34
+      S_MIN: 76
+      S_MAX: 172
+      V_MIN: 190
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -62,11 +62,11 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - ALARANJADO:
-      H_MIN: 3
-      H_MAX: 12
-      S_MIN: 138
-      S_MAX: 205
-      V_MIN: 228
+      H_MIN: 1
+      H_MAX: 19
+      S_MIN: 103
+      S_MAX: 197
+      V_MIN: 112
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -79,11 +79,11 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - ROSA:
-      H_MIN: 150
+      H_MIN: 146
       H_MAX: 162
-      S_MIN: 57
-      S_MAX: 87
-      V_MIN: 246
+      S_MIN: 32
+      S_MAX: 85
+      V_MIN: 176
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -97,10 +97,10 @@ Cores:
 
   - ROXO:
       H_MIN: 121
-      H_MAX: 128
-      S_MIN: 58
-      S_MAX: 88
-      V_MIN: 221
+      H_MAX: 131
+      S_MIN: 53
+      S_MAX: 86
+      V_MIN: 220
       V_MAX: 255
       AreaMinima: 100
       AreaMaxima: 700
@@ -113,12 +113,12 @@ Cores:
       AlturaRetanguloDilatate: 6
 
   - VERDE:
-      H_MIN: 38
-      H_MAX: 46
-      S_MIN: 89
-      S_MAX: 148
+      H_MIN: 37
+      H_MAX: 43
+      S_MIN: 93
+      S_MAX: 151
       V_MIN: 221
-      V_MAX: 246
+      V_MAX: 244
       AreaMinima: 100
       AreaMaxima: 700
       NumObjetosCor: 1
