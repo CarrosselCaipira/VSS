@@ -112,7 +112,7 @@ bool Robo::isRoboEmPosseBola(const posXY bola){
 	//Formula de encontrar angulo entre dois vetores
 	//Resultado deve ser menor do que PI/4 (0.785398163397448309616) para a posse ser considerada
 	return ((std::acos((sentido.x * robobola.x + sentido.y * robobola.y)/(sqrt(pow(sentido.x, 2) + pow(sentido.y, 2)) * sqrt(pow(robobola.x, 2) + pow(robobola.y, 2)))) < 0.785398163397448309616) 
-			&& (this->estadoAtualRobo.posicao.getDistEucliana(bola) <= TAM_ROBO/2));
+			&& (this->estadoAtualRobo.posicao.getDistEucliana(bola) <= TAM_ROBO));
 }
 
 /****************************************************************/
