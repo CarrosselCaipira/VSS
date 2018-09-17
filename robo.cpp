@@ -158,9 +158,9 @@ void Robo::setVelocidadeAtualRobo (const unsigned char velRodaEsq, const unsigne
 /****************************************************************/
 
 /*  Retorna  a orientacao do robo*/
-void Robo::setFrenteAtual(bool f){
-	estadoAtualRobo.frente = f;
-}
+//void Robo::setFrenteAtual(bool f){
+//	estadoAtualRobo.frente = f;
+//}
 
 /********************* POSICAO PREVISTA ROBO ********************/
 void Robo::setPosicaoPrevRobo (const posXY posicao) {

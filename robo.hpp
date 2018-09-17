@@ -162,7 +162,7 @@ class Robo {
         /****************************************************************/
 
         /*  Retorna  a orientacao do robo*/
-        void Robo::setFrenteAtual(bool f);
+        //void Robo::setFrenteAtual(bool f);
 
         /*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */
