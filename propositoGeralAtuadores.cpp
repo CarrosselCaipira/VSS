@@ -1,5 +1,6 @@
 #include "propositoGeralAtuadores.hpp"
 #include <iostream>
+
 posXY posXY::getPontoMedio(const posXY pos) {
 	posXY resu;
 
