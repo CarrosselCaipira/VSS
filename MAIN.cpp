@@ -1,9 +1,8 @@
 #include "camera.hpp"
 #include "robo.hpp"
-
 // #include "CPH.hpp"
 // #include "AEstrela.hpp"
-#include "radio.hpp"
+// #include "radio.hpp"
 
 #define FRAME_TIME 30
 #define DESLOCA_BITS 2
@@ -109,9 +108,11 @@ int main() {
 
 
 /* Controle Juvenil MAIN */
+
+
 	//Atualiza os parâmetros do robo 0
 	cam.setCorObjeto(AMARELO, ROSA);
-	cam.getPosicaoAtualObjeto(CJzinhos[0].robo.estadoAtualRobo.posicao);
+	cam.getPosicaoAtualObjeto(CJzinhos[0].robo.getPosicaoAtualRobo());
 	CJzinhos[0].robo.setAnguloAtualRobo(cam.getAnguloObjeto());
 	CJzinhos[0].robo.setPosicaoAtualBola(bola);
 	CJzinhos[0].calculaVelRodas();
@@ -130,6 +131,13 @@ int main() {
 
 
 /* Fim do Controle Juvenil MAIN */
+
+
+
+
+
+
+
 		/* BEGIN DEBUG */
 	  std::cout << " ROBO2: " << "x: " << posRobosTime[2].x << " y: "<< posRobosTime[2].y;
 		Frame4 = cam.getFrameOriginalRecortadoFlip();
@@ -157,13 +165,13 @@ int main() {
 		robosTime[2].run();
 
 		// calculando velocidade das rodas para o robo 1
-		campoPotencial1.calculaVelRodas();
+		//campoPotencial1.calculaVelRodas();
 		std::cout << "Calculanda vel rodas Robo1" << '\n';
 		// calculando velocidade das rodas para o robo 2
-		campoPotencial2.calculaVelRodas();
+		//campoPotencial2.calculaVelRodas();
 		std::cout << "Calculanda vel rodas Robo2" << '\n';
 		// calculando velocidade das rodas para o robo 3
-		campoPotencial3.calculaVelRodas();
+		//campoPotencial3.calculaVelRodas();
 		std::cout << "Calculanda vel rodas Robo3" << '\n';
     // corrigindo a velocidade das rodas para funcionar com o radio novo
     for(int i = 0; i < robosTime.size(); i++) {

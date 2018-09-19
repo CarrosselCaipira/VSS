@@ -44,11 +44,11 @@ void Roteiro::atacanteBasico(Robo& r, posXY& b) {
 		//Se estiver na faixa central ou na faixa superior
 		if(b.isInFaixaCentral() || b.isInFaixaSuperior()){
 			//espera no lado contrário para o contra-ataque
-			Comportamento::posicionaAtacanteParaEsperarSuperior(r, b);
+			Comportamento::posicionaRoboParaEsperarSuperior(r, b);
 		}
 		//se estiver na faixa inferior
 		else if(b.isInFaixaInferior()){
-			Comportamento::posicionaAtacanteParaEsperarInferior(r, b);
+			Comportamento::posicionaRoboParaEsperarInferior(r, b);
 			//espera do lado contrário para o contra-ataque
 		}
 

@@ -30,10 +30,10 @@
 #include <iostream>
 
 //Constructor, inicializando com o robô referênciado
-CJ::CJ(Robo& r): robo(r){
+// CJ::CJ(Robo& r): robo(r){
 
 
-}
+// }
 
 void CJ::pid() {
 
@@ -42,20 +42,20 @@ void CJ::pid() {
 posXY CJ::calculaSombra(Bola bola, float dist_sombra) {
     posXY sombra;
     // Reta entre a bola e o objetivo dela
-    retaBolaObj.geraReta(bola.getPosicaoAtualBola(), bola.estadoObjBola.posicao);
+    retaBolaObj.geraReta(bola.getPosicaoAtualBola(), bola.getPosicaoAtualObjBola());
 
     // Calcula a sombra de fato, usando a equacao da reta
     // A coordenada x é sempre inferior (para trás)
-    sombra.x = bola.estadoAtualBola.posicao.x - dist_sombra * cos(this->robo.getAnguloAtualRobo());
+    sombra.x = bola.getPosicaoAtualBola().x - dist_sombra * cos(this->robo.getAnguloAtualRobo());
     // A coordenada y depende em qual campo está a bola
-    if(bola.estadoAtualBola.posicao.isInCampoMetadeSuperior()) {
-        sombra.y = bola.estadoAtualBola.y + dist_sombra * sin(this->robo.estadoAtualRobo.angulo);
+    if(bola.getPosicaoAtualBola().isInCampoMetadeSuperior()) {
+        sombra.y = bola.getPosicaoAtualBola().y + dist_sombra * sin(this->robo.getAnguloAtualRobo());
     }
     else {
-        sombra.y = bola.estadoAtualBola.y - dist_sombra * sin(this->robo.estadoAtualRobo.angulo);
+        sombra.y = bola.getPosicaoAtualBola().y - dist_sombra * sin(this->robo.getAnguloAtualRobo());
     }
     // Verifica se a projeção da sombra fica dentro do campo. Se ficar fora, sombra.y = bola.y
-    if(!sombra.isInCampo()) sombra.y = bola.estadoAtualBola.posicao.y;
+    if(!sombra.isInCampo()) sombra.y = bola.getPosicaoAtualBola().y;
 
     // Retorna a posicao da sombra como ponto XY
     return sombra;
@@ -84,14 +84,16 @@ void CJ::calculaVelRodas(){
     // Código do thiago
     float dAngulo;
     // Verifica se o robo ja está proximo ao objetivo
-    if(this->robo.getPosicaoAtualRobo().isInRaio(this->robo.estadoObjRobo.posicao, RAIO_DE_TOLERANCIA)) {
+    
+    //ToDo -> setar raio de tolerância (parâmetro do isInRaio)
+    if(this->robo.getPosicaoAtualRobo().isInRaio(this->robo.getPosicaoObj(), 5)) {
         // Calcula a diferenca entre o angulo do robo e o angulo da reta entre a bola e o objetivo dela
-        dAngulo = retaBolaObj.angulo - this->robo.getAnguloAtualRobo;
+        dAngulo = retaBolaObj.angulo - this->robo.getAnguloAtualRobo();
         // Verifica se o robo está alinhado com a bola e o objetivo dela
         if(dAngulo < this->thetaCritico) {
             // Anda em linha reta
-            vEsq = VEL_MAX;
-            vDir = VEL_MAX;
+            // vEsq = VEL_MAX;
+            // vDir = VEL_MAX;
         }
         // O robo ainda precisa se alinhar antes de chutar
         else {
@@ -103,7 +105,7 @@ void CJ::calculaVelRodas(){
     // Ainda não chegou ao objetivo
     else {
         // Reta entre o robo e o objetivo
-        Reta retaRoboObj(this->robo.estadoAtualRobo.posicao, this->robo.estadoObjRobo.posicao);
+        Reta retaRoboObj(this->robo.getPosicaoAtualRobo(), this->robo.getPosicaoObj());
 
         // Diferença entre o angulo objetivo e o atual do robo
         float dAngulo = retaRoboObj.angulo - this->robo.getAnguloAtualRobo();

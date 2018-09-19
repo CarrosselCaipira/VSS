@@ -23,7 +23,7 @@ void Roteiro::volanteBasico(Robo& r, posXY& b){
 			Comportamento::posicionaVolantePosNatural(r, b);
 			r.setPosicaoAtualRobo(r.getPosicaoObj());
 			//Se y do voltante é igual ao y da bola e está no campo do adversário
-			if(r.getPosicaoAtualRobo().y == b.y && b.isInCampoSemAreaGolAdv() && b.isInAreaAtaqueVolatante()){
+			if(r.getPosicaoAtualRobo().y == b.y && b.isInCampoSemAreaGolAdv() && b.isInAreaAtaqueVolante()){
 				Comportamento::chutaFrente(r, b);
 			}
 		}

@@ -1,5 +1,6 @@
 #include "propositoGeralAtuadores.hpp"
 #include <iostream>
+
 posXY posXY::getPontoMedio(const posXY pos) {
 	posXY resu;
 
@@ -147,6 +148,7 @@ bool posXY::isInFaixaChuteGirandoAdv() {
   return (!posXY::isInFaixaCentral() && this->x < (TAM_X_CAMPO - TAM_X_GOL - 6));
 }
 
+/*
 bool inInCampoX() {
   return (this->x < TAM_X_CAMPO && this->x > 0);
 }
@@ -158,6 +160,7 @@ bool inInCampoY() {
 bool inInCampo() {
   return (posXY::isInCampoX() && posXY::isInCampoY());
 }
+*/
 
 bool posXY::isInQuadradoInutilCantoSuperiorEsquerdo() {
   return ((this->x > TAM_X_GOL && this->x < TAM_X_GOL + TAM_QUADRADO_INUTIL ) && ( this->y > TAM_Y_CAMPO - TAM_QUADRADO_INUTIL && this->y < TAM_Y_CAMPO));

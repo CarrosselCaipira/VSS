@@ -12,12 +12,6 @@ class Robo;
 //
 #include "ControleJuvenil.hpp"
 
-#define MASSA_ROBO 0.89
-#define RAIO_DA_RODA 1.6
-#define RAIO_DISTANCIA 5
-#define DIST_ENTRE_RODAS 7
-#define TAM_ROBO 8 //tamanho do lado do robo em cm
-
 enum INDEX_ATRIBUTOS {
 	CHUTE_GIRANDO_HORARIO,
 	CHUTE_GIRANDO_ANTI_HORARIO,
@@ -37,7 +31,14 @@ class Robo {
     posXY bola;
 
     public:
-				std::bitset<BITSET_SIZE> atributos; /**< bitset sinalizando se os atributos do robo */
+        static const double MASSA_ROBO 0.89;
+        static const double RAIO_DA_RODA 1.6;
+        static const double RAIO_DISTANCIA 5;
+        static const double DIST_ENTRE_RODAS 7;
+        static const double TAM_ROBO 8; //tamanho do lado do robo em cm
+
+    public:
+        std::bitset<BITSET_SIZE> atributos; /**< bitset sinalizando se os atributos do robo */
 
         /*************************** CONSTRUTOR *************************/
         // inicializa todas as componentes do robo com zero e define o roteiro atual do robo como "INDEFINIDO".
@@ -164,7 +165,7 @@ class Robo {
         /****************************************************************/
 
         /*  Retorna  a orientacao do robo*/
-        void Robo::setFrenteAtual(bool f);
+        //void Robo::setFrenteAtual(bool f);
 
         /*********************** FUNCAO ROTEIRO *************************/
         /* Define o identificador de roteiro do robo */

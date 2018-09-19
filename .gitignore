@@ -33,3 +33,4 @@
 
 # Videos para Debug
 *.avi
+.vscode/c_cpp_properties.json

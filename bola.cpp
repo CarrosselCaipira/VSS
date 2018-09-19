@@ -1,6 +1,6 @@
 #include "bola.hpp"
 
-posXY Bola::getPosicaoAtualBola () {
+posXY Bola::getPosicaoAtualBola() {
 
   return estadoAtualBola.posicao;
 }
@@ -14,7 +14,7 @@ posXY Bola::getPosicaoAtualObjBola(){
 //   return estadoAtualBola.direcao;
 // }
 
-float Bola::getVelocidadeAtualBola () {
+float Bola::getVelocidadeAtualBola() {
   return estadoAtualBola.velocidade;
 }
 
@@ -22,10 +22,6 @@ float Bola::getVelocidadeAtualBola () {
 //   return estadoPrevistoBola;
 // }
 
-void Bola::calculaEstadoPrevisto (){
+void Bola::calculaEstadoPrevisto(){
 
-}
-
-posXY CJ::oaspkospa(){
-  
 }
