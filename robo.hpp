@@ -9,6 +9,8 @@ class Robo;
 #include <cstring>
 #include <bitset>
 #include <cmath>
+//
+#include "ControleJuvenil.hpp"
 
 #define MASSA_ROBO 0.89
 #define RAIO_DA_RODA 1.6

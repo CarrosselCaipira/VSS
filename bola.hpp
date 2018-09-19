@@ -1,13 +1,14 @@
 #ifndef BOLA_H
 #define BOLA_H
 
-#include "auxiliares.hpp"
-#include "tipoClasses.hpp"
+//#include "auxiliares.hpp"
+//#include "tipoClasses.hpp"
+#include "propositoGeralAtuadores.hpp"
 
 class Bola{
-  estadoBola estadoAtualBola; // Todas as informacoes sobre a bola
-  estadoBola estadoObjBola; // Todas as informacoes sobre o objetivo da bola. Por padrão é o centro do gol.
-  estadoBola estadoPrevistoBola; // Todas as informacoes sobre as posicoes(provaveis) futuras da bola.
+    estadoBola estadoAtualBola; // Todas as informacoes sobre a bola
+    estadoBola estadoObjBola; // Todas as informacoes sobre o objetivo da bola. Por padrão é o centro do gol.
+    estadoBola estadoPrevistoBola; // Todas as informacoes sobre as posicoes(provaveis) futuras da bola.
 
   public:
     // Retorna a posicao xy da bola.
@@ -15,6 +16,8 @@ class Bola{
 
     // Retorna o vetor sentido da bola
     inline vetorSentido getVetorSentidoAtualBola ();
+
+    inline posXY Bola::getPosicaoAtualObjBola();
 
     // Retorna a velocidade atual da bola
     inline float getVelocidadeAtualBola ();

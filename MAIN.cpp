@@ -1,6 +1,7 @@
 #include "camera.hpp"
 #include "robo.hpp"
-#include "CPH.hpp"
+
+// #include "CPH.hpp"
 // #include "AEstrela.hpp"
 #include "radio.hpp"
 
@@ -8,6 +9,12 @@
 #define DESLOCA_BITS 2
 
 int main() {
+
+//
+	std::vector<CJ> CJzinhos(3);
+
+
+
 	const int quadrosPulados = 0;
 	std::vector<Robo> robosTime(3);
 	// USANDO ESTE VECTOR PARA MANTER AS POSICOES ANTERIORES CASO NAO CONSIGA ENCONTRAR NOVAS, RETORNA AS ANTERIORES MESMO
@@ -99,6 +106,30 @@ int main() {
 		robosTime[2].setPosicaoAtualRobo(posRobosTime[2]);
 		robosTime[2].setPosicaoAtualBola(bola);
 
+
+
+/* Controle Juvenil MAIN */
+	//Atualiza os parâmetros do robo 0
+	cam.setCorObjeto(AMARELO, ROSA);
+	cam.getPosicaoAtualObjeto(CJzinhos[0].robo.estadoAtualRobo.posicao);
+	CJzinhos[0].robo.setAnguloAtualRobo(cam.getAnguloObjeto());
+	CJzinhos[0].robo.setPosicaoAtualBola(bola);
+	CJzinhos[0].calculaVelRodas();
+
+	//Atualiza os parâmetros do robo 1
+	cam.setCorObjeto(AMARELO, VERDE);
+	cam.getPosicaoAtualObjeto(CJzinhos[1].robo.estadoAtualRobo.posicao);
+	CJzinhos[1].robo.setAnguloAtualRobo(cam.getAnguloObjeto());
+	CJzinhos[1].robo.setPosicaoAtualBola(bola);
+
+	//Atualiza os parâmetros do robo 2
+	cam.setCorObjeto(AMARELO, ROXO);
+	cam.getPosicaoAtualObjeto(CJzinhos[2].robo.estadoAtualRobo.posicao);
+	CJzinhos[2].robo.setAnguloAtualRobo(cam.getAnguloObjeto());
+	CJzinhos[2].robo.setPosicaoAtualBola(bola);
+
+
+/* Fim do Controle Juvenil MAIN */
 		/* BEGIN DEBUG */
 	  std::cout << " ROBO2: " << "x: " << posRobosTime[2].x << " y: "<< posRobosTime[2].y;
 		Frame4 = cam.getFrameOriginalRecortadoFlip();

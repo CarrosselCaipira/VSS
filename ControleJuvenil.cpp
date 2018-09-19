@@ -27,30 +27,35 @@
 // CJ(Robo& r, std::vector<posXY>& obs);
 
 #include "ControleJuvenil.hpp"
+#include <iostream>
 
-CJ::CJ(Robo& r, std::vector<posXY>& obs): robo(r), posObstaculos(obs) {}
+//Constructor, inicializando com o robô referênciado
+CJ::CJ(Robo& r): robo(r){
+
+
+}
 
 void CJ::pid() {
 
 }
 
-posXY CJ::calculaSombra(float dist_sombra) {
+posXY CJ::calculaSombra(Bola bola, float dist_sombra) {
     posXY sombra;
     // Reta entre a bola e o objetivo dela
-    this->retaBolaObj.geraReta(this->bola.estadoAtualBola.posicao, this->bola.estadoObjBola.posicao);
+    retaBolaObj.geraReta(bola.getPosicaoAtualBola(), bola.estadoObjBola.posicao);
 
     // Calcula a sombra de fato, usando a equacao da reta
     // A coordenada x é sempre inferior (para trás)
-    sombra.posicao.x = this->bola.estadoAtualBola.posicao.x - dist_sombra * cos(r.angulo);
+    sombra.x = bola.estadoAtualBola.posicao.x - dist_sombra * cos(this->robo.getAnguloAtualRobo());
     // A coordenada y depende em qual campo está a bola
-    if(this->bola.estadoAtualBola.posicao.isInCampoMetadeSuperior()) {
-        sombra.posicao.y = this->bola.estadoAtualBola.posicao.y + dist_sombra * sin(r.angulo);
+    if(bola.estadoAtualBola.posicao.isInCampoMetadeSuperior()) {
+        sombra.y = bola.estadoAtualBola.y + dist_sombra * sin(this->robo.estadoAtualRobo.angulo);
     }
     else {
-        sombra.posicao.y = this->bola.estadoAtualBola.posicao.y - dist_sombra * sin(r.angulo);
+        sombra.y = bola.estadoAtualBola.y - dist_sombra * sin(this->robo.estadoAtualRobo.angulo);
     }
     // Verifica se a projeção da sombra fica dentro do campo. Se ficar fora, sombra.y = bola.y
-    if(!sombra.isInCampo()) sombra.y = this->bola.estadoAtualBola.posicao.y;
+    if(!sombra.isInCampo()) sombra.y = bola.estadoAtualBola.posicao.y;
 
     // Retorna a posicao da sombra como ponto XY
     return sombra;
@@ -60,7 +65,23 @@ void determinaFrente() {
     
 }
 
-void CJ::calculaVelRodas{
+void CJ::calculaVelRodas(){
+
+//Verifica se está alinhado com o objetivo da bola (a princípio o gol)
+    //Como faz isso? ->
+        //Traça reta entre bola e gol e veja se está no raio da sombra
+            //Acha o raio da Sombra
+            posXY sombra = calculaSombra();
+        //Testa se está no raio da sombra
+        if(!this->robo.getPosicaoAtualRobo().isInRaio(sombra, 5)){
+            //Se alinha
+            
+        }
+        else{
+
+        }
+
+    // Código do thiago
     float dAngulo;
     // Verifica se o robo ja está proximo ao objetivo
     if(this->robo.getPosicaoAtualRobo().isInRaio(this->robo.estadoObjRobo.posicao, RAIO_DE_TOLERANCIA)) {
@@ -79,7 +100,7 @@ void CJ::calculaVelRodas{
         }
 
     }
-    // Serão necessárias duas ou mais retas
+    // Ainda não chegou ao objetivo
     else {
         // Reta entre o robo e o objetivo
         Reta retaRoboObj(this->robo.estadoAtualRobo.posicao, this->robo.estadoObjRobo.posicao);
@@ -99,6 +120,7 @@ void CJ::calculaVelRodas{
     }
     // Define as velocidades de cada roda
     this->robo.setVelocidadeAtualRobo(vEsq, vDir);
+    // Fim código thiago
 }
 
 

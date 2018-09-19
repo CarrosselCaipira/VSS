@@ -16,7 +16,7 @@
 #include <unistd.h> // Definicoes de funcao padrao do UNIX
 #include <fcntl.h> // Para o uso das constantes utilizadas em 'open(...)' ex.: O_RDWR, O_RDONLY, etc. Para mais informacoes, va para Docs/tcntl.pdf
 #include <cerrno> // Para o uso da rotina de indicacao de erro strerror() e da constante errno
-#include <termios.h> // Definicoes de controle de terminal POSIX
+//#include <termios.h> // Definicoes de controle de terminal POSIX
 #include <vector>
 #include <iostream>
 #include "robo.hpp"
