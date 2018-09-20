@@ -12,8 +12,16 @@ void Roteiro::goleiro(Robo& r, posXY& b){
     //A bola esta na nossa metade do campo
     else {
         //Segue a bola em Y
-        Comportamento::posicionaGolX(r);
-        Comportamento::posicionaPosBolaEmY(r, b);
+        if(b.isInFaixaSuperior()){
+            Comportamento::posicionaTraveSuperior(r);
+        }
+        else if (b.isInFaixaInferior()){
+            Comportamento::posicionaTraveInferior(r);
+        }
+        else{
+            Comportamento::posicionaGolX(r);
+            Comportamento::posicionaPosBolaEmY(r, b);
+        }
     }
 
 }

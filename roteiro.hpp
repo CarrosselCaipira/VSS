@@ -17,12 +17,12 @@ enum ROTEIROS {
 
 class Roteiro {
 	public:
-		// static void atacante(Robo& r);
-		// static void volante(Robo& r);
-		// static void goleiro(Robo& r);
-		static void atacanteBasico(Robo& r, posXY& b);
-		static void volanteBasico(Robo& r, posXY& b);
-		static void goleiroBasico(Robo& r, posXY& b);
+		 static void atacante(Robo& r, posXY& b);
+		 static void volante(Robo& r, posXY& b);
+		 static void goleiro(Robo& r, posXY& b);
+		//static void atacanteBasico(Robo& r, posXY& b);
+		//static void volanteBasico(Robo& r, posXY& b);
+		//static void goleiroBasico(Robo& r, posXY& b);
 
 };
 

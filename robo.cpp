@@ -270,31 +270,31 @@ void Robo::setEstadoPrevComoEstadoObj(){
 
 void Robo::run() {
 	switch (tipoJogador) {
-		// case ATACANTE:
-		//   Roteiro::atacante(*this, bola);
-		//   break;
+		 case ATACANTE:
+		   Roteiro::atacante(*this, bola);
+		   break;
+		
+		 case VOLANTE:
+		   Roteiro::volante(*this, bola);
+		   break;
+		
+		 case GOLEIRO:
+		   Roteiro::goleiro(*this, bola);
+		   break;
+
+		//case ATACANTE_BASICO:
+		//	std::cout << "@Robo: Roteiro do atacante rodando" << '\n';
+		//	Roteiro::atacanteBasico(*this, bola);
+		//break;
 		//
-		// case VOLANTE:
-		//   Roteiro::volante(*this, bola);
-		//   break;
+		//case VOLANTE_BASICO:
+		//	std::cout << "@Robo: Roteiro do volante rodando" << '\n';
+		//	Roteiro::volanteBasico(*this, bola);
+		//break;
 		//
-		// case GOLEIRO:
-		//   Roteiro::goleiro(*this, bola);
-		//   break;
-
-		case ATACANTE_BASICO:
-			std::cout << "@Robo: Roteiro do atacante rodando" << '\n';
-			Roteiro::atacanteBasico(*this, bola);
-		break;
-
-		case VOLANTE_BASICO:
-			std::cout << "@Robo: Roteiro do volante rodando" << '\n';
-			Roteiro::volanteBasico(*this, bola);
-		break;
-
-		case GOLEIRO_BASICO:
-			std::cout << "@Robo: Roteiro do goleiro rodando" << '\n';
-			Roteiro::goleiroBasico(*this, bola);
-		break;
+		//case GOLEIRO_BASICO:
+		//	std::cout << "@Robo: Roteiro do goleiro rodando" << '\n';
+		//	Roteiro::goleiroBasico(*this, bola);
+		//break;
 	}
 }
