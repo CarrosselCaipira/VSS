@@ -1,8 +1,0 @@
-{
-    "C_Cpp.intelliSenseEngineFallback": "Disabled",
-    "files.associations": {
-        "algorithm": "cpp",
-        "iostream": "cpp",
-        "cmath": "cpp"
-    }
-}
