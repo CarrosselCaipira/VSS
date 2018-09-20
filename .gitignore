@@ -33,4 +33,12 @@
 
 # Videos para Debug
 *.avi
+
+# Visual Studio Properties files
 .vscode/c_cpp_properties.json
+
+# mac backup files
+.DS_Store
+
+# linux kde directory files
+.directory
