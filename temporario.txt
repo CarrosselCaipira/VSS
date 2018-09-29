@@ -1,0 +1,28 @@
+Volante:
+    Modo Ataque:
+        Caso o Volante esteja na à frente (à uma distância arbitrária) do Atacante:
+            *Estratégia de escolta:
+
+            O 
+
+            O Volante se mantém à frente do Atacante e da Bola à uma distancia razoável, escoltando o Atacante;
+            O Volante não se posicionará imediatamente à frente do robô em Y, mas com a diferença de um tamanho do robo (tam_robo) em relação ao centro, isto para bloquear adversários que avançam para irar a bola do atacante.
+            Se o Atacante está já no centro do Campo, em uma faixa arbitrária, não importa se a diferença de tam_robo do Volante será positiva ou negativa.
+            Quando chegam próximos ao gol, o Volante sai da frente do Atacante.
+            *
+        Caso o Volante esteja próximo ao X do Atacante:
+            Se o Volante está mais próximo do meio de campo (Caso A):
+                O Volante executará a *Estratégia de Escolta (como descrito logo acima).
+            Se o Volante está mais distante do meio de campo (Caso B):
+                O Volante se posiciona atrás do Atacante em aproximadamente 20cm.
+        Caso o Volante esteja atrás do Atacante (Caso C):
+            O Volante se posiciona atrás do Atacante em aproximadamente 20cm.
+    Modo Defesa:
+        Caso a posse da bola for perdida em até 60% do campo:
+            O volante recua até a área e fica percorrendo o perímetro desta.
+            Se a bola entrar na área ele se distancia desta para não atrapalhar o goleiro.
+        Caso a posse da bola for perdida após 60% do campo:
+            Ele avança na bola e tenta recuperá-la.
+    A qualquer momento:
+        Caso o volante obtenha a posse da bola:
+            Ocorre a troca de funções entre o volante e o atacante, o volante vira atacante e o atacante volante.
