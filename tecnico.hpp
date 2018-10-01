@@ -8,7 +8,7 @@
 
 /* Nesta abstracao, o tecnico define os roteiros dos jogadores em campo e os auxilia informando, por exemplo, a localizacao dos robos adversarios. O tecnico BASE na verdade atua orquestrando a passagem de informacoes e assim deve permanecer sendo, possuindo apenas metodos genericos para auxiliar os jogadores. A estrategia em si deve ser implementada pelos descendentes desta classe, como realizando o posicionamento dos jogadores, por exemplo, por este motivo esta eh uma classe abstrata (o metodo run() (puramente virtual pelo = 0) (e demais metodos virtuais) deve ser obrigatoriamente implementado em seus descendentes) */
 
-/* Lembre-se tambem que ao criar classes herdeiras, eh necessario chamar explicitamente o construtor desta classe pela lista de inicializacao, assim como demostrado no tecnico exemplo 'TecnicoOfencivo'. */
+/* Lembre-se tambem que ao criar classes herdeiras, eh necessario chamar explicitamente o construtor desta classe pela lista de inicializacao, assim como demostrado no tecnico exemplo 'TecnicoOfensivo'. */
 
 /* Para  a criacao de metodos e estruturas nao-publicos cria-los dentro do 'escopo' "protected" visto que provavelmente deverao ser herdadas pela classe herdeira. */
 class Tecnico {
