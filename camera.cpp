@@ -722,7 +722,7 @@ void Camera::determinaAngulo() {
 // 						1 -> Nao conseguiu encontrar os objetos de forma alguma
 // 						2 -> Conseguiu encontrar o objeto mas apenas para a cor1
 // 						3 -> Conseguiu encontrar o objeto mas apenas para a cor2
-// 						4 -> Nao fez absolumente nada (nao entrou em if algum)
+// 						4 -> Nao fez std::absolumente nada (nao entrou em if algum)
 int Camera::getPosicaoAtualObjeto(posXY& posicaoObj, bool emCentimetros /* = true */) {
 	bool resuCor1 = false;
 	bool resuCor2 = false;

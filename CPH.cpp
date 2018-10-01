@@ -237,50 +237,50 @@ void CPH::calculaVelRodas() {
 				vSignal = 1;
 			}
 
-			if (abs(vObj) > 127)
+			if (std::abs(vObj) > 127)
 				vObj = 127 * vSignal;
 			if (robo.getRoteiro() == ATACANTE_BASICO){ // Robo defensor
 				if (distEuclidianaObjRobo < RAIO_DISTANCIA){ // Se a distancia for menor que o raio de distancia aceitavel chegou no objetivo
-					if (abs(vObj) > 0)
+					if (std::abs(vObj) > 0)
 						vObj = 0;
 				}
 			}
 			if (distEuclidianaObjRobo > RAIO_DISTANCIA){ // Se a distancia for maior que o raio de distancia aceitavel esta errado
-				if (abs(vObj) < 42)
+				if (std::abs(vObj) < 42)
 					vObj = 42 * vSignal;
 			} else {
-				if (abs(dAng) >= 80)
+				if (std::abs(dAng) >= 80)
 					if (vObj > 0)
 						vObj = 0;
 			}
-			switch((int) abs(vObj / 21)){
+			switch((int) std::abs(vObj / 21)){
 				case 1:
-					if (abs(wObj) > 6)
+					if (std::abs(wObj) > 6)
 						wObj = 6 * wSignal;
 					break;
 				case 2:
-					if (abs(wObj) > 11)
+					if (std::abs(wObj) > 11)
 						wObj = 11 * wSignal;
 
 					break;
 				case 3:
-					if (abs(wObj) > 17)
+					if (std::abs(wObj) > 17)
 						wObj = 17 * wSignal;
 					break;
 				case 4:
-					if (abs(wObj) > 22)
+					if (std::abs(wObj) > 22)
 						wObj = 22 * wSignal;
 					break;
 				case 5:
-					if (abs(wObj) > 30)
+					if (std::abs(wObj) > 30)
 						wObj = 30 * wSignal;
 					break;
 				case 6:
-					if (abs(wObj) > 36)
+					if (std::abs(wObj) > 36)
 						wObj = 36 * wSignal;
 					break;
 				// case 7:
-					// if (abs(wObj) > 42)
+					// if (std::abs(wObj) > 42)
 					// 	wObj = 42 * wSignal;
 					// break;
 			}
