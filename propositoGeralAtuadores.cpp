@@ -61,6 +61,22 @@ bool posXY::isInFaixaXDaAreaGolAdv() {
   return this->x > (TAM_X_CAMPO - TAM_X_GOL - TAM_X_AREA_GOL);
 }
 
+bool posXY::isInAcimaAreaTime() {
+  return (posXY::isInFaixaXDaAreaGolTime() && this->y > (TAM_Y_CAMPO/2 + TAM_Y_AREA_GOL/2));  
+}
+
+bool posXY::isInAbaixoAreaTime() {
+  return (posXY::isInFaixaXDaAreaGolTime() && this->y < (TAM_Y_CAMPO/2 - TAM_Y_AREA_GOL/2));
+} 
+
+bool posXY::isInAcimaAreaAdv() {
+  return (posXY::isInFaixaXDaAreaGolAdv() && this->y > (TAM_Y_CAMPO/2 + TAM_Y_AREA_GOL/2));
+} 
+
+bool posXY::isInAbaixoAreaAdv() {
+  return (posXY::isInFaixaXDaAreaGolAdv() && this->y < (TAM_Y_CAMPO/2 - TAM_Y_AREA_GOL/2));
+} 
+
 bool posXY::isInCampoSemAreaGolTime() {
   return (posXY::isInCampoTime() && !posXY::isInFaixaXDaAreaGolTime());
 }

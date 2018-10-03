@@ -59,6 +59,10 @@ struct posXY {
 	bool isInFaixaCentral();
 	bool isInFaixaXDaAreaGolTime();
 	bool isInFaixaXDaAreaGolAdv();
+	bool isInAcimaAreaTime();
+	bool isInAbaixoAreaTime();
+	bool isInAcimaAreaAdv();
+	bool isInAbaixoAreaAdv();
 	bool isInCampoSemAreaGolTime();
 	bool isInCampoSemAreaGolAdv();
 	bool isInAreaEscanteioSuperiorTime();
