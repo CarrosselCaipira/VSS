@@ -3,6 +3,7 @@
 #include "CPH.hpp"
 // #include "AEstrela.hpp"
 #include "radio.hpp"
+#include "tecnicoOfensivo.hpp"
 
 #define FRAME_TIME 30
 #define DESLOCA_BITS 2
@@ -13,17 +14,20 @@ int main() {
 	// USANDO ESTE VECTOR PARA MANTER AS POSICOES ANTERIORES CASO NAO CONSIGA ENCONTRAR NOVAS, RETORNA AS ANTERIORES MESMO
 	std::vector<posXY> posRobosTime(3);
 	// COMO ADVERSARIOS SAO APENAS OBSTACULOS (POR ENQUANTO), ELES PODEM SER APENAS PONTOS NO CAMPO
-  std::vector<posXY> robosTimeAdv;
+  	std::vector<posXY> robosTimeAdv;
 	// A BOLA ESTA NA MESMA CATEGORIA DOS ADVERSARIOS, NO MOMENTO EH APENAS UM PONTO NO CAMPO
 	posXY bola;
 
 	Camera cam("outcpp4.avi");
 	//Radio radio(robosTime);
 
+	// Criando instancia de tecnicoOfensivo
+	TecnicoOfensivo tecnicoOfensivo(robosTime, robosTimeAdv, bola);
+
 	// setando os roteiros
-	robosTime[0].setRoteiro(GOLEIRO_BASICO);
-	robosTime[1].setRoteiro(VOLANTE_BASICO);
-	robosTime[2].setRoteiro(ATACANTE_BASICO);
+	// robosTime[0].setRoteiro(GOLEIRO_BASICO);
+	// robosTime[1].setRoteiro(VOLANTE_BASICO);
+	// robosTime[2].setRoteiro(ATACANTE_BASICO);
 
 	cv::Mat Frame1;
 	cv::Mat Frame2;
