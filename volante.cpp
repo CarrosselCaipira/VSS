@@ -2,7 +2,6 @@
 
 //bool Tecnico.getAtacantePosse()
 //posXY Tecnico.getPosAtualAtacante()
-//int Tecnico.getEstrategiaVolante() => enum {ataque, defesa}
 //void Tecnico.permutaRoteiroAtkVol(); => permuta os roteiros e reseta as variaveis dependentes dos roteiros
 
 void Roteiro::volante(Robo& r, posXY& b) {
@@ -17,16 +16,16 @@ void Roteiro::volante(Robo& r, posXY& b) {
         // "Caso A" -> se posicionara a frente do atacante para escolta-lo
         // (posVolante = posAtacante.X + TAM_ROBO)
         // (posVolante = posAtacante.y (+-) TAM_ROBO). O volante se posiciona em Y mais proximo de meio de campo
-        if ((std::abs(r.getPosicaoAtualRobo().x - Tecnico.getPosAtualAtacante().x) <= 10)
+        if ((std::abs(r.getPosicaoAtualRobo().getDistX(Tecnico.getPosAtualAtacante())) <= 10)
             && (std::abs(TAM_Y_CAMPO/2 - r.getPosicaoAtualRobo().y) < std::abs(TAM_Y_CAMPO/2 - Tecnico.getPosAtualAtacante().y))) {
 
-            if(r.getPosicaoAtualRobo().y <= TAM_Y_AREA_GOL / 2) {
-                // Volante esta abaixo do meio de campo em Y
+            // Volante esta abaixo do meio de campo em Y
+            if(r.getPosicaoAtualRobo().isInCampoMetadeInferior()) {
                 r.setPosicaoObj(Tecnico.getPosAtualAtacante().x + TAM_ROBO, Tecnico.getPosAtualAtacante().Y + TAM_ROBO);
             }
 
+            // Volante esta acima do meio de campo em Y
             else{
-                // Volante esta acima do meio de campo em Y
                 r.setPosicaoObj(Tecnico.getPosAtualAtacante().x + TAM_ROBO, Tecnico.getPosAtualAtacante().Y - TAM_ROBO);
             }
         }
@@ -72,35 +71,34 @@ void Roteiro::volante(Robo& r, posXY& b) {
                 else {
 
                     // A bola esta em uma faixa acima da area
-                    if (b.y > TAM_Y_CAMPO / 2 + TAM_Y_AREA_GOL / 2){
-                        r.setPosicaoObjY(TAM_Y_CAMPO / 2 + TAM_Y_AREA_GOL / 2 + TAM_ROBO / 2);
+                    if (b.isInAcimaAreaTime()){
+                        Comportamento::tangenciaLinhaSuperiorAreaGol(r);
 
                         // A bola esta a frente da area
-                        if (b.x > TAM_X_AREA_GOL){
+                        if (!b.isInFaixaXDaAreaGolTime()){
                             // O robo fica na "quina da area"
-                            r.setPosicaoObjX(TAM_X_AREA_GOL + TAM_ROBO / 2);
+                            Comportamento::tangenciaLinhaFrenteAreaGol(r);
                         }
                         // A bola esta encima da area
                         else {
                             // O robo fica na linha superior da area
-                            r.setPosicaoObjX(b.x);
+                            Comportamento::posicionaPosBolaEmX(r, b);
                         }
                     }
                     // A bola esta em uma faixa abaixo da area
-                    else if (b.y < TAM_Y_CAMPO / 2 - TAM_Y_AREA_GOL / 2) {
+                    else if (b.isInAbaixoAreaTime()) {
 
-
-                        r.setPosicaoObjY(TAM_Y_CAMPO / 2 - TAM_Y_AREA_GOL / 2 - TAM_ROBO / 2);
+                        Comportamento::tangenciaLinhaInferiorAreaGol(r);
 
                         // A bola esta a frente da area
                         if (b.x > TAM_X_AREA_GOL){
                             // O robo fica na "quina da area"
-                            r.setPosicaoObjX(TAM_X_AREA_GOL + TAM_ROBO / 2);
+                            Comportamento::tangenciaLinhaFrenteAreaGol(r);
                         }
                         // A bola esta embaixo da area
                         else {
                             // O robo fica na linha inferior da area
-                            r.setPosicaoObjX(b.x);
+                            Comportamento::posicionaPosBolaEmX(r, b);
                         }
                     }
 
@@ -108,7 +106,7 @@ void Roteiro::volante(Robo& r, posXY& b) {
                     else {
                         // O robo fica na linha de frente da area
                         Comportamento::posicionaPosBolaEmY(r, b);
-                        r.setPosicaoObjX(TAM_X_AREA_GOL + TAM_ROBO / 2);
+                        Comportamento::tangenciaLinhaFrenteAreaGol(r);
                     }
                 }
             }
