@@ -6,7 +6,7 @@ void Roteiro::atacante(Robo& r, posXY& b){
 
     // Se o atacante ja estiver realizando o chute girando no sentido horario
     if(r.atributos.test(CHUTE_GIRANDO_HORARIO)) {
-		r.atributos.reset(CHUTE_GIRANDO_HORARIO);
+	r.atributos.reset(CHUTE_GIRANDO_HORARIO);
 	}
 
 	// Se o atacante ja estiver realizando o chute girando no sentido anti horario
