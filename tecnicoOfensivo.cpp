@@ -8,6 +8,10 @@ TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<Robo>& rAdv, 
   Tecnico::robosTime[this->indiceGoleiro].setRoteiro(GOLEIRO);
   Tecnico::robosTime[this->indiceVolante].setRoteiro(VOLANTE);
   Tecnico::robosTime[this->indiceAtacante].setRoteiro(ATACANTE);
+
+  this->indiceGoleiro = 0;
+  this->indiceVolante = 1;
+  this->indiceAtacante = 2;
 }
 
 TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<posXY>& rAdv, posXY& b) : Tecnico(r, rAdv, b) {
@@ -18,6 +22,10 @@ TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<posXY>& rAdv,
   Tecnico::robosTime[this->indiceGoleiro].setRoteiro(GOLEIRO);
   Tecnico::robosTime[this->indiceVolante].setRoteiro(VOLANTE);
   Tecnico::robosTime[this->indiceAtacante].setRoteiro(ATACANTE);
+
+  this->indiceGoleiro = 0;
+  this->indiceVolante = 1;
+  this->indiceAtacante = 2;
 }
 
 TecnicoOfensivo::run() {
@@ -38,9 +46,8 @@ posXY TecnicoOfensivo::getPosAtualAtacante() {
 }
 
 void TecnicoOfensivo::permutaRoteiroAtkVol() {
-  short int aux = this->indiceAtacante; // aux serve para intermediar a troca de indices entre volante e atacante
-  this->indiceAtacante = this->indiceVolante;
-  this->indiceVolante = aux;
+  /* trocando os indices do atacante com o do voltante. */
+  std::swap(this->indiceAtacante, this->indiceVolante);
 
   Tecnico::robosTime[this->indiceAtacante].setRoteiro(ATACANTE);
   Tecnico::robosTime[this->indiceVolante].setRoteiro(VOLANTE);

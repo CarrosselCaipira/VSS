@@ -2,12 +2,13 @@
 
 #include "tecnico.hpp"
 #include "roteiro.hpp"
+#include <algorithm>
 
 class TecnicoOfensivo : public Tecnico {
   private:
-    const short int indiceGoleiro = 0; /* posicao no vector de robos do goleiro */
-    const short int indiceVolante = 1; /* posicao no vector de robos do voltante */
-    const short int indiceAtacante = 2; /* posicao no vector de robos do atacante */
+    short int indiceGoleiro; /* posicao no vector de robos do goleiro */
+    short int indiceVolante; /* posicao no vector de robos do voltante */
+    short int indiceAtacante; /* posicao no vector de robos do atacante */
     bool atacanteRetornou;
 
   public:
