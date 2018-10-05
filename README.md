@@ -7,7 +7,9 @@ Para compilar, no presente momento, utilize o script `compile.sh` através do co
 Este script contém instruções para dois compiladores, o `CLANG` e o `GCC`.
 
 ## Compiladores
-Compiladores que são capazes de compilar este código, até então testados são:
+Teoricamente todos os compiladores que estão capazes de utilizar o padrão `c++11` são suportados.
+
+Até o momento, foram estados os seguintes compiladores:
 - `CLANG`;
 - `GCC`;
 
