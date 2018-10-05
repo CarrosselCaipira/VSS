@@ -5,6 +5,7 @@ class Robo;
 
 #include "roteiro.hpp"
 #include "propositoGeralAtuadores.hpp"
+#include "tecnico.hpp"
 #include <iostream>
 #include <cstring>
 #include <bitset>
@@ -20,7 +21,7 @@ enum INDEX_ATRIBUTOS {
 	CHUTE_GIRANDO_HORARIO,
 	CHUTE_GIRANDO_ANTI_HORARIO,
 	CHUTANDO,
-  EM_POSSE_BOLA, 
+  EM_POSSE_BOLA,
 
 	/* Adicionar os novos atributos antes de BITSET_SIZE */
 	BITSET_SIZE
@@ -32,8 +33,6 @@ class Robo {
     estadoRobo estadoObjRobo; /**< Informações sobre o objetivo do robo. */
 
     enum ROTEIROS tipoJogador; // identificao de qual roteiro esta sendo seguido pelo robo no momento.
-
-    posXY bola;
 
     public:
 				std::bitset<BITSET_SIZE> atributos; /**< bitset sinalizando se os atributos do robo */
@@ -103,7 +102,7 @@ class Robo {
 				// Checa se a bola está no intervalo y do robô.
 				bool isBolaNoIntervaloYRobo(const posXY posicao);
 
-        // Checa se o robo esta com a posse da bola, uma area em frente ao robo, de abertura 90 graus (pi/2), 45 graus acima e abaixo da direcao deste, 
+        // Checa se o robo esta com a posse da bola, uma area em frente ao robo, de abertura 90 graus (pi/2), 45 graus acima e abaixo da direcao deste,
         // e de comprimento de meio robo
         bool Robo::isRoboEmPosseBola(const posXY bola);
 				/****************************************************************/
@@ -183,8 +182,8 @@ class Robo {
 				void setEstadoPrevComoEstadoObj();
 				/****************************************************************/
 
-        /* Corre o roteiro determinado por tipo_jogador */
-        void run();
+        /* Corre o roteiro determinado por tipo_jogador. O Tecnico eh um parametro opcional pois existem roteiros que nao necessitam do auxilo de um tecnico. */
+        void run(Tecnico* tecnico = NULL);
 };
 
 #endif /* ROBO_H */
