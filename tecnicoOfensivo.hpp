@@ -1,12 +1,13 @@
 #ifndef TECNICO_OFENSIVO_H
+
 #include "tecnico.hpp"
 #include "roteiro.hpp"
 
 class TecnicoOfensivo : public Tecnico {
   private:
-    short int indiceAtacante;
-    short int indiceVolante;
-    short int indiceGoleiro;
+    const short int indiceGoleiro = 0; /* posicao no vector de robos do goleiro */
+    const short int indiceVolante = 1; /* posicao no vector de robos do voltante */
+    const short int indiceAtacante = 2; /* posicao no vector de robos do atacante */
     bool atacanteRetornou;
 
   public:
