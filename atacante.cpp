@@ -2,7 +2,15 @@
 
 //bool Tecnico.getEstrategiaAtacanteRetornou()
 //bool Tecnico.setEstrategiaAtacanteRetornou() => muda uma variavel bool no tecnico
-void Roteiro::atacante(Robo& r, posXY& b){
+void Roteiro::atacante(Robo& r, Tecnico* tecnico) {
+
+  if(tecnico == NULL) {
+    std::cerr << "ERRO: @Roteiro::atacante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
+    exit(1);
+  }
+
+  TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
+
 
     // Se o atacante ja estiver realizando o chute girando no sentido horario
     if(r.atributos.test(CHUTE_GIRANDO_HORARIO)) {
@@ -24,7 +32,7 @@ void Roteiro::atacante(Robo& r, posXY& b){
         else{
             r.atributos.set(CHUTE_GIRANDO_ANTI_HORARIO);
         }
-    } 
+    }
 
     // Se o robo estiver com a bola
     else if(r.isRoboEmPosseBola(b)){
@@ -37,13 +45,13 @@ void Roteiro::atacante(Robo& r, posXY& b){
         }
         // Senao, move o robo para um pouco atras da bola
         else{
-            Comportamento::posicionaAntesBola(r, b); 
+            Comportamento::posicionaAntesBola(r, b);
         }
 
         // Reseta a variavel "retornou"
-        Tecnico.setEstrategiaAtacanteRetornou(false);
+        Tecnico->setEstrategiaAtacanteRetornou(false);
     }
-    
+
     // O atacante nao esta com a bola
     // Se a bola estiver no campo adversario
     else if (b.isInCampoAdv()){
@@ -51,7 +59,7 @@ void Roteiro::atacante(Robo& r, posXY& b){
         r.atributos.reset(EM_POSSE_BOLA);
 
         // O atacante volta para o meio de campo e depois avanca para cima da bola
-        if(r.getPosicaoAtualRobo().isInCampoAdv() && !Tecnico.getEstrategiaAtacanteRetornou()){
+        if(r.getPosicaoAtualRobo().isInCampoAdv() && !Tecnico->getEstrategiaAtacanteRetornou()){
             Comportamento::posicionaCentroCampoX(r);
         }
 
@@ -62,10 +70,10 @@ void Roteiro::atacante(Robo& r, posXY& b){
             // A variavel "retornou" se torna verdadeira
             // Isto pois o atacante retornou ao meio de campo depois de perder a bola (ou nao tinha ela desde o inicio)
             // E passa a seguir a bola para recupera-la
-            Tecnico.setEstrategiaAtacanteRetornou(true);
+            Tecnico->setEstrategiaAtacanteRetornou(true);
         }
     }
-    
+
     // Se a bola esta no nosso campo
     else if (b.isInCampoTime()){
         // Reseta o bitset para a posse da bola

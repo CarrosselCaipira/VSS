@@ -1,32 +1,38 @@
 #include "roteiro.hpp"
+#include "tecnicoOfensivo.hpp"
 
 //bool Tecnico.getAtacantePosse()
 //posXY Tecnico.getPosAtualAtacante()
 //void Tecnico.permutaRoteiroAtkVol(); => permuta os roteiros e reseta as variaveis dependentes dos roteiros
 
-void Roteiro::volante(Robo& r, posXY& b) {
+void Roteiro::volante(Robo& r, Tecnico* tecnico){
 
+  if(tecnico == NULL) {
+    std::cerr << "ERRO: @Roteiro::volante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
+    exit(1);
+  }
 
+  TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
 
     // O atacante possui a posse da bola
-    if (Tecnico.isAtacantePosse()) {
+    if (Tecnico->isAtacantePosse()) {
 
         // O volante se encontra ate 10cm atras do atacante e
         // o volante esta mais proximo do meio de campo do que o atacante
         // "Caso A" -> se posicionara a frente do atacante para escolta-lo
         // (posVolante = posAtacante.X + TAM_ROBO)
         // (posVolante = posAtacante.y (+-) TAM_ROBO). O volante se posiciona em Y mais proximo de meio de campo
-        if ((std::abs(r.getPosicaoAtualRobo().getDistX(Tecnico.getPosAtualAtacante())) <= 10)
-            && (std::abs(TAM_Y_CAMPO/2 - r.getPosicaoAtualRobo().y) < std::abs(TAM_Y_CAMPO/2 - Tecnico.getPosAtualAtacante().y))) {
+        if ((std::abs(r.getPosicaoAtualRobo().getDistX(Tecnico->getPosAtualAtacante())) <= 10)
+            && (std::abs(TAM_Y_CAMPO/2 - r.getPosicaoAtualRobo().y) < std::abs(TAM_Y_CAMPO/2 - Tecnico->getPosAtualAtacante().y))) {
 
             // Volante esta abaixo do meio de campo em Y
             if(r.getPosicaoAtualRobo().isInCampoMetadeInferior()) {
-                r.setPosicaoObj(Tecnico.getPosAtualAtacante().x + TAM_ROBO, Tecnico.getPosAtualAtacante().Y + TAM_ROBO);
+                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().Y + TAM_ROBO);
             }
 
             // Volante esta acima do meio de campo em Y
             else{
-                r.setPosicaoObj(Tecnico.getPosAtualAtacante().x + TAM_ROBO, Tecnico.getPosAtualAtacante().Y - TAM_ROBO);
+                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().Y - TAM_ROBO);
             }
         }
 
@@ -35,7 +41,7 @@ void Roteiro::volante(Robo& r, posXY& b) {
         // "Caso B" ou "Caso C", respectivamente
         else {
             // O volante segue o atacante 20cm atras
-            r.setPosicaoObj(Tecnico.getPosAtualAtacante().x - 20, Tecnico.getPosAtualAtacante().Y);
+            r.setPosicaoObj(Tecnico->getPosAtualAtacante().x - 20, Tecnico->getPosAtualAtacante().Y);
         }
     }
 
@@ -43,7 +49,7 @@ void Roteiro::volante(Robo& r, posXY& b) {
     else {
         // O volante esta em posse da bola
         if(r.isRoboEmPosseBola(b)){
-            Tecnico.permutaRoteiroAtkVol();
+            Tecnico->permutaRoteiroAtkVol();
         }
 
         // Nao temos posse da bola -> volante fica defensivo

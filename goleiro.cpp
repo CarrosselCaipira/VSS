@@ -1,6 +1,6 @@
 #include "roteiro.hpp"
 
-void Roteiro::goleiro(Robo& r, posXY& b){
+void Roteiro::goleiro(Robo& r, Tecnico* tecnico){
 
     // A bola esta na metade adversaria do campo
     if (b.isInCampoAdv()){
