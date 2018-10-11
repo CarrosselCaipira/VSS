@@ -35,6 +35,10 @@ TecnicoOfensivo::run() {
   /* a partir de agora, ao chamar o run, deve-se passar o this como segundo argumento caso o roteiro va usar funcoes do tecnico em questao.
   Exemplo: robosTime[this->indiceAtacante].run(this); // para rodar o roteiro do atacante. Caso o roteiro nao tenha necessidade de usar o tecnico, nao eh necessario passar o this, visto que ele eh um parametro opcional.
   */
+  robosTime[this->indiceGoleiro].run(this);
+  robosTime[this->indiceVolante].run(this);
+  robosTime[this->indiceAtacante].run(this);
+
 }
 
 bool TecnicoOfensivo::isAtacantePosse() {
