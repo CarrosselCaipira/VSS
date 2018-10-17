@@ -1,6 +1,9 @@
 #include "tecnicoOfensivo.hpp"
 
 TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<Robo>& rAdv, Bola& b) : Tecnico(r, rAdv, b) {
+  this->indiceGoleiro = 0;
+  this->indiceVolante = 1;
+  this->indiceAtacante = 2;
   /* realizar a setagem dos roteiros e outras coisas de interesse que devem ser setadas */
   /* talvez tambem seja interessante definir (salvar) os indices dos robos que possuam determinado roteiro no vector de robos.
   Por exemplo, salvar o indice (provavelmente uma variavel membro privada desta classe) do atacante no vetor de robos, para nao precisarmos ficar
@@ -8,26 +11,6 @@ TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<Robo>& rAdv, 
   Tecnico::robosTime[this->indiceGoleiro].setRoteiro(GOLEIRO);
   Tecnico::robosTime[this->indiceVolante].setRoteiro(VOLANTE);
   Tecnico::robosTime[this->indiceAtacante].setRoteiro(ATACANTE);
-
-  this->indiceGoleiro = 0;
-  this->indiceVolante = 1;
-  this->indiceAtacante = 2;
-  this->bola = b;
-}
-
-TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<posXY>& rAdv, posXY& b) : Tecnico(r, rAdv, b) {
-  /* realizar a setagem dos roteiros e outras coisas de interesse que devem ser setadas */
-  /* talvez tambem seja interessante definir (salvar) os indices dos robos que possuam determinado roteiro no vector de robos.
-  Por exemplo, salvar o indice (provavelmente uma variavel membro privada desta classe) do atacante no vetor de robos, para nao precisarmos ficar
-  buscando ele o tempo todo, ou ainda criar uma referencia para para sua posicao no vector (mais complexo e nao vejo, ainda, ganhos de performance significativos) */
-  Tecnico::robosTime[this->indiceGoleiro].setRoteiro(GOLEIRO);
-  Tecnico::robosTime[this->indiceVolante].setRoteiro(VOLANTE);
-  Tecnico::robosTime[this->indiceAtacante].setRoteiro(ATACANTE);
-
-  this->indiceGoleiro = 0;
-  this->indiceVolante = 1;
-  this->indiceAtacante = 2;
-  this->bola_posXY = b;
 }
 
 void TecnicoOfensivo::run() {
