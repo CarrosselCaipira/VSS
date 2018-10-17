@@ -49,14 +49,14 @@ class Camera : public GestorArq {
 		 *
 		 *  @note Este vector eh publico para permitir que, caso ocorram erros de identificacao de objetos, o objeto que esta tentando determinar sua posicao possa fazer uma melhor escolha baseado nas localizacoes obtidas
 		 */
-		std::vector<std::vector<Retangulo>> centroAtualRetangulos;
+		std::vector<std::vector<Retangulo> > centroAtualRetangulos;
 
 		/** @var centroAntRetangulos
 		 *  @brief Vetor de vetores de posicoes XY para o retangulo de cada cor no instante anterior.
 		 *
 		 *  @note Este vector eh publico para permitir que, caso ocorram erros de identificacao de objetos, o objeto que esta tentando determinar sua posicao possa fazer uma melhor escolha baseado nas localizacoes obtidas
 		 */
-		std::vector<std::vector<Retangulo>> centroAntRetangulos;
+		std::vector<std::vector<Retangulo> > centroAntRetangulos;
 
 	private:
 		/** @fn void inicializaVect()

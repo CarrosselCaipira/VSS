@@ -15,7 +15,7 @@ class Bola {
     // Retorna o vetor sentido da bola
     inline vetorSentido getVetorSentidoAtualBola ();
 
-    inline posXY Bola::getPosicaoAtualObjBola();
+    inline posXY getPosicaoAtualObjBola();
 
     // Retorna a velocidade atual da bola
     inline float getVelocidadeAtualBola ();

@@ -265,7 +265,7 @@ class Comportamento {
 	 * @param referencia para a bola
 	 * @Author Rafael Tatsuki Takagi
 	 */ 
-	static void Comportamento::posicionaPosBolaEmYPonderado(Robo& r, posXY b);
+	static void posicionaPosBolaEmYPonderado(Robo& r, posXY b);
 
  };
 
