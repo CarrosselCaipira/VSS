@@ -2,8 +2,10 @@
 #define TECNICO_H
 
 #include <vector>
+
+class Tecnico;
+
 #include "robo.hpp"
-class Robo;
 #include "bola.hpp"
 //#include "propositoGeralAtuadores.hpp"
 
@@ -17,10 +19,6 @@ class Tecnico {
     std::vector<Robo>& robosTime; /* referencia para o vector que contem os robos do nosso time. */
     std::vector<Robo>& robosAdv; /* referencia para o vector que contem os robos do time aversario . */
     Bola& bola; /* referencia para a bola. */
-
-    /* para simplificacoes que possam vir a ser necessarias, podemos abstratir os adaversarios e a bola, em um primeiro momento, como simples pontos. Note que esta nao eh a configuracao ideal e deve ser usada com foco para testes e implementacoes rapidas. */
-    std::vector<posXY>& robosAdv_posXY; /* reprefencia para os robos adversarios, representados como pontos. */
-    posXY& bola_posXY; /* referencia para a bola, presentada como um ponto. */
 
   public:
     /**
