@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 g++ -c atacante.cpp -std=c++11
 g++ -c camera.cpp -std=c++11
 g++ -c comportamento.cpp -std=c++11
