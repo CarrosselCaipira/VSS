@@ -1,7 +1,11 @@
 #ifndef TECNICO_OFENSIVO_H
+#define TECNICO_OFENSIVO_H
 
 #include "tecnico.hpp"
+#ifndef ROTEIRO_H
+#define ROTEIRO_H
 #include "roteiro.hpp"
+#endif
 #include <algorithm>
 
 class TecnicoOfensivo : public Tecnico {
@@ -20,8 +24,9 @@ class TecnicoOfensivo : public Tecnico {
     void permutaRoteiroAtkVol();
     void setEstrategiaAtacanteRetornou(bool set);
     bool getEstrategiaAtacanteRetornou();
+    posXY getPosAtualBola();
 
-    run();
+    void run();
 };
 
 # endif /* TECNICO_OFENSIVO_H */

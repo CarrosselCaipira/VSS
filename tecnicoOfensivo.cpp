@@ -12,6 +12,7 @@ TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<Robo>& rAdv, 
   this->indiceGoleiro = 0;
   this->indiceVolante = 1;
   this->indiceAtacante = 2;
+  this->bola = b;
 }
 
 TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<posXY>& rAdv, posXY& b) : Tecnico(r, rAdv, b) {
@@ -26,9 +27,10 @@ TecnicoOfensivo::TecnicoOfensivo(std::vector<Robo>& r, std::vector<posXY>& rAdv,
   this->indiceGoleiro = 0;
   this->indiceVolante = 1;
   this->indiceAtacante = 2;
+  this->bola_posXY = b;
 }
 
-TecnicoOfensivo::run() {
+void TecnicoOfensivo::run() {
   /* implementacao do roteiro, rodando os roteiros de cada jogador. Setar os roteiros de cada jogador eh uma etapa que provavelmente
   deve ser feita no Constrututor desta classe */
 
@@ -38,7 +40,6 @@ TecnicoOfensivo::run() {
   robosTime[this->indiceGoleiro].run(this);
   robosTime[this->indiceVolante].run(this);
   robosTime[this->indiceAtacante].run(this);
-
 }
 
 bool TecnicoOfensivo::isAtacantePosse() {
@@ -63,4 +64,8 @@ void TecnicoOfensivo::setEstrategiaAtacanteRetornou(bool set){
 
 bool TecnicoOfensivo::getEstrategiaAtacanteRetornou(){
   return this->atacanteRetornou;
+}
+
+posXY TecnicoOfensivo::getPosAtualBola() {
+  return this->bola.getPosicaoAtualBola();
 }

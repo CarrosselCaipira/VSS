@@ -121,14 +121,6 @@ bool Robo::isRoboEmPosseBola(const posXY bola){
 
 /************************ POSICAO ATUAL ROBO ********************/
 /* CAGADAS COM BOLA */
-void Robo::setPosicaoAtualBola(const posXY posicao){
-	this->bola = posicao;
-}
-
-posXY Robo::getPosicaoAtualBola() {
-	return this->bola;
-}
-
 
 void Robo::setPosicaoAtualRobo (const posXY posicao) {
 	if(posicao.x <= 0 || posicao.y <= 0 )

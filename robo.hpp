@@ -21,7 +21,7 @@ enum INDEX_ATRIBUTOS {
 	CHUTE_GIRANDO_HORARIO,
 	CHUTE_GIRANDO_ANTI_HORARIO,
 	CHUTANDO,
-  EM_POSSE_BOLA,
+  EM_POSSE_BOLA,  
 
 	/* Adicionar os novos atributos antes de BITSET_SIZE */
 	BITSET_SIZE
@@ -104,16 +104,12 @@ class Robo {
 
         // Checa se o robo esta com a posse da bola, uma area em frente ao robo, de abertura 90 graus (pi/2), 45 graus acima e abaixo da direcao deste,
         // e de comprimento de meio robo
-        bool Robo::isRoboEmPosseBola(const posXY bola);
+        bool isRoboEmPosseBola(const posXY bola);
 				/****************************************************************/
 
         /***************************** SETTERS **************************/
 
         /************************ POSICAO ATUAL ROBO ********************/
-        /* CAGADAS COM BOLA */
-        void setPosicaoAtualBola(const posXY posicao);
-        posXY getPosicaoAtualBola();
-
         // Define a posicao XY do robo.
         void setPosicaoAtualRobo (const posXY posicao);
         void setPosicaoAtualRobo (const float x, const float y);
