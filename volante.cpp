@@ -7,12 +7,13 @@
 
 void Roteiro::volante(Robo& r, Tecnico* tecnico){
 
-  if(tecnico == NULL) {
-    std::cerr << "ERRO: @Roteiro::volante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
-    exit(1);
-  }
+    if(tecnico == NULL) {
+        std::cerr << "ERRO: @Roteiro::volante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
+        exit(1);
+    }
 
-  TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
+    TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
+    posXY b = Tecnico->getPosAtualBola();
 
     // O atacante possui a posse da bola
     if (Tecnico->isAtacantePosse()) {
@@ -27,12 +28,12 @@ void Roteiro::volante(Robo& r, Tecnico* tecnico){
 
             // Volante esta abaixo do meio de campo em Y
             if(r.getPosicaoAtualRobo().isInCampoMetadeInferior()) {
-                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().Y + TAM_ROBO);
+                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().y + TAM_ROBO);
             }
 
             // Volante esta acima do meio de campo em Y
             else{
-                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().Y - TAM_ROBO);
+                r.setPosicaoObj(Tecnico->getPosAtualAtacante().x + TAM_ROBO, Tecnico->getPosAtualAtacante().y - TAM_ROBO);
             }
         }
 
@@ -41,7 +42,7 @@ void Roteiro::volante(Robo& r, Tecnico* tecnico){
         // "Caso B" ou "Caso C", respectivamente
         else {
             // O volante segue o atacante 20cm atras
-            r.setPosicaoObj(Tecnico->getPosAtualAtacante().x - 20, Tecnico->getPosAtualAtacante().Y);
+            r.setPosicaoObj(Tecnico->getPosAtualAtacante().x - 20, Tecnico->getPosAtualAtacante().y);
         }
     }
 

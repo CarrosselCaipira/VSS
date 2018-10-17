@@ -1,16 +1,17 @@
 #include "roteiro.hpp"
+#include "tecnicoOfensivo.hpp"
 
 //bool Tecnico.getEstrategiaAtacanteRetornou()
 //bool Tecnico.setEstrategiaAtacanteRetornou() => muda uma variavel bool no tecnico
 void Roteiro::atacante(Robo& r, Tecnico* tecnico) {
 
-  if(tecnico == NULL) {
-    std::cerr << "ERRO: @Roteiro::atacante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
-    exit(1);
-  }
+    if(tecnico == NULL) {
+        std::cerr << "ERRO: @Roteiro::atacante. Ponteiro para tecnico nao definido. Saindo..." << '\n';
+        exit(1);
+    }
 
-  TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
-
+    TecnicoOfensivo* Tecnico = (TecnicoOfensivo*) tecnico; /* convertendo um tecnico generico em um TecnicoOfensivo. */
+    posXY b = Tecnico->getPosAtualBola();
 
     // Se o atacante ja estiver realizando o chute girando no sentido horario
     if(r.atributos.test(CHUTE_GIRANDO_HORARIO)) {
@@ -45,7 +46,7 @@ void Roteiro::atacante(Robo& r, Tecnico* tecnico) {
         }
         // Senao, move o robo para um pouco atras da bola
         else{
-            Comportamento::posicionaAntesBola(r, b);
+            Comportamento::posicionaAntesBola(r, (b));
         }
 
         // Reseta a variavel "retornou"
@@ -84,7 +85,7 @@ void Roteiro::atacante(Robo& r, Tecnico* tecnico) {
             Comportamento::permaneceNoEixoX(r);
         }
         else{
-            Comportamento::posicionaPosBola(r, b);
+            Comportamento::posicionaPosBola(r, b);            
         }
     }
 }
