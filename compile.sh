@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 g++ -c atacante.cpp -std=c++11
+g++ -c bola.cpp -std=c++11
 g++ -c camera.cpp -std=c++11
 g++ -c comportamento.cpp -std=c++11
 g++ -c CPH.cpp -std=c++11
-g++ -c AEstrela.cpp -std=c++11
 g++ -c gestorArq.cpp -std=c++11
 g++ -c goleiro.cpp -std=c++11
 g++ -c propositoGeralAtuadores.cpp -std=c++11
@@ -13,7 +13,7 @@ g++ -c robo.cpp -std=c++11
 g++ -c tecnico.cpp -std=c++11
 g++ -c tecnicoOfensivo.cpp -std=c++11
 g++ -c volante.cpp -std=c++11
-g++ -o Testes/MAIN Testes/MAIN.cpp atacante.o camera.o AEstrela.o comportamento.o CPH.o gestorArq.o goleiro.o propositoGeralAtuadores.o propositoGeralCamera.o radio.o robo.o tecnico.o tecnicoOfensivo.o volante.o -std=c++11 `pkg-config --cflags --libs opencv`
+g++ -o Testes/MAIN Testes/MAIN.cpp atacante.o bola.o camera.o comportamento.o CPH.o gestorArq.o goleiro.o propositoGeralAtuadores.o propositoGeralCamera.o radio.o robo.o tecnico.o tecnicoOfensivo.o volante.o -std=c++11 `pkg-config --cflags --libs opencv`
 
 # g++ -c atacanteBasico.cpp -std=c++11
 # g++ -c camera.cpp -std=c++11
