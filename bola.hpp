@@ -10,26 +10,26 @@ class Bola {
 
   public:
     // Retorna a posicao xy da bola.
-    inline posXY getPosicaoAtualBola ();
+    posXY getPosicaoAtualBola ();
 
     // Retorna o vetor sentido da bola
-    inline vetorSentido getVetorSentidoAtualBola ();
+    vetorSentido getVetorSentidoAtualBola ();
 
-    inline posXY getPosicaoAtualObjBola();
+    posXY getPosicaoAtualObjBola();
 
     // Retorna a velocidade atual da bola
-    inline float getVelocidadeAtualBola ();
+    float getVelocidadeAtualBola ();
 
     // Retorna a posicao xy prevista da bola.
-    inline posXY getPosicaoPrevistoBola ();
+    posXY getPosicaoPrevistoBola ();
 
     // Retorna o vetor sentido previsto da bola
-    inline vetorSentido getVetorSentidoPrevistoBola ();
+    vetorSentido getVetorSentidoPrevistoBola ();
 
     // Retorna a velocidade prevista da bola
-    inline float getVelocidadePrevistoBola ();
+    float getVelocidadePrevistoBola ();
 
-    inline void calculaEstadoPrevisto(); 
+    void calculaEstadoPrevisto(); 
 
 		// TO-DO -> criar funcao para determinar a posicao XY da bola quando ela atingir o gol
 		// criar funcao para checar se a bola esta indo na diracao do nosso gol, se esta parada ou se esta indo na direcao do time adversario
