@@ -50,5 +50,5 @@ bool TecnicoOfensivo::getEstrategiaAtacanteRetornou(){
 }
 
 posXY TecnicoOfensivo::getPosAtualBola() {
-  return this->bola.getPosicaoAtualBola();
+  return Tecnico::bola.getPosicaoAtualBola();
 }
