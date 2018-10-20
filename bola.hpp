@@ -17,6 +17,8 @@ class Bola {
 
     posXY getPosicaoAtualObjBola();
 
+    void setPosicaoAtualBola (int x, int y);
+
     // Retorna a velocidade atual da bola
     float getVelocidadeAtualBola ();
 

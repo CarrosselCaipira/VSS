@@ -10,6 +10,11 @@ posXY Bola::getPosicaoAtualObjBola(){
   return estadoObjBola.posicao;
 }
 
+void Bola::setPosicaoAtualBola (int x, int y){
+  this->estadoAtualBola.posicao.x = x;
+  this->estadoAtualBola.posicao.y = y;
+}
+
 // vetorSentidoBola Bola::getVetorSentidoAtualBola () {
 //   return estadoAtualBola.direcao;
 // }
