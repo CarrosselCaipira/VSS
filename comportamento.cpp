@@ -11,7 +11,7 @@ void Comportamento::posicionaCentroGolXY(Robo& r) {
 
 void Comportamento::posicionaCentroGolXYAdv(Robo& r) {
 
-	r.setPosicaoObj(TAM_X_GOL + TAM_X_CAMPO, CENTRO_Y_GOL);
+	r.setPosicaoObj(TAM_X_GOL + TAM_X_CAMPO_SEM_GOL, CENTRO_Y_GOL);
 }
 
 void Comportamento::posicionaVolantePosNatural(Robo& r, posXY b){ //Sujeito à alterações por implicar uma estratégia do volante dentro de comportamento
@@ -36,12 +36,12 @@ void Comportamento::tangenciaLinhaFrenteAreaGol(Robo& r) {
 
 void Comportamento::posicionaTraveSuperior(Robo& r) {
 
-	r.setPosicaoObj(TAM_X_GOL, TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
+	r.setPosicaoObj(TAM_X_GOL + TAM_ROBO/2, TAM_Y_CAMPO/2 + TAM_Y_GOL/2);
 }
 
 void Comportamento::posicionaTraveInferior(Robo& r) {
 
-	r.setPosicaoObj(TAM_X_GOL, TAM_Y_CAMPO/2 - TAM_Y_GOL/2);
+	r.setPosicaoObj(TAM_X_GOL + TAM_ROBO/2, TAM_Y_CAMPO/2 - TAM_Y_GOL/2);
 }
 
 void Comportamento::posiciona90Graus(Robo& r){
