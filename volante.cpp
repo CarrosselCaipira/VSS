@@ -78,7 +78,7 @@ void Roteiro::volante(Robo& r, Tecnico* tecnico){
                     // A bola esta em uma faixa acima da area
                     if (b.isInAcimaAreaTime()){
                         Comportamento::tangenciaLinhaSuperiorAreaGol(r);
-                        std::cout << "acima\n";
+                        
                         // A bola esta a frente da area
                         if (b.x > TAM_X_GOL + TAM_X_AREA_GOL){ //é possível utilizar !b.isInFaixaXDaAreaGolTime(), mas é mais fácil de entender utilizando os valores diretos
                             // O robo fica na "quina da area"
@@ -93,7 +93,6 @@ void Roteiro::volante(Robo& r, Tecnico* tecnico){
                     }
                     // A bola esta em uma faixa abaixo da area
                     else if (b.isInAbaixoAreaTime()) {
-                        std::cout << "abaixo\n";
                         Comportamento::tangenciaLinhaInferiorAreaGol(r);
 
                         // A bola esta a frente da area
