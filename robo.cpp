@@ -123,16 +123,33 @@ bool Robo::isRoboEmPosseBola(const posXY bola){
 /* CAGADAS COM BOLA */
 
 void Robo::setPosicaoAtualRobo (const posXY posicao) {
+
 	if(posicao.x <= 0 || posicao.y <= 0 )
 	std::cerr << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
-	estadoAtualRobo.posicao = posicao;
+
+	posXY novaPosicao = posicao;
+
+	novaPosicao.isInCampo();
+	novaPosicao.saturaSeNotInCampo("Robo::setPosicaoAtualRobo");
+
+	estadoAtualRobo.posicao = novaPosicao;
 }
 
 void Robo::setPosicaoAtualRobo (const float x, const float y) {
+	
 	if(x <= 0 || y <= 0 )
 	std::cerr << "Erro " << "@Robo->setPosicaoAtualRobo " << "Nao eh possivel definir posicoes negativas ou iguais a zero" << std::endl;
-	estadoAtualRobo.posicao.x = x;
-	estadoAtualRobo.posicao.y = y;
+	
+
+	posXY posicao;
+	posicao.x = x;
+	posicao.y = y;
+
+	// posicao.isInCampo();
+	posicao.saturaSeNotInCampo("Robo::setPosicaoAtualRobo");
+
+
+	estadoAtualRobo.posicao = posicao;
 }
 
 void Robo::setVetorSentidoAtualRobo(const vetorSentido vetor) {
