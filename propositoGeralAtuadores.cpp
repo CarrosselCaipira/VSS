@@ -191,6 +191,70 @@ bool posXY::isInAreaAtaqueVolante (){ //Sujeito à alterações por implicar uma
   return (this->x < TAM_X_CAMPO*0.6);
 }
 
+bool posXY::isInCampo(){
+
+  if (this->isInFaixaCentral()) {
+		if (this->x <= 0){
+			return false;
+		}
+		else if (this->x >= TAM_X_CAMPO) {
+			return false;
+		}		
+	}
+	else {
+		if (this->x <= TAM_X_GOL) {
+			return false;
+		}
+		else if (this->x >= TAM_X_CAMPO - TAM_X_GOL) {
+			return false;
+		}	
+	}
+
+	if (this->y <= 0) {
+	  return false;
+	}
+	else if (this->y >= TAM_Y_CAMPO) {
+		return false;
+	}
+
+	return true;
+}
+
+bool posXY::saturaSeNotInCampo(const std::string s){
+
+  posXY valoresAntigos;
+  valoresAntigos.x = this->x;
+  valoresAntigos.y = this->y;
+
+  if (this->isInFaixaCentral()) {
+		if (this->x <= 0){
+			this->x = 1;
+		}
+		else if (this->x >= TAM_X_CAMPO) {
+			this->x = TAM_X_CAMPO - 1;
+		}		
+	}
+	else {
+		if (this->x <= TAM_X_GOL) {
+			this->x = TAM_X_GOL + 1;
+		}
+		else if (this->x >= TAM_X_CAMPO - TAM_X_GOL) {
+			this->x = TAM_X_CAMPO - TAM_X_GOL - 1;
+		}	
+	}
+
+	if (this->y <= 0) {
+		this->y = 1;
+	}
+	else if (this->y >= TAM_Y_CAMPO) {
+		this->y = TAM_Y_CAMPO - 1;
+	}
+
+	if (valoresAntigos.x != this->x || valoresAntigos.y != this->y) {
+		std::cerr << "WARNING @"<< s <<", parametros fora do intervalo do campo. A posicao anterior em x: " << valoresAntigos.x << ", e em y: " << valoresAntigos.y << ". \nSerao saturados para as posicaoes em x:" <<this->x << ", e em y: " << this->y << "." << std::endl;
+	}
+}
+
 posXY& posXY::operator=(const int i) {
 	this->x = i;
 	this->y = i;
