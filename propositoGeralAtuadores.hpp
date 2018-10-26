@@ -4,6 +4,7 @@
 #define PROPOSITO_GERAL_ATUADORES_H
 
 #include <cmath>
+#include <string>
 
 #define TAM_X_GOL 10	// em cemtimetros
 #define TAM_Y_GOL 40
@@ -96,6 +97,12 @@ struct posXY {
 	bool isInRaio (posXY posicao, int raio);
 	// Checa se a bola está na área de ataque do volante
 	bool isInAreaAtaqueVolante ();
+
+	// Verifica se a posicao esta dentro ou fora dos limites do campo
+	bool isInCampo();
+	// Se a posica estao fora dos limites do campo e ainda satura a mesma, s set trata do nome da funcao chamadora
+	// Tambem gera um warning caso teve de saturar alguma posicao
+	bool saturaSeNotInCampo(const std::string s);
 
 
 	/** @fn posXY& operator=(const int i)
