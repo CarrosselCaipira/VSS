@@ -91,7 +91,8 @@ int main(int argc, char** argv){
     // Iniciando as imagens que serao mostradas em cada janela
     // Utilize cv::imread(argv[1], 1) caso seja dada uma imagem como entrada
     aux = cv::Mat(TAM_Y_CAMPO, TAM_X_CAMPO, CV_8UC3, cv::Scalar(255, 255, 255));
-    //aux = cv::imread(argv[1], 1);
+    // Desenha no fundo a imagem com o nome passado como o argumento argv da main
+    aux = cv::imread(argv[1], 1);
 
     imgAtacante = aux.clone();
     imgGoleiro = aux.clone();
@@ -109,8 +110,9 @@ int main(int argc, char** argv){
 
     // Inicializando os robos com suas posicoes, angulos e sentidos
     // Se necessario testar outras situacoes, altere aqui (a menos que seja necessario criar uma nova sliderbar, se for o caso Boa Sorte)
-    robosTime[0].setPosicaoAtualRobo(TAM_X_GOL + TAM_ROBO/2, TAM_Y_CAMPO/2); // o goleiro nao precisa de muita coisa
-    
+    robosTime[0].setPosicaoAtualRobo(100, 1000); // o goleiro nao precisa de muita coisa
+    //robosTime[0].setPosicaoAtualRobo(TAM_X_GOL + TAM_ROBO/2, TAM_Y_CAMPO/2); // o goleiro nao precisa de muita coisa
+
     robosTime[1].setPosicaoAtualRobo(TAM_X_CAMPO/2 - 5, TAM_Y_CAMPO/2+20);
     robosTime[1].setAnguloAtualRobo(0); // desencargo de consciencia
     robosTime[1].setVetorSentidoAtualRobo(1, 0); // um vetor paralelo ao eixo horizontal do campo
@@ -118,7 +120,16 @@ int main(int argc, char** argv){
     robosTime[2].setPosicaoAtualRobo(TAM_X_CAMPO/2, TAM_Y_CAMPO/2+5);
     robosTime[2].setAnguloAtualRobo(0); // desencargo de consciencia
     robosTime[2].setVetorSentidoAtualRobo(1, 0); // um vetor paralelo ao eixo horizontal do campo
-    
+
+    // inicia a posicao da bola com a posicao inicial dos sliders
+    bola.setPosicaoAtualBola(sliderXbola, sliderYbola);
+    // Desenha o circulo que representa a bola na janela do Atacante
+    cv::circle(imgAtacante, cv::Point(sliderXbola, sliderYbola), 5, cv::Scalar(0,0,255), cv::FILLED, cv::LINE_8);
+    // Desenha o circulo que representa a bola na janela do Atacante
+    cv::circle(imgGoleiro, cv::Point(sliderXbola, sliderYbola), 5, cv::Scalar(0,0,255), cv::FILLED, cv::LINE_8);
+    // Desenha o circulo que representa a bola na janela do Atacante
+    cv::circle(imgVolante, cv::Point(sliderXbola, sliderYbola), 5, cv::Scalar(0,0,255), cv::FILLED, cv::LINE_8);
+
     // Criando as sliderbars para as coordenadas da bola
     cv::createTrackbar("XBola", "Goleiro", &sliderXbola, TAM_X_CAMPO, trackBarXGoleiro);
     cv::createTrackbar("YBola", "Goleiro", &sliderYbola, TAM_Y_CAMPO, trackBarYGoleiro);
