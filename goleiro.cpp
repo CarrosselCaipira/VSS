@@ -29,7 +29,7 @@ void Roteiro::goleiro(Robo& r, Tecnico* tecnico){
         }
         else{
             Comportamento::posicionaGolX(r);
-            Comportamento::posicionaPosBolaEmY(r, b);
+            Comportamento::posicionaPosBolaEmYObj(r, b);
         }
     }
 
