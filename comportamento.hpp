@@ -63,6 +63,14 @@ class Comportamento {
 	 */
  	static void tangenciaLinhaFrenteAreaGol(Robo& r);
 
+	/**
+	 * @fn Comportamento::tangenciaLinhaFrenteAreaGolObj(Robo& r)
+ 	 * @brief Define o obj do robo como manter y como o propio objetivo de y e x de modo que tangencie a linha da frente da area do gol.
+ 	 * @param Referencia para um robo
+ 	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
+	 */
+ 	static void tangenciaLinhaFrenteAreaGolObj(Robo& r);
+
  	/**
  	 * @fn Comportamento::posicionaTraveSuperior(Robo& r)
  	 * @brief Define como objetivo do robo a trave superior do gol do nosso lado.
@@ -107,12 +115,21 @@ class Comportamento {
 
  	/**
  	 * @fn Comportamento::posicionaPosBolaEmY(Robo& r, Bola& b)
- 	 * @brief Define como objetivo do robo a posicao da bola em y.
+ 	 * @brief Define como objetivo do robo a posicao da bola em y, considerando o x como o x da posicao atual do robo. 
  	 * @param Referencia para um robo
  	 * @param Referencia para a bola
  	 * @Author Rodrigo Bueno Dos Reis Rodrigues de Siqueira
  	 */
  	static void posicionaPosBolaEmY(Robo& r, posXY& b);
+
+	/**
+ 	 * @fn Comportamento::posicionaPosBolaEmYObj(Robo& r, Bola& b)
+ 	 * @brief Define como objetivo do robo a posicao da bola em y, considerando o x como o x do objetivo do robo.
+ 	 * @param Referencia para um robo
+ 	 * @param Referencia para a bola
+ 	 * @Author Marcelo Garcia Nunez
+ 	 */
+ 	static void posicionaPosBolaEmYObj(Robo& r, posXY& b);
 
  	/**
  	 * @fn Comportamento::posicionaFaixaSuperior(Robo& r)
