@@ -33,6 +33,10 @@ void Comportamento::tangenciaLinhaFrenteAreaGol(Robo& r) {
 	r.setPosicaoObj(TAM_X_GOL + TAM_X_AREA_GOL + TAM_ROBO/2, r.getPosicaoAtualRobo().y);
 }
 
+void Comportamento::tangenciaLinhaFrenteAreaGolObj(Robo& r) {
+
+	r.setPosicaoObj(TAM_X_GOL + TAM_X_AREA_GOL + TAM_ROBO/2, r.getPosicaoObj().y);
+}
 
 void Comportamento::posicionaTraveSuperior(Robo& r) {
 
@@ -62,6 +66,11 @@ void Comportamento::posicionaPosBolaEmX(Robo& r, posXY& b){
 void Comportamento::posicionaPosBolaEmY(Robo& r, posXY& b){
 
    r.setPosicaoObj(r.getPosicaoAtualRobo().x, b.y);
+}
+
+void Comportamento::posicionaPosBolaEmYObj(Robo& r, posXY& b){
+
+   r.setPosicaoObj(r.getPosicaoObj().x, b.y);
 }
 
 void Comportamento::posicionaFaixaSuperior(Robo& r){
