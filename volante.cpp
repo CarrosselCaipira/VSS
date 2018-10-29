@@ -112,7 +112,7 @@ void Roteiro::volante(Robo& r, Tecnico* tecnico){
                     else {
                         // O robo fica na linha de frente da area
                         Comportamento::posicionaPosBolaEmY(r, b);
-                        Comportamento::tangenciaLinhaFrenteAreaGol(r);
+                        Comportamento::tangenciaLinhaFrenteAreaGolObj(r);
                     }
                 }
             }
